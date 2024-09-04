@@ -6,6 +6,8 @@ using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 
 public class SceneManager : MonoBehaviour
 {
+    private static SceneManager _instance;
+    
     public static bool isLoaded;
     public string emptySceneName = "Empty";
 
@@ -18,6 +20,14 @@ public class SceneManager : MonoBehaviour
 
     private void Awake()
     {
+        if (_instance == null) _instance = this;
+        else
+        {
+            Debug.Log("Destroy SceneManager GameObject");
+            Destroy(gameObject);
+        }
+        
+        
         Scene activeScene = UnitySceneManager.GetActiveScene();
         Current = activeScene.name;
 
