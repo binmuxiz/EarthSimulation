@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 416875520700152261}
-  duration: 1
+  duration: 2
 --- !u!1 &6694586890919828414
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,7 +7,7 @@ namespace Global
     public class Fader : MonoBehaviour
     {
         public CanvasGroup canvasGroup;
-        public float duration = 0.15f;
+        public float duration = 1f;
 
         private void Awake()
         {
@@ -18,8 +18,7 @@ namespace Global
         public IEnumerator Show()
         {
             canvasGroup.interactable = canvasGroup.blocksRaycasts = true;
-            // 트위닝이 끝날때까지 대기 
-            yield return canvasGroup.DOFade(1f, duration).WaitForCompletion();
+            yield return canvasGroup.DOFade(1f, duration).WaitForCompletion(); // 트위닝이 끝날때까지 대기 
         }
 
         public IEnumerator Hide()

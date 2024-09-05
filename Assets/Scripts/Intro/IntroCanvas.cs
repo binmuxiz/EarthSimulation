@@ -2,20 +2,24 @@ using System.Collections;
 using Global;
 using UnityEngine;
 
-public class IntroCanvas : MonoBehaviour
+namespace Intro
 {
-    public SceneManager sceneManager;
-    public CanvasGroup introCanvasGroup;
-    public FadeController fadeController;
-
-    private IEnumerator Start()
+    public class IntroCanvas : MonoBehaviour
     {
-        yield return fadeController.FadeIn(introCanvasGroup);
+        public CanvasGroup introCanvasGroup;
+        public FadeController fadeController;
 
-        yield return new WaitForSeconds(1.3f);
+        private IEnumerator Start()
+        {
+            yield return fadeController.FadeIn(introCanvasGroup);
 
-        yield return fadeController.FadeOut(introCanvasGroup);
+            yield return new WaitForSeconds(1.3f);
 
-        sceneManager.LoadScene("Main Scene");
+            yield return fadeController.FadeOut(introCanvasGroup);
+
+            yield return new WaitForSeconds(1.3f);
+
+            SceneManager.Instance.LoadScene("Main Scene");
+        }
     }
 }
