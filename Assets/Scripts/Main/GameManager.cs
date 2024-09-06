@@ -2,6 +2,8 @@
 using UnityEditor;
 #endif
 
+using System.Collections;
+using Global;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,21 +14,20 @@ public class GameManager : MonoBehaviour
     
     public void StartGame()
     {
-        Debug.Log("StartGame()");
-        // Loading Cavas 켜기
-        // onGameStart.Invoke();
-        
-        // 일정 시간 대기
-        
-        
-        
-        // Game Scene Temp 로드
+        Debug.Log("GameManager.StartGame()");
+        onGameStart.Invoke();
+        // todo 원래는 바로 게임 씬으로 안넘어감 
+        StartCoroutine(LoadGameScene());
     }
     
-    // private IEnumerator LoadGameScene()
-    // {
-    //     
-    // }
+    private IEnumerator LoadGameScene()
+    {
+        Debug.Log("GameManager.LoadGameScene()");
+        
+        // todo 모든 인원이 찰 떄까지 대기
+        yield return new WaitForSeconds(5);
+        SceneManager.Instance.LoadScene("Game Scene Temp");        
+    }
     
     public void QuitGame()
     {
