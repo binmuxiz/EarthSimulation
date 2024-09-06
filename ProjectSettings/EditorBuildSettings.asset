@@ -14,5 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Empty.unity
     guid: e2494a2bd63804835aa81eb6e1131276
+  - enabled: 1
+    path: Assets/Scenes/Game Scene Temp.unity
+    guid: c5488c729b1734c9b9c87a2a1f5eef9e
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
