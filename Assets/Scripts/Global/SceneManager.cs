@@ -44,31 +44,29 @@ namespace Global
          * LoadSceneMode.Single : 현재 로드된 모든 씬을 종료하고, 지정한 씬을 로드한다.  
          * LoadSceneMode.Additive : 현재 씬을 UnLoad하지 않고, 지정한 씬을 추가로 로드한다.  
          */
-            yield return LoadSceneAsyncRoutine(emptySceneName); // 빈 씬 로드
-            // yield return UnitySceneManager.LoadSceneAsync(emptySceneName, LoadSceneMode.Additive);
-
+            yield return LoadSceneAsyncRoutine(emptySceneName, LoadSceneMode.Additive); // 빈 씬 로드
+            
             if (!string.IsNullOrWhiteSpace(Current))
             {
+                //현재 씬 언로드
                 yield return UnitySceneManager.UnloadSceneAsync(Current);
             }
 
-            yield return LoadSceneAsyncRoutine(sceneName);
+            yield return LoadSceneAsyncRoutine(sceneName, LoadSceneMode.Additive);
 
             Current = sceneName;
-            // isLoaded = false;
-            // // isLoaded가 true가 될 때까지 기다린다.
-            // // 새로 로드하는 씬 쪽에서 로딩이 완료된 후 isLoaded를 true로 변경
-            // yield return new WaitUntil(() => isLoaded);
-
+            
+            // empty 씬 언로드 
             yield return UnitySceneManager.UnloadSceneAsync(emptySceneName);
 
-            StopCoroutine(showCoroutine);
-            yield return _fader.Hide();
+            StopCoroutine(showCoroutine); // fader의 show 코루틴 함수가 아직 실행중이었다면 코루틴 종료시킴 
+            StartCoroutine(_fader.Hide());
         }
         
-        private IEnumerator LoadSceneAsyncRoutine(string sceneName)
+        private IEnumerator LoadSceneAsyncRoutine(string sceneName, LoadSceneMode mode)
         {
-            AsyncOperation asyncOperation = UnitySceneManager.LoadSceneAsync(sceneName);
+            Debug.Log("Loading Scene... : " + sceneName);
+            AsyncOperation asyncOperation = UnitySceneManager.LoadSceneAsync(sceneName, mode);
             // 씬이 완료 될 때까지 대기
             while (!asyncOperation.isDone)
             {
@@ -77,7 +75,7 @@ namespace Global
                 yield return null;
             }
             
-            Debug.Log("Scene Loading Completed!");
+            Debug.Log("Scene Loading Completed! : " + sceneName );
         }
     }
 }
