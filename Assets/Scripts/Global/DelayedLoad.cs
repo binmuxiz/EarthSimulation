@@ -16,7 +16,7 @@ namespace Global
         
             Debug.Log("Loading Done...");
 
-            // SceneManager.isLoaded = true;
+            SceneManager.isLoaded = true;
         }
     }
 }

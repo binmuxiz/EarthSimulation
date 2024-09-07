@@ -1004,14 +1004,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1947303381455619176, guid: c8159143d0cbd5a47a9b26bb94c559a7, type: 3}
-      propertyPath: orthographic
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3754145908496963930, guid: c8159143d0cbd5a47a9b26bb94c559a7, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6416808952096223913, guid: c8159143d0cbd5a47a9b26bb94c559a7, type: 3}
       propertyPath: m_Name
       value: SceneManager
@@ -1277,7 +1269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a96039fb24c574ae7aed30b95b38cb0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayTime: 2
+  delayTime: 7
 --- !u!1 &1669680574
 GameObject:
   m_ObjectHideFlags: 0

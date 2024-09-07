@@ -7,10 +7,11 @@ namespace Global
 {
     public class SceneManager : Singleton<SceneManager>
     {
-        // public static bool isLoaded;
+        public static bool isLoaded;
         public string emptySceneName = "Empty";
 
         private Fader _fader;
+
 
         private string Current { get; set; } = string.Empty;
 
@@ -40,26 +41,31 @@ namespace Global
 
             var showCoroutine = StartCoroutine(_fader.Show());
 
-        /*
+            yield return new WaitForSeconds(2f);
+            /*
          * LoadSceneMode.Single : 현재 로드된 모든 씬을 종료하고, 지정한 씬을 로드한다.  
          * LoadSceneMode.Additive : 현재 씬을 UnLoad하지 않고, 지정한 씬을 추가로 로드한다.  
          */
             yield return LoadSceneAsyncRoutine(emptySceneName, LoadSceneMode.Additive); // 빈 씬 로드
-            
-            if (!string.IsNullOrWhiteSpace(Current))
+
+        if (!string.IsNullOrWhiteSpace(Current))
             {
                 //현재 씬 언로드
                 yield return UnitySceneManager.UnloadSceneAsync(Current);
             }
 
+            // yield return UnitySceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
             yield return LoadSceneAsyncRoutine(sceneName, LoadSceneMode.Additive);
-
+            
             Current = sceneName;
+
+            // isLoaded = false;
+            // yield return new WaitUntil(() => isLoaded);
             
             // empty 씬 언로드 
             yield return UnitySceneManager.UnloadSceneAsync(emptySceneName);
 
-            StopCoroutine(showCoroutine); // fader의 show 코루틴 함수가 아직 실행중이었다면 코루틴 종료시킴 
+            // StopCoroutine(showCoroutine); // fader의 show 코루틴 함수가 아직 실행중이었다면 코루틴 종료시킴 
             StartCoroutine(_fader.Hide());
         }
         
@@ -74,7 +80,7 @@ namespace Global
                 Debug.Log(p + "%");
                 yield return null;
             }
-            
+
             Debug.Log("Scene Loading Completed! : " + sceneName );
         }
     }
