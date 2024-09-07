@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         Debug.Log("GameManager.StartGame()");
+
         onGameStart.Invoke();
         // todo 원래는 바로 게임 씬으로 안넘어감 
         StartCoroutine(LoadGameScene());

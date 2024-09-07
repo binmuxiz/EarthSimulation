@@ -23,7 +23,7 @@ namespace Intro
             
             yield return new WaitForSeconds(1.3f);
 
-            SceneManager.Instance.LoadScene("Main Scene");
+            SceneManager.Instance.LoadScene("Home Scene");
         }
     }
 }
