@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -30,7 +29,9 @@ public class TypingEffect : MonoBehaviour
 
         if (i != str.Length)
         {
-            uiText.text = str.Substring(i);
+            uiText.text += str.Substring(i);
         }
+
+        skip = false;
     }
 }

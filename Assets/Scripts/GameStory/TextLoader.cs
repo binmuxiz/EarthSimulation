@@ -1,20 +1,34 @@
-using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
 public class TextLoader : MonoBehaviour
 {
-    public TMP_Text storyText;
     public TypingEffect typingEffect;
-    
+
     private void Start()
     {
-        var textAsset = Resources.Load<TextAsset>("game_story");
+        Debug.Log("TypingEffect is exist : " + (typingEffect != null));
+        
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public IEnumerator LoadText(string filename, TMP_Text tmpText, bool effect)
+    {
+        var textAsset = Resources.Load<TextAsset>(filename);
 
         if (textAsset != null)
         {
             Debug.Log(textAsset.text);
-            StartCoroutine(typingEffect.TypeText(textAsset.text, storyText));
+
+            if (effect)
+            {
+                yield return StartCoroutine(typingEffect.TypeText(textAsset.text, tmpText));
+            }
+            else
+            {
+                tmpText.text = textAsset.text;
+            }
         }
         else
         {
