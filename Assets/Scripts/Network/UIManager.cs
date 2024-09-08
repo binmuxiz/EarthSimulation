@@ -102,9 +102,11 @@ public class UIManager : MonoBehaviour
     {
         _UIState = UIState.Choice;
         choiceCanvas.gameObject.SetActive(true);
+        
         for (int i = 0; i < choices.Length; i++)
         {
             choices[i].GetComponentInChildren<TMP_Text>().text = choices_list[i].text;
+            votes[i].text = "0";
         }
 
         for (int i = 10; i >= 0; i--)
