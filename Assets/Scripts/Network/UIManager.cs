@@ -20,8 +20,12 @@ public class UIManager : MonoBehaviour
     public Canvas choiceCanvas;
     
     public Button[] choices;
+    public TMP_Text[] votes;
+    
     public TMP_Text storyText;
     public TMP_Text timer;
+    
+    
     
     public UIState _UIState;
     
@@ -29,6 +33,9 @@ public class UIManager : MonoBehaviour
     private bool isCoroutine;
     private bool isChoosing;
     private string[] storySentences;
+
+    private bool isFirstStory;
+    private bool isChoosed;
     
     
     private IEnumerator Start()
@@ -36,15 +43,19 @@ public class UIManager : MonoBehaviour
         _UIState = UIState.Idle;
         storyCanvas.gameObject.SetActive(false);
         choiceCanvas.gameObject.SetActive(false);
+        
         yield return NetworkManager.instance.StartSendDataProcess();
 
-        for (int i = 0; i < 5; i++) 
+        for (int i = 0; i < 5; i++)
         {
+            if (i == 0) isFirstStory = true;
+            else isFirstStory = false;
             storySentences = NetworkManager.instance._getData.text.Split("\n");
-
+            
+            Debug.Log(storySentences[0]);
             yield return PresentingStory(storySentences);
             
-            isChoosing = true;
+            //isChoosing = true;
             
             yield return ShowChoices(NetworkManager.instance._getData.choices);
             
@@ -55,19 +66,25 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            isClick = true;
-        }
+        //if (_UIState == UIState.Idle) return;
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    isClick = true;
+        //}
     }
 
     IEnumerator PresentingStory(string[] storySentences)
     {
         _UIState = UIState.Story;
+        int startIndex;
         
         storyCanvas.gameObject.SetActive(true);
         isClick = false;
-        for (int i = 0; i < storySentences.Length; i++)
+
+        if (isFirstStory) startIndex = 1;
+        else startIndex = 0;
+        
+        for (int i = startIndex; i < storySentences.Length; i++)
         {
             storyText.text = storySentences[i];
             
@@ -92,26 +109,32 @@ public class UIManager : MonoBehaviour
 
         for (int i = 10; i >= 0; i--)
         {
-            if (!isChoosing) yield break; //enum
+            if (_UIState != UIState.Choice ) yield break; //enum
             
             timer.text = $"남은 시간 : {i}";
             yield return new WaitForSeconds(1f);
             if (i == 0)
             {
-                int temp = Random.Range(1, 4);
-
-                switch (temp)
+                if (!isChoosed)
                 {
-                    case 1:
-                        Choice1();
-                        break;
-                    case 2:
-                        Choice2();
-                        break;
-                    case 3:
-                        Choice3();
-                        break;
+                    int temp = Random.Range(1, 4);
+
+                    switch (temp)
+                    {
+                        case 1:
+                            Choice1();
+                            break;
+                        case 2:
+                            Choice2();
+                            break;
+                        case 3:
+                            Choice3();
+                            break;
+                    }
                 }
+                choiceCanvas.gameObject.SetActive(false);
+                _UIState = UIState.Idle;
+                isChoosed = false;
             }
         }
 
@@ -120,31 +143,61 @@ public class UIManager : MonoBehaviour
 
     public void Choice1()
     {
+        votes[0].text = OnePersonChoose(votes[0].text);
+
         NetworkManager.instance._sendData.story_id = NetworkManager.instance._getData.id;
         NetworkManager.instance._sendData.choice_index = 1;
-        isChoosing = false; // enum
-        choiceCanvas.gameObject.SetActive(false);
-        //StartCoroutine(NetworkManager.instance.SendDataProcess());
+        Debug.Log(NetworkManager.instance._sendData.choice_index);
+
+        isChoosed = true;
+
+        //choiceCanvas.gameObject.SetActive(false);
+        //_UIState = UIState.Idle;
     }
     
     public void Choice2()
     {
+        votes[1].text = OnePersonChoose(votes[1].text);
+        
         NetworkManager.instance._sendData.story_id = NetworkManager.instance._getData.id;
         NetworkManager.instance._sendData.choice_index = 2;
-        isChoosing = false; //enum
-        choiceCanvas.gameObject.SetActive(false);
-        //StartCoroutine(NetworkManager.instance.SendDataProcess());
+        Debug.Log(NetworkManager.instance._sendData.choice_index);
+        
+        isChoosed = true;
+
+
+        //choiceCanvas.gameObject.SetActive(false);
+        //_UIState = UIState.Idle;
+
 
     }
     public void Choice3()
-    { 
+    {
+
+        votes[2].text = OnePersonChoose(votes[2].text);
+            
         NetworkManager.instance._sendData.story_id = NetworkManager.instance._getData.id;
         NetworkManager.instance._sendData.choice_index = 3;
-        isChoosing = false; //enum
-        choiceCanvas.gameObject.SetActive(false);
-        //StartCoroutine(NetworkManager.instance.SendDataProcess());
+        Debug.Log(NetworkManager.instance._sendData.choice_index);
         
+        isChoosed = true;
 
+        
+        //choiceCanvas.gameObject.SetActive(false);
+       // _UIState = UIState.Idle;
+    }
+
+    public void NextButton()
+    {
+        isClick = true;
+    }
+
+
+    string OnePersonChoose(string s)
+    {
+        int temp = Int32.Parse(s);
+        temp++;
+        return temp.ToString();
     }
     
 }
