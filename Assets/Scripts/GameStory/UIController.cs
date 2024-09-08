@@ -32,9 +32,6 @@ namespace GameStory
             
             yield return roleUI.Show(fadeController);
             yield return roleUI.Hide(fadeController);
-            
-            // Game scene으로 전환
-            SceneManager.Instance.LoadScene("Game Scene");
 
         }
         

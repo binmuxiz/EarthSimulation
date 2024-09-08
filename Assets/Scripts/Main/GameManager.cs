@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("GameManager.LoadGameScene()");
         
         // todo 모든 인원이 찰 떄까지 대기
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5);
         SceneManager.Instance.LoadScene("Game Story Scene");        
     }
     

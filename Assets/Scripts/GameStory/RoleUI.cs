@@ -7,8 +7,6 @@ public class RoleUI : MonoBehaviour
 {
     public CanvasGroup canvasGroup;
 
-    private float fadeDuration = 0.5f;
-
     private void Awake()
     {
         canvasGroup.alpha = 0f;
@@ -17,13 +15,13 @@ public class RoleUI : MonoBehaviour
 
     public IEnumerator Show(FadeController fadeController)
     {
-        yield return fadeController.FadeIn(canvasGroup, fadeDuration);
+        yield return fadeController.FadeIn(canvasGroup, 1f);
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
     }
 
     public IEnumerator Hide(FadeController fadeController)
     {
-        yield return fadeController.FadeOut(canvasGroup, fadeDuration);
+        yield return fadeController.FadeOut(canvasGroup, 1f);
     }
 }
