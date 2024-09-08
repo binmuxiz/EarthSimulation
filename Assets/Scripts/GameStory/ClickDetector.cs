@@ -1,11 +1,21 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ClickDetector : MonoBehaviour
 {
+    public UnityEvent onStoryClickEvent;
+    public UnityEvent onRoleClickEvent;
+    
+    private GraphicRaycaster _raycaster;
+
+    private void Awake()
+    {
+        _raycaster = GetComponent<GraphicRaycaster>();
+    }
 
     void Update()
     {
@@ -15,17 +25,22 @@ public class ClickDetector : MonoBehaviour
             var results = new List<RaycastResult>();
             
             pointerData.position = Input.mousePosition;
-            
-            EventSystem.current.RaycastAll(pointerData, results);
+
+            _raycaster.Raycast(pointerData, results);
 
             foreach (RaycastResult result in results)
             {
-                if (result.gameObject == gameObject)
+                string name = result.gameObject.name;
+                
+                if (name.Equals("Panel - Story"))
                 {
-                    Debug.Log($"{gameObject.name} 클릭됨!");
+                    onStoryClickEvent.Invoke();
+                }
+                else if (name.Equals("Panel - Role"))
+                {
+                    onRoleClickEvent.Invoke();
                 }
             }
-            
         }
     }
 }

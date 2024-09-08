@@ -25,14 +25,28 @@ namespace GameStory
 
         private IEnumerator Start()
         {
-            
             yield return storyUI.Show(fadeController);
             yield return storyUI.Hide(fadeController);
 
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
             
             yield return roleUI.Show(fadeController);
             yield return roleUI.Hide(fadeController);
+
         }
+        
+        // public IEnumerator ShowRoleUI()
+        // {
+        //     yield return storyUI.Hide(fadeController);
+        //
+        //     yield return new WaitForSeconds(2f);
+        //     
+        //     yield return roleUI.Show(fadeController);
+        // }
+        //
+        // public IEnumerator HideRoleUI()
+        // {
+        //     yield return roleUI.Hide(fadeController);
+        // }
     }
 }
