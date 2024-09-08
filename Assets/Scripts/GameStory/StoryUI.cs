@@ -10,6 +10,8 @@ namespace GameStory
         public CanvasGroup canvasGroup;
         public TMP_Text tmpText;
         public TextLoader textLoader;
+        
+        private float fadeDuration = 0.6f;
 
         private void Awake()
         {
@@ -19,7 +21,7 @@ namespace GameStory
 
         public IEnumerator Show(FadeController fadeController)
         {
-            yield return fadeController.FadeIn(canvasGroup, 1f);
+            yield return fadeController.FadeIn(canvasGroup, fadeDuration);
 
             yield return textLoader.LoadText("game_story", tmpText, true);
 
@@ -30,7 +32,7 @@ namespace GameStory
 
         public IEnumerator Hide(FadeController fadeController)
         {
-            yield return fadeController.FadeOut(canvasGroup, 1f);
+            yield return fadeController.FadeOut(canvasGroup, fadeDuration);
         }
     }
 }

@@ -1,6 +1,8 @@
 using System.Collections;
 using Global;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using SceneManager = Global.SceneManager;
 
 namespace GameStory
 {
@@ -32,6 +34,8 @@ namespace GameStory
             
             yield return roleUI.Show(fadeController);
             yield return roleUI.Hide(fadeController);
+            
+            SceneManager.Instance.LoadScene("Game Scene");
 
         }
         
