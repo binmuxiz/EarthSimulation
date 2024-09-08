@@ -1,5 +1,5 @@
 using System.Collections;
-using DG.Tweening;
+using Global;
 using TMPro;
 using UnityEngine;
 
@@ -10,28 +10,27 @@ namespace GameStory
         public CanvasGroup canvasGroup;
         public TMP_Text tmpText;
         public TextLoader textLoader;
-        
+
         private void Awake()
         {
             canvasGroup.alpha = 0f;
             canvasGroup.interactable = canvasGroup.blocksRaycasts = false;
         }
-        
-        private IEnumerator Start()
+
+        public IEnumerator Show(FadeController fadeController)
         {
-            // TODO WaitForCompletion??
-            // yield return canvasGroup.DOFade( 1f, 1f).WaitForCompletion();
-            canvasGroup.alpha = 1f;
-            canvasGroup.interactable = canvasGroup.blocksRaycasts = true;
+            yield return fadeController.FadeIn(canvasGroup, 1f);
 
             yield return textLoader.LoadText("game_story", tmpText, true);
-            // yield return textLoader.LoadText("game_story", tmpText, false);
 
             // TODO 로딩 아이콘
             yield return new WaitForSeconds(3f);
 
-            canvasGroup.interactable = canvasGroup.blocksRaycasts = false;
-            yield return canvasGroup.DOFade( 0f, 1f).WaitForCompletion();
+        }
+
+        public IEnumerator Hide(FadeController fadeController)
+        {
+            yield return fadeController.FadeOut(canvasGroup, 1f);
         }
     }
 }
