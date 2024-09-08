@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -6,13 +5,33 @@ using UnityEngine;
 public class TypingEffect : MonoBehaviour
 {
     public float typingSpeed = 0.1f;
-    
-    public IEnumerator TypeText(string text, TMP_Text uiText)
+
+    private bool skip = false;
+
+    public bool Skip
     {
-        foreach (char letter in text)
+        get => skip;
+        set => skip = value;
+    }
+
+    public IEnumerator TypeText(string str, TMP_Text uiText)
+    {
+        int i = 0;
+        for (; i < str.Length; i++)
         {
-            uiText.text += letter;
-            yield return new WaitForSeconds(typingSpeed);
+            if (!skip)
+            {
+                uiText.text += str[i];
+                yield return new WaitForSeconds(typingSpeed);
+            }
+            else break;
         }
+
+        if (i != str.Length)
+        {
+            uiText.text += str.Substring(i);
+        }
+
+        skip = false;
     }
 }

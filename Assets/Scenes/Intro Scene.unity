@@ -297,7 +297,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: No
+  m_text: Earth Simualtion
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dcb3270443d2b43f0afaadddf532d432, type: 2}
   m_sharedMaterial: {fileID: 3697391153214165472, guid: dcb3270443d2b43f0afaadddf532d432, type: 2}
