@@ -38,7 +38,7 @@ public class UIManager : MonoBehaviour
         choiceCanvas.gameObject.SetActive(false);
         yield return NetworkManager.instance.StartSendDataProcess();
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 5; i++) 
         {
             storySentences = NetworkManager.instance._getData.text.Split("\n");
 

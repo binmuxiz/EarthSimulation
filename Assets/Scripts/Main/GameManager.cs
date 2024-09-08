@@ -18,16 +18,16 @@ public class GameManager : MonoBehaviour
 
         onGameStart.Invoke();
         // todo 원래는 바로 게임 씬으로 안넘어감 
-        StartCoroutine(LoadGameScene());
+        StartCoroutine(LoadGameStoryScene());
     }
     
-    private IEnumerator LoadGameScene()
+    private IEnumerator LoadGameStoryScene()
     {
         Debug.Log("GameManager.LoadGameScene()");
         
         // todo 모든 인원이 찰 떄까지 대기
         yield return new WaitForSeconds(5);
-        SceneManager.Instance.LoadScene("Game Scene");        
+        SceneManager.Instance.LoadScene("Game Story Scene");        
     }
     
     public void QuitGame()
