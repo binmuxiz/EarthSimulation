@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GetData
 {
-   public int id;
+   public int round;
    public string text;
    public List<Choice> choices;
 }
@@ -11,9 +11,13 @@ public class GetData
 public class Choice
 { 
    public string text;
+   public Score score;
+}
 
-   class Scores
-   {
-      
-   }
+public class Score
+{
+   public int envScore;
+   public int societyScore;
+   public int techScore;
+   public int economyScore;
 }
