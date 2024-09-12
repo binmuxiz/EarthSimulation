@@ -64,14 +64,7 @@ public class UIManager : MonoBehaviour
         
     }
 
-    private void Update()
-    {
-        //if (_UIState == UIState.Idle) return;
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    isClick = true;
-        //}
-    }
+    
 
     IEnumerator PresentingStory(string[] storySentences)
     {

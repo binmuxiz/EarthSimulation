@@ -39,7 +39,16 @@ namespace GameStory
             yield return ShowStory();
             yield return new WaitForSeconds(1f);
             yield return ShowRole();
-            SceneManager.Instance.LoadScene("Game Scene");
+            SharedData.Instance.CheckReadStoryDoneRpc();
+            Debug.Log("tq");
+            yield return new WaitUntil(() => SharedData.MaxCount <= SharedData.CountReadStoryDone);
+            Debug.Log("모두 다 읽음");
+            SharedData.Instance.ClearReadCountRpc();
+            //if(RunnerController.Runner.IsSceneAuthority)
+                
+
+
+
         }
 
         private IEnumerator ShowStory()

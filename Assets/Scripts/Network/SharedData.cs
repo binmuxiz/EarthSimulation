@@ -9,15 +9,16 @@ public class SharedData : NetworkBehaviour
 {
     
     public static SharedData Instance;
-    
-    
+
+    public static int CountReadStoryDone { get; set; }
     static int CountReady { get; set; }
 
-    private int MaxCount { get; set; } =2;
+    public static int MaxCount { get; set; } =2;
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
+        DontDestroyOnLoad(this);
     }
 
     [Rpc(RpcSources.All, RpcTargets.All)]
@@ -26,16 +27,28 @@ public class SharedData : NetworkBehaviour
         CountReady++;
         Debug.Log(CountReady);
 
-        Debug.Log(RunnerController.Runner.LocalPlayer.IsMasterClient);
+       
         if (CountReady >= 2)
         {
-            
-            RunnerController.Runner.LoadScene(SceneRef.FromIndex(4));
             Debug.Log("ok");
+            if(RunnerController.Runner.IsSceneAuthority)
+                RunnerController.Runner.LoadScene(SceneRef.FromIndex(4));
             
            
         }
         
+    }
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void CheckReadStoryDoneRpc()
+    {
+        CountReadStoryDone++;
+        Debug.Log(CountReadStoryDone);
+    }
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void ClearReadCountRpc()
+    {
+        CountReadStoryDone = 0;
+        Debug.Log(CountReadStoryDone);
     }
 
     
