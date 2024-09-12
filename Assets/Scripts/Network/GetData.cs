@@ -11,4 +11,9 @@ public class GetData
 public class Choice
 { 
    public string text;
+
+   class Scores
+   {
+      
+   }
 }

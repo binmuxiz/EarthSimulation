@@ -128,7 +128,6 @@ GameObject:
   m_Component:
   - component: {fileID: 89184074}
   - component: {fileID: 89184073}
-  - component: {fileID: 89184072}
   m_Layer: 0
   m_Name: DataManager
   m_TagString: Untagged
@@ -136,18 +135,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &89184072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 89184071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04bc49c5795f1924f8924b7129d59540, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &89184073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -514,7 +501,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 218514171}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 89184073}
+        m_TargetAssemblyTypeName: TempManager, Assembly-CSharp
+        m_MethodName: ReadyButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &218514171
 MonoBehaviour:
   m_ObjectHideFlags: 0
