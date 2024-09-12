@@ -1,9 +1,12 @@
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
+using System;
 using System.Collections;
 using Global;
+using Fusion;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -18,8 +21,25 @@ public class GameManager : MonoBehaviour
 
         onGameStart.Invoke();
         // todo 원래는 바로 게임 씬으로 안넘어감 
+        
+        
+        
         StartCoroutine(LoadGameStoryScene());
     }
+    
+    public void EnterGame(string RoomName = null)
+    {
+        Debug.Log("GameManager.StartGame()");
+
+        onGameStart.Invoke();
+        // todo 원래는 바로 게임 씬으로 안넘어감 
+        
+        
+        FusionManager.Instance.StartGame(RoomName);
+        //StartCoroutine(LoadGameStoryScene());
+    }
+    
+    
     
     private IEnumerator LoadGameStoryScene()
     {
