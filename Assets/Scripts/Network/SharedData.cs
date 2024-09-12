@@ -26,9 +26,14 @@ public class SharedData : NetworkBehaviour
         CountReady++;
         Debug.Log(CountReady);
 
+        Debug.Log(RunnerController.Runner.LocalPlayer.IsMasterClient);
         if (CountReady >= 2)
         {
-            RunnerController.Runner.LoadScene(SceneRef.FromIndex(2));
+            
+            RunnerController.Runner.LoadScene(SceneRef.FromIndex(4));
+            Debug.Log("ok");
+            
+           
         }
         
     }

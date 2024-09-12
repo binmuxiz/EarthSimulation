@@ -1,16 +1,18 @@
+using System;
+using Fusion;
 using UnityEngine;
 
-public class DataManager : MonoBehaviour
+public class TempManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void ReadyButton()
     {
-        
-    }
+        GameObject[] networkObjects = GameObject.FindGameObjectsWithTag("NetworkObject");
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        foreach (var i in networkObjects)
+        {
+            if (i.GetComponent<NetworkObject>().HasStateAuthority)
+                i.GetComponent<SharedData>().CheckReadyRpc();
+        }
     }
+    
 }
