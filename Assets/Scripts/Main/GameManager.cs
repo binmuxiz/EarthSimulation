@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
         
         // todo 모든 인원이 찰 떄까지 대기
         yield return new WaitForSeconds(3);
-        SceneManager.Instance.LoadScene("Game Story Scene");        
+        SceneManager.Instance.LoadScene("Game Scene");        
     }
     
     public void QuitGame()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Global
 {
-    public class FadeController : MonoBehaviour
+    public class FadeController : MonoBehaviour                                                                                                                             
     {
         private void Awake()
         {
