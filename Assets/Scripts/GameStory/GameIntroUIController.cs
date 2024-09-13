@@ -18,6 +18,8 @@ namespace GameStory
         public FadeController fadeController;
 
         private float _fadeDuration = 0.6f;
+        
+        
 
         private void Awake()
         {
@@ -43,10 +45,11 @@ namespace GameStory
             Debug.Log("tq");
             yield return new WaitUntil(() => SharedData.MaxCount <= SharedData.CountReadStoryDone);
             Debug.Log("모두 다 읽음");
+            Debug.Log(UIManager.storyPermitted);
+           
             SharedData.Instance.ClearReadCountRpc();
-            
             //if(RunnerController.Runner.IsSceneAuthority)
-                
+
 
 
 

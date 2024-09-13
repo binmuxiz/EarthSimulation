@@ -49,7 +49,10 @@ public class SharedData : NetworkBehaviour
     public void ClearReadCountRpc()
     {
         CountReadStoryDone = 0;
+        UIManager.storyPermitted = true;
         Debug.Log(CountReadStoryDone);
+        
+        
     }
 
     

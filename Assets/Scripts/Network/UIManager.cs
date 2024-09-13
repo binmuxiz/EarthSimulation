@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,7 +30,7 @@ public class UIManager : MonoBehaviour
 
     private const int timer = 10;
     private const int _finalRound = 5;
-
+    public static bool storyPermitted = false;
 
     private void Awake()
     {
@@ -54,17 +55,24 @@ public class UIManager : MonoBehaviour
         scoreTexts[3].text = _score.Economy.ToString();        
     }
 
-    private void Start()
+    private async UniTaskVoid Start()
     {
         storyCanvas.gameObject.SetActive(false);
         choiceCanvas.gameObject.SetActive(false);
 
-        StartCoroutine(ReceiveDataProcess());
+        await UniTask.WaitUntil(() => storyPermitted);
+        Debug.Log("tqtqtq");
+        await ReceiveDataProcess();
     }
 
-    private IEnumerator ReceiveDataProcess()
+    private void Update()
     {
-        yield return NetworkManager.instance.StartSendDataProcess();
+        Debug.Log(storyPermitted);
+    }
+
+    private async UniTask ReceiveDataProcess()
+    {
+        await NetworkManager.instance.StartSendDataProcess();
         var getData = NetworkManager.instance._getData;
 
         while (true)
@@ -78,13 +86,13 @@ public class UIManager : MonoBehaviour
                 storySentences[j] += '.';
             }
 
-            yield return PresentingStory(storySentences);
-            yield return ShowChoices(getData.choices);
+            await PresentingStory(storySentences);
+            await ShowChoices(getData.choices);
             SetScore(getData.choices[_choiceNum - 1].score);
 
             if (getData.round == _finalRound) break;
             
-            yield return NetworkManager.instance.SendDataProcess();
+            await NetworkManager.instance.SendDataProcess();
             getData = NetworkManager.instance._getData;
         }
         
@@ -101,7 +109,7 @@ public class UIManager : MonoBehaviour
         
     }
 
-    IEnumerator PresentingStory(string[] storySentences)
+    async UniTask PresentingStory(string[] storySentences)
     {
         storyCanvas.gameObject.SetActive(true);
         clickNextBtn = false;
@@ -110,13 +118,13 @@ public class UIManager : MonoBehaviour
         {
             storyText.text = storySentences[i];
             
-            yield return new WaitUntil(() => clickNextBtn);
+            await UniTask.WaitUntil(() => clickNextBtn);
             clickNextBtn = false;
         }
         storyCanvas.gameObject.SetActive(false);
     }
 
-    IEnumerator ShowChoices(List<Choice> choiceList)
+    async UniTask ShowChoices(List<Choice> choiceList)
     {
         // _UIState = UIState.Choice;
         choiceCanvas.gameObject.SetActive(true);
@@ -130,7 +138,7 @@ public class UIManager : MonoBehaviour
         for (int t = timer; t >= 0; t--)
         {
             timerText.text = $"남은 시간 : {t}";
-            yield return new WaitForSeconds(1f);
+            await UniTask.Delay(TimeSpan.FromSeconds(1));
         }
         
         // 아무 선택이 없었을 때 랜덤 선택 
