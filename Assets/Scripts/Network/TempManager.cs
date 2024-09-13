@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TempManager : MonoBehaviour
 {
+    //LoadingSceneButton에서 사용됨
     public void ReadyButton()
     {
         GameObject[] networkObjects = GameObject.FindGameObjectsWithTag("NetworkObject");

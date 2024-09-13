@@ -44,6 +44,7 @@ namespace GameStory
             yield return new WaitUntil(() => SharedData.MaxCount <= SharedData.CountReadStoryDone);
             Debug.Log("모두 다 읽음");
             SharedData.Instance.ClearReadCountRpc();
+            
             //if(RunnerController.Runner.IsSceneAuthority)
                 
 

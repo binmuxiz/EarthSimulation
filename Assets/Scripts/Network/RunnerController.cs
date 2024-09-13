@@ -9,6 +9,7 @@ public class RunnerController : SimulationBehaviour, INetworkRunnerCallbacks
     
     public static NetworkRunner Runner;
     public NetworkPrefabRef SharedDataPrefab;
+    //public NetworkPrefabRef playerPrefab;
     
     
     private void Awake()
@@ -33,7 +34,7 @@ public class RunnerController : SimulationBehaviour, INetworkRunnerCallbacks
         if (player == Runner.LocalPlayer)
         {
             Runner.SpawnAsync(SharedDataPrefab, Vector3.zero, Quaternion.identity);
-            
+            //Runner.SpawnAsync(playerPrefab, Vector3.zero, Quaternion.identity);
             Debug.Log("생성한다");
         }
     }

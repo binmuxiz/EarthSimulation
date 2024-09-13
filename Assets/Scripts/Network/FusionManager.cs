@@ -8,7 +8,6 @@ public class FusionManager : MonoBehaviour
 {
     public static FusionManager Instance;
     
-    public NetworkPrefabRef sharedDataPrefab;
     public GameObject runnerPrefab;
 
     public static NetworkRunner Runner;
@@ -16,7 +15,6 @@ public class FusionManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
-        DontDestroyOnLoad(this);
     }
     
     public void StartGame(string RoomName = null)
@@ -39,12 +37,6 @@ public class FusionManager : MonoBehaviour
             Scene = SceneRef.FromIndex(3),
         });
     }
-    
-    public void ReadyButton()
-    {
-        SharedData.Instance.CheckReadyRpc();
-    }
-
 }
 
    

@@ -2479,12 +2479,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 919880254}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: Choice3
-        m_Mode: 1
+        m_MethodName: Choice
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3719,7 +3719,7 @@ MonoBehaviour:
   - {fileID: 1325395222}
   - {fileID: 1601571858}
   storyText: {fileID: 1468223340}
-  timer: {fileID: 1507103917}
+  timerText: {fileID: 0}
   _UIState: 0
 --- !u!4 &919880255
 Transform:
@@ -5026,12 +5026,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 919880254}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: Choice2
-        m_Mode: 1
+        m_MethodName: Choice
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -5296,12 +5296,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 919880254}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: Choice1
-        m_Mode: 1
+        m_MethodName: Choice
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -5360,7 +5360,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1503651110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5373,6 +5373,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d65164cf47371544a609085e91070eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPrefab:
+    RawGuidValue: 9b4447d485443ab4e9b74735ac610f87
 --- !u!4 &1503651111
 Transform:
   m_ObjectHideFlags: 0

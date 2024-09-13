@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class SharedData : NetworkBehaviour
 {
-    
     public static SharedData Instance;
 
     public static int CountReadStoryDone { get; set; }
@@ -31,8 +30,10 @@ public class SharedData : NetworkBehaviour
         if (CountReady >= 2)
         {
             Debug.Log("ok");
-            if(RunnerController.Runner.IsSceneAuthority)
+            if (RunnerController.Runner.IsSceneAuthority)
+            {
                 RunnerController.Runner.LoadScene(SceneRef.FromIndex(4));
+            }
             
            
         }
@@ -50,6 +51,8 @@ public class SharedData : NetworkBehaviour
         CountReadStoryDone = 0;
         Debug.Log(CountReadStoryDone);
     }
+
+    
 
     
     

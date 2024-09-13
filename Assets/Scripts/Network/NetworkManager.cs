@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Fusion;
 using UnityEngine;
 using Newtonsoft.Json;
 using UnityEngine.Networking;
@@ -11,12 +12,13 @@ public class NetworkManager : MonoBehaviour
     public static NetworkManager instance;
     public GetData _getData;
     public SendData _sendData;
+    public NetworkPrefabRef playerPrefab;
     
     private void Awake()
     {
+        if (instance == null) instance = this;
         _sendData = new SendData();
-        if (instance == null)
-            instance = this;
+        RunnerController.Runner.SpawnAsync(playerPrefab, Vector3.zero, Quaternion.identity);
     }
 
     public IEnumerator SendDataProcess()
@@ -29,15 +31,19 @@ public class NetworkManager : MonoBehaviour
         _getData = JsonConvert.DeserializeObject<GetData>(temp);
     }
 
-    public IEnumerator StartSendDataProcess() 
+    public IEnumerator StartSendDataProcess()
     {
-        var req = UnityWebRequest.Get(base_url + "/start");
-        Debug.Log("요청 보냄");
-        yield return req.SendWebRequest();
-        Debug.Log("응답 생성됨");
-
-        var temp = req.downloadHandler.text;
-        
-        _getData = JsonConvert.DeserializeObject<GetData>(temp);
+        string temp = "";
+        if (RunnerController.Runner.IsSceneAuthority)
+        {
+            var req = UnityWebRequest.Get(base_url + "/start");
+            Debug.Log("요청 보냄");
+            yield return req.SendWebRequest();
+            Debug.Log("응답 생성됨");
+            temp = req.downloadHandler.text;
+        }
+       
+        Debug.Log(temp);
+        //_getData = JsonConvert.DeserializeObject<GetData>(temp);
     }
 }
