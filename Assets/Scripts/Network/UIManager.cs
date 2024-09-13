@@ -2,19 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
-
-public enum UIState
-{
-    Idle,
-    Story,
-    Choice
-}
 
 public class UIManager : MonoBehaviour
 {
@@ -23,143 +13,157 @@ public class UIManager : MonoBehaviour
     
     public Button[] choices;
     public TMP_Text[] votes;
-    
+
+    public Transform scoreParent;
+    private TMP_Text[] scoreTexts;
+    private Data.Score _score;
+
     public TMP_Text storyText;
     public TMP_Text timerText;
     
-    public UIState _UIState;
-    
-    private bool isClick;
-    private bool isCoroutine;
-    private bool isChoosing;
     private string[] storySentences;
 
-    private bool isFirstStory;
+    private bool clickNextBtn;
     private bool isChoosed;
+    private int _choiceNum;
 
-    private int timer = 10;
-    
-    private IEnumerator Start()
+    private const int timer = 10;
+    private const int _finalRound = 5;
+
+
+    private void Awake()
     {
-        _UIState = UIState.Idle;
+        InitializeScore();
+    }
+    
+    private void InitializeScore()
+    {
+        _score = new Data.Score();
+        
+        // score text 초기화
+        int scoreCnt = scoreParent.childCount;
+        scoreTexts = new TMP_Text[scoreCnt];
+        for (int i = 0; i < scoreCnt; i++)
+        {
+            scoreTexts[i] = scoreParent.GetChild(i).GetComponentInChildren<TMP_Text>();
+        }
+
+        scoreTexts[0].text = _score.Environment.ToString();
+        scoreTexts[1].text = _score.Society.ToString();
+        scoreTexts[2].text = _score.Technology.ToString();
+        scoreTexts[3].text = _score.Economy.ToString();        
+    }
+
+    private void Start()
+    {
         storyCanvas.gameObject.SetActive(false);
         choiceCanvas.gameObject.SetActive(false);
-        
+
+        StartCoroutine(ReceiveDataProcess());
+    }
+
+    private IEnumerator ReceiveDataProcess()
+    {
         yield return NetworkManager.instance.StartSendDataProcess();
+        var getData = NetworkManager.instance._getData;
 
-        for (int i = 0; i < 5; i++)
+        while (true)
         {
-            if (i == 0) isFirstStory = true;
-            else isFirstStory = false;
-            storySentences = NetworkManager.instance._getData.text.Split("\n");
+            Debug.Log(getData);
 
-            Debug.Log("Story " + i);
-            foreach (var story in storySentences)
+            storySentences = getData.story.Split(".");
+
+            for (int j = 0; j < storySentences.Length - 1; j++)
             {
-                Debug.Log(story);
+                storySentences[j] += '.';
             }
-            
+
             yield return PresentingStory(storySentences);
-            
-            //isChoosing = true;
-            
-            yield return ShowChoices(NetworkManager.instance._getData.choices);
+            yield return ShowChoices(getData.choices);
+            SetScore(getData.choices[_choiceNum - 1].score);
+
+            if (getData.round == _finalRound) break;
             
             yield return NetworkManager.instance.SendDataProcess();
+            getData = NetworkManager.instance._getData;
         }
+        
+        // TODO 엔딩 
+    }
+
+    private void StoryProcess()
+    {
         
     }
 
-    
+    private void EndingProcess()
+    {
+        
+    }
 
     IEnumerator PresentingStory(string[] storySentences)
     {
-        _UIState = UIState.Story;
-        int startIndex;
-        
         storyCanvas.gameObject.SetActive(true);
-        isClick = false;
+        clickNextBtn = false;
 
-        if (isFirstStory) startIndex = 1;
-        else startIndex = 0;
-        
-        for (int i = startIndex; i < storySentences.Length; i++)
+        for (int i = 0; i < storySentences.Length - 1; i++)
         {
-            storyText.text = storySentences[i] + "\n";
+            storyText.text = storySentences[i];
             
-            yield return new WaitUntil(() => isClick);
-            isClick = false;
-            if (i == this.storySentences.Length - 1)
-            {
-                storyCanvas.gameObject.SetActive(false);
-            }
+            yield return new WaitUntil(() => clickNextBtn);
+            clickNextBtn = false;
         }
+        storyCanvas.gameObject.SetActive(false);
     }
 
-    IEnumerator ShowChoices(List<Choice> choices_list)
+    IEnumerator ShowChoices(List<Choice> choiceList)
     {
-        _UIState = UIState.Choice;
+        // _UIState = UIState.Choice;
         choiceCanvas.gameObject.SetActive(true);
         
         for (int i = 0; i < choices.Length; i++)
         {
-            choices[i].GetComponentInChildren<TMP_Text>().text = choices_list[i].text;
+            choices[i].GetComponentInChildren<TMP_Text>().text = choiceList[i].text;
             votes[i].text = "0";
         }
 
-        int t = timer;
-        for (; t >= 0; t--)
+        for (int t = timer; t >= 0; t--)
         {
-            if (_UIState != UIState.Choice ) yield break; //enum
-            
             timerText.text = $"남은 시간 : {t}";
             yield return new WaitForSeconds(1f);
         }
-        // 아무 선택이 없었을 때 랜덤 선택 
-        if (t < 0 && !isChoosed)
-        {
-            switch (Random.Range(1, 4))
-            {
-                case 1:
-                    Choice(1);
-                    break;
-                case 2:
-                    Choice(2);
-                    break;
-                case 3:
-                    Choice(3);
-                    break;
-            }
-        }
         
+        // 아무 선택이 없었을 때 랜덤 선택 
+        if (!isChoosed) Choice(Random.Range(1, choices.Length));
+
         choiceCanvas.gameObject.SetActive(false);
-        _UIState = UIState.Idle;
         isChoosed = false;
     }
-    
-    public void Choice(int idx)
+
+    void Choice(int idx)
     {
-        votes[idx-1].text = OnePersonChoose(votes[idx-1].text);
-            
-        NetworkManager.instance._sendData.story_id = NetworkManager.instance._getData.round;
-        NetworkManager.instance._sendData.choice_index = idx;
-        Debug.Log(NetworkManager.instance._sendData.choice_index);
-        
+        Debug.Log($"선택 번호 : {idx}");
+        _choiceNum = idx;
         isChoosed = true;
+        votes[idx - 1].text = (Int32.Parse(votes[idx - 1].text) + 1).ToString();
+        NetworkManager.instance._sendData.choice_index = idx;
     }
 
+    private void SetScore(Score score)
+    {
+        _score.Environment += score.envScore;
+        _score.Society += score.societyScore;
+        _score.Technology += score.techScore;
+        _score.Economy += score.economyScore;
+        
+        scoreTexts[0].text = _score.Environment.ToString();
+        scoreTexts[1].text = _score.Society.ToString();
+        scoreTexts[2].text = _score.Technology.ToString();
+        scoreTexts[3].text = _score.Economy.ToString();       
+    }
 
     public void NextButton()
     {
-        isClick = true;
+        clickNextBtn = true;
     }
-
-
-    string OnePersonChoose(string s)
-    {
-        int temp = Int32.Parse(s);
-        temp++;
-        return temp.ToString();
-    }
-    
 }

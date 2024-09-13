@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 public class NetworkManager : MonoBehaviour
 {
-    private string base_url = "https://eternal-leopard-hopelessly.ngrok-free.app";
+    private const string base_url = "https://eternal-leopard-hopelessly.ngrok-free.app";
     
     public static NetworkManager instance;
     public GetData _getData;
@@ -25,12 +25,8 @@ public class NetworkManager : MonoBehaviour
         var req = UnityWebRequest.Post(base_url + "/next", json, "application/json");
         Debug.Log("요청 보냄");
         yield return req.SendWebRequest();
-        Debug.Log("응답 생성됨");
         var temp = req.downloadHandler.text;
-         _getData = JsonConvert.DeserializeObject<GetData>(temp);
-         Debug.Log("-------------------");
-         Debug.Log(_getData);
-         Debug.Log(_getData.text);
+        _getData = JsonConvert.DeserializeObject<GetData>(temp);
     }
 
     public IEnumerator StartSendDataProcess() 
@@ -40,9 +36,8 @@ public class NetworkManager : MonoBehaviour
         yield return req.SendWebRequest();
         Debug.Log("응답 생성됨");
 
-        string temp = req.downloadHandler.text;
+        var temp = req.downloadHandler.text;
         
-        Debug.Log(temp);
         _getData = JsonConvert.DeserializeObject<GetData>(temp);
     }
 }
