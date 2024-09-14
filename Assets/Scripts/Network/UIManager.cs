@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using TMPro;
@@ -12,11 +11,9 @@ public class UIManager : MonoBehaviour
     public Canvas storyCanvas;
     public Canvas choiceCanvas;
     
-    public Button[] choices;
-    public TMP_Text[] votes;
-
     public Transform scoreParent;
     private TMP_Text[] scoreTexts;
+    
     private Data.Score _score;
 
     public TMP_Text storyText;
@@ -24,9 +21,15 @@ public class UIManager : MonoBehaviour
     
     private string[] storySentences;
 
+    public Button[] choices;
+    public bool[] _isSelected; // N개의 선택지 중 하나만 선택할 수 있도록 
+    public GameObject[] votes;
+    public GameObject checkmarkPrefab;
+
     private bool clickNextBtn;
+    
     private bool isChoosed;
-    private int _choiceNum;
+    private int _choiceNum = -1;
 
     private const int timer = 10;
     private const int _finalRound = 5;
@@ -132,7 +135,7 @@ public class UIManager : MonoBehaviour
         for (int i = 0; i < choices.Length; i++)
         {
             choices[i].GetComponentInChildren<TMP_Text>().text = choiceList[i].text;
-            votes[i].text = "0";
+            // votes[i].text = "0";
         }
 
         for (int t = timer; t >= 0; t--)
@@ -142,19 +145,34 @@ public class UIManager : MonoBehaviour
         }
         
         // 아무 선택이 없었을 때 랜덤 선택 
-        if (!isChoosed) Choice(Random.Range(1, choices.Length));
-
+        if (!isChoosed) Choice(Random.Range(0, choices.Length));
+        
+        
         choiceCanvas.gameObject.SetActive(false);
         isChoosed = false;
+        _choiceNum = -1;
     }
 
     void Choice(int idx)
     {
-        Debug.Log($"선택 번호 : {idx}");
+        if (_choiceNum == idx) return;
+        
         _choiceNum = idx;
         isChoosed = true;
-        votes[idx - 1].text = (Int32.Parse(votes[idx - 1].text) + 1).ToString();
-        NetworkManager.instance._sendData.choice_index = idx;
+
+        // if (_isSelected[_choiceNum])
+        // {
+        //     _isSelected[_choiceNum] = false;
+        //     
+        //     int voteNum = votes[_choiceNum].transform.childCount;
+        //     if (voteNum > 0)
+        //     {
+        //         // checkmark 제거 
+        //         Destroy(votes[_choiceNum].transform.GetChild(voteNum-1));
+        //     }
+        // }
+
+        NetworkManager.instance._sendData.choice_index = _choiceNum;
     }
 
     private void SetScore(Score score)
@@ -170,8 +188,5 @@ public class UIManager : MonoBehaviour
         scoreTexts[3].text = _score.Economy.ToString();       
     }
 
-    public void NextButton()
-    {
-        clickNextBtn = true;
-    }
+    public void NextButton() => clickNextBtn = true;
 }
