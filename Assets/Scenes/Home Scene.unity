@@ -201,8 +201,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 861034709}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 436690795}
+        m_TargetAssemblyTypeName: Home.HomeBtnController, Assembly-CSharp
         m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:
@@ -492,7 +492,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &336720075
 Transform:
   m_ObjectHideFlags: 0
@@ -551,6 +551,7 @@ GameObject:
   m_Component:
   - component: {fileID: 436690793}
   - component: {fileID: 436690794}
+  - component: {fileID: 436690795}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -590,6 +591,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   introUI: {fileID: 1931529951}
   homeUI: {fileID: 1570341548}
+--- !u!114 &436690795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 436690792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b692cb9f8c1041c4979ddde469b4752b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onGameLoading:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 900904053}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &485105343
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,52 +911,6 @@ Transform:
   - {fileID: 1931529950}
   m_Father: {fileID: 436690793}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &861034707
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 861034708}
-  - component: {fileID: 861034709}
-  m_Layer: 0
-  m_Name: HomeUIManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &861034708
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 861034707}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &861034709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 861034707}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f03d975ba00782b40a71c14082ad948d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  introUI: {fileID: 1931529951}
-  homeUI: {fileID: 1570341548}
 --- !u!1 &900904053
 GameObject:
   m_ObjectHideFlags: 0
@@ -947,7 +929,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &900904054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1889,8 +1871,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 861034709}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 436690795}
+        m_TargetAssemblyTypeName: Home.HomeBtnController, Assembly-CSharp
         m_MethodName: StartGame
         m_Mode: 5
         m_Arguments:
@@ -2091,7 +2073,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1686878655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2773,6 +2755,5 @@ SceneRoots:
   - {fileID: 585603378}
   - {fileID: 1876297333}
   - {fileID: 485105346}
-  - {fileID: 861034708}
   - {fileID: 1686878656}
   - {fileID: 436690793}
