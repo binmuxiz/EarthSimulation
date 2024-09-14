@@ -1,9 +1,7 @@
 using System.Collections;
-using System.Net.Mime;
 using Global;
 using TMPro;
 using UnityEngine;
-using SceneManager = Global.SceneManager;
 
 namespace GameStory
 {
@@ -15,12 +13,8 @@ namespace GameStory
         public TMP_Text storyText;
         public TextLoader textLoader;
         
-        public FadeController fadeController;
-
         private float _fadeDuration = 0.6f;
         
-        
-
         private void Awake()
         {
             textLoader = GetComponent<TextLoader>();
@@ -50,26 +44,23 @@ namespace GameStory
             SharedData.Instance.ClearReadCountRpc();
             //if(RunnerController.Runner.IsSceneAuthority)
 
-
-
-
         }
 
         private IEnumerator ShowStory()
         {
-            yield return fadeController.FadeIn(storyCanvasGroup, _fadeDuration);
+            yield return FadeController.Instance.FadeIn(storyCanvasGroup, _fadeDuration);
             yield return textLoader.LoadText("game_story", storyText, true);
 
             yield return new WaitForSeconds(3f);
 
-            yield return fadeController.FadeOut(storyCanvasGroup, _fadeDuration);
+            yield return FadeController.Instance.FadeOut(storyCanvasGroup, _fadeDuration);
         }
 
         private IEnumerator ShowRole()
         {
-            yield return fadeController.FadeIn(roleCanvasGroup, _fadeDuration);
+            yield return FadeController.Instance.FadeIn(roleCanvasGroup, _fadeDuration);
             yield return new WaitForSeconds(3f);
-            yield return fadeController.FadeOut(roleCanvasGroup, _fadeDuration);
+            yield return FadeController.Instance.FadeOut(roleCanvasGroup, _fadeDuration);
         }
         
     }
