@@ -15,5 +15,4 @@ public class TempManager : MonoBehaviour
                 i.GetComponent<SharedData>().CheckReadyRpc();
         }
     }
-    
 }

@@ -1,18 +1,12 @@
 using Fusion;
+using Global;
 using UnityEngine;
 
-public class FusionManager : MonoBehaviour
+public class FusionManager : Singleton<FusionManager>
 {
-    public static FusionManager Instance;
-    
     public GameObject runnerPrefab;
 
-    public static NetworkRunner Runner;
-    
-    private void Awake()
-    {
-        if (Instance == null) Instance = this;
-    }
+    private static NetworkRunner Runner;
     
     public void StartGame(string RoomName = null)
     {
@@ -26,12 +20,13 @@ public class FusionManager : MonoBehaviour
             Debug.Log(Runner);
             
         }
-
+        
         Runner.StartGame(new StartGameArgs()
         {
             SessionName = temp,
             GameMode = GameMode.Shared,
             Scene = SceneRef.FromIndex(3),
+            PlayerCount = 4
         });
     }
 }

@@ -40,23 +40,6 @@ public class UIManager : MonoBehaviour
         InitializeScore();
     }
     
-    private void InitializeScore()
-    {
-        _score = new Data.Score();
-        
-        // score text 초기화
-        int scoreCnt = scoreParent.childCount;
-        scoreTexts = new TMP_Text[scoreCnt];
-        for (int i = 0; i < scoreCnt; i++)
-        {
-            scoreTexts[i] = scoreParent.GetChild(i).GetComponentInChildren<TMP_Text>();
-        }
-
-        scoreTexts[0].text = _score.Environment.ToString();
-        scoreTexts[1].text = _score.Society.ToString();
-        scoreTexts[2].text = _score.Technology.ToString();
-        scoreTexts[3].text = _score.Economy.ToString();        
-    }
 
     private async UniTaskVoid Start()
     {
@@ -188,5 +171,26 @@ public class UIManager : MonoBehaviour
         scoreTexts[3].text = _score.Economy.ToString();       
     }
 
-    public void NextButton() => clickNextBtn = true;
+    public void NextButton()
+    {
+        clickNextBtn = true;   
+    }
+    
+    private void InitializeScore()
+    {
+        _score = new Data.Score();
+        
+        // score text 초기화
+        int scoreCnt = scoreParent.childCount;
+        scoreTexts = new TMP_Text[scoreCnt];
+        for (int i = 0; i < scoreCnt; i++)
+        {
+            scoreTexts[i] = scoreParent.GetChild(i).GetComponentInChildren<TMP_Text>();
+        }
+
+        scoreTexts[0].text = _score.Environment.ToString();
+        scoreTexts[1].text = _score.Society.ToString();
+        scoreTexts[2].text = _score.Technology.ToString();
+        scoreTexts[3].text = _score.Economy.ToString();        
+    }
 }

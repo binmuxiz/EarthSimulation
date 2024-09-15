@@ -10,7 +10,7 @@ public class TextLoader : MonoBehaviour
     {
         Debug.Log("TypingEffect is exist : " + (typingEffect != null));
         
-        DontDestroyOnLoad(gameObject);
+        // DontDestroyOnLoad(gameObject);
     }
 
     public IEnumerator LoadText(string filename, TMP_Text tmpText, bool effect)

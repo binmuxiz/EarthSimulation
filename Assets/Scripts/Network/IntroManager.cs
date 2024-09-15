@@ -9,8 +9,6 @@ public class IntroManager : MonoBehaviour
 
     public static NetworkRunner Runner;
     
-    
-    
     public void StartGame(string RoomName = null)
     {
         string temp = RoomName;
