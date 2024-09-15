@@ -15,8 +15,6 @@ namespace Home
             onGameLoading.Invoke();
 
             FusionManager.Instance.StartGame(RoomName);
-
-            // todo GameScene으로 전환 
         }
 
         public void QuitGame()

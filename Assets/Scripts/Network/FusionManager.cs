@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using Fusion;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class FusionManager : MonoBehaviour
 {
