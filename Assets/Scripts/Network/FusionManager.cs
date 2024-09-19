@@ -8,11 +8,10 @@ public class FusionManager : Singleton<FusionManager>
 
     private static NetworkRunner Runner;
     
-    public void StartGame(string RoomName = null)
+    public void StartGame(string roomName = null)
     {
-        string temp = RoomName;
         
-        if (string.IsNullOrEmpty(temp)) temp = "777";
+        if (string.IsNullOrEmpty(roomName)) roomName = "777";
         if (Runner == null)
         {
             GameObject go = Instantiate(runnerPrefab);
@@ -23,12 +22,10 @@ public class FusionManager : Singleton<FusionManager>
         
         Runner.StartGame(new StartGameArgs()
         {
-            SessionName = temp,
+            SessionName = roomName,
             GameMode = GameMode.Shared,
             Scene = SceneRef.FromIndex(3),
             PlayerCount = 4
         });
     }
 }
-
-   
