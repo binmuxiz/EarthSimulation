@@ -34,6 +34,8 @@ public class UIManager : MonoBehaviour
     private const int timer = 10;
     private const int _finalRound = 5;
     public static bool storyPermitted = false;
+    private bool isFirst = true;
+
 
     private void Awake()
     {
@@ -47,25 +49,44 @@ public class UIManager : MonoBehaviour
         choiceCanvas.gameObject.SetActive(false);
 
         await UniTask.WaitUntil(() => storyPermitted);
-        Debug.Log("tqtqtq");
         await ReceiveDataProcess();
-    }
-
-    private void Update()
-    {
-        Debug.Log(storyPermitted);
     }
 
     private async UniTask ReceiveDataProcess()
     {
-        await NetworkManager.instance.StartSendDataProcess();
-        var getData = NetworkManager.instance._getData;
+        var temp = "";
+        if (RunnerController.Runner.IsSceneAuthority)
+        {
+            temp = await NetworkManager.instance.StartSendDataProcess();
+            Debug.Log(temp);
+            NetworkManager.gettedJson = temp;
+            SharedData.Instance.TransferJsonRpc(NetworkManager.gettedJson);
+            
+            
+            //Debug.Log(NetworkManager.gettedJson);
+            
+        }
+        else
+        {
+            await UniTask.WaitUntil(() => !string.IsNullOrEmpty(temp));
+        }
 
         while (true)
         {
-            Debug.Log(getData);
+            if (!isFirst)
+            {
+                if (RunnerController.Runner.IsSceneAuthority)
+                {
+                    temp = await NetworkManager.instance.SendDataProcess();
+                    Debug.Log(temp);
+                    //SharedData.Instance.GettedJson = temp;
+                }
+            }
+            isFirst = false;
 
-            storySentences = getData.story.Split(".");
+            await UniTask.WaitUntil(() => !string.IsNullOrEmpty(NetworkManager._getData.story));
+            storySentences = NetworkManager._getData.story.Split(".");
+            
 
             for (int j = 0; j < storySentences.Length - 1; j++)
             {
@@ -73,13 +94,12 @@ public class UIManager : MonoBehaviour
             }
 
             await PresentingStory(storySentences);
-            await ShowChoices(getData.choices);
-            SetScore(getData.choices[_choiceNum - 1].score);
+            await ShowChoices(NetworkManager._getData.choices);
+            SetScore(NetworkManager._getData.choices[_choiceNum - 1].score);
 
-            if (getData.round == _finalRound) break;
+            if (NetworkManager._getData.round == _finalRound) break;
             
-            await NetworkManager.instance.SendDataProcess();
-            getData = NetworkManager.instance._getData;
+            
         }
         
         // TODO 엔딩 
@@ -155,7 +175,7 @@ public class UIManager : MonoBehaviour
         //     }
         // }
 
-        NetworkManager.instance._sendData.choice_index = _choiceNum;
+        NetworkManager._sendData.choice_index = _choiceNum;
     }
 
     private void SetScore(Score score)

@@ -34,7 +34,7 @@ namespace Home
             StartCoroutine(HomeUIManager.Instance.HideMiniMenu());
             HomeUIManager.Instance.ShowLoadingView();
             
-            FusionManager.Instance.StartGame(nickName.text, roomName.text, GameStory);
+            FusionManager.Instance.StartGame(roomName.text, GameStory);
         }
         
     }

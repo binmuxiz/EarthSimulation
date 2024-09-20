@@ -27,7 +27,7 @@ public class FusionManager : Singleton<FusionManager>
     }
     */
 
-    public async Task StartGame(string nickName, string roomName, Home.GameStory gameStory)
+    public async Task StartGame(string roomName, Home.GameStory gameStory)
     {
         if (Runner == null)
         {
@@ -43,7 +43,7 @@ public class FusionManager : Singleton<FusionManager>
         StartGameArgs args = new StartGameArgs()
         {
             GameMode = GameMode.Shared,
-            Scene = SceneRef.FromIndex(3),
+            Scene = SceneRef.FromIndex(2),
             PlayerCount = 4,
             SessionProperties = customProps,
         };

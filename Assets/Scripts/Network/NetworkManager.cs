@@ -9,11 +9,16 @@ using UnityEngine.Networking;
 public class NetworkManager : MonoBehaviour
 {
     private const string base_url = "https://eternal-leopard-hopelessly.ngrok-free.app";
-    
     public static NetworkManager instance;
-    public GetData _getData;
-    public SendData _sendData;
+    public static GetData _getData;
+    public static SendData _sendData;
     public NetworkPrefabRef playerPrefab;
+
+
+    public static string gettedJson;
+    
+    
+   
     
     private void Awake()
     {
@@ -25,28 +30,22 @@ public class NetworkManager : MonoBehaviour
     public async UniTask<string> StartSendDataProcess()
     {
         string temp = "";
-        if (RunnerController.Runner.IsSceneAuthority)
-        {
-            var req = UnityWebRequest.Get(base_url + "/start");
-            Debug.Log("요청 보냄");
-            await req.SendWebRequest();
-            Debug.Log("응답 생성됨");
-            temp = req.downloadHandler.text;
-        }
+        var req = UnityWebRequest.Get(base_url + "/start");
+        Debug.Log("요청 보냄");
+        await req.SendWebRequest();
+        Debug.Log("응답 생성됨");
+        temp = req.downloadHandler.text;
         return temp;
     }
     
     public async UniTask<string> SendDataProcess()
     {
         var temp = "";
-        if (RunnerController.Runner.IsSceneAuthority)
-        {
-            var json = JsonConvert.SerializeObject(_sendData);
-            var req = UnityWebRequest.Post(base_url + "/next", json, "application/json");
-            Debug.Log("요청 보냄");
-            await req.SendWebRequest();
-            temp = req.downloadHandler.text;
-        }
+        var json = JsonConvert.SerializeObject(_sendData);
+        var req = UnityWebRequest.Post(base_url + "/next", json, "application/json");
+        Debug.Log("요청 보냄");
+        await req.SendWebRequest();
+        temp = req.downloadHandler.text;
         return temp;
     }
 
