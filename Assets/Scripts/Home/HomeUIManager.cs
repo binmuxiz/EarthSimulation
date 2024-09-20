@@ -43,7 +43,7 @@ namespace Home
             yield return new WaitForSeconds(2f);
             yield return _fadeController.FadeOut(introUI, 1f);
 
-            ShowMenu();
+            yield return ShowMenu();
             introUI.gameObject.SetActive(false);
         }
         
@@ -77,7 +77,7 @@ namespace Home
             yield return _fadeController.FadeOut(miniMenuUI, 1f);
         }
         
-        public void ShowLoadingView(string RoomName = null)
+        public void ShowLoadingView()
         {
             loadingUI.SetActive(true);
         }

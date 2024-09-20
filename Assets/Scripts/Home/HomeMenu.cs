@@ -7,11 +7,11 @@ namespace Home
 {
     public class HomeMenu : Singleton<HomeMenu>
     {
-        public IEnumerator StartGame(string RoomName = null)
+        public void StartGame()
         {
-            yield return HomeUIManager.Instance.HideMenu();
+            StartCoroutine(HomeUIManager.Instance.HideMenu());
             // story 선택창
-            yield return HomeUIManager.Instance.ShowStorySelection();
+            StartCoroutine(HomeUIManager.Instance.ShowStorySelection());
         }
 
         public void QuitGame()
