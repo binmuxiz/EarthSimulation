@@ -17,7 +17,6 @@ public class WaitingRoom : MonoBehaviour
 
     private const string GameSceneName = "Game Scene";
 
-    
     public void Ready()
     {
         _isReady = true;
@@ -71,6 +70,7 @@ public class WaitingRoom : MonoBehaviour
             }
         }
 
+        // 게임 씬으로 이동 
         if (RunnerController.Runner.IsSharedModeMasterClient)
         {
             RunnerController.Runner.LoadScene(SceneRef.FromIndex(SceneUtility.GetBuildIndexByScenePath(GameSceneName)));

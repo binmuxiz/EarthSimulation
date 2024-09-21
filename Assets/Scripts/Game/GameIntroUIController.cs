@@ -1,8 +1,10 @@
 using System.Collections;
+using Data;
 using Global;
 using Multi;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GameStory
 {
@@ -13,6 +15,10 @@ namespace GameStory
 
         public TMP_Text storyText;
         public TextLoader textLoader;
+
+        public Image roleImage;
+        public TMP_Text roleName;
+        public TMP_Text roleDescription;
         
         private void Awake()
         {
@@ -46,11 +52,9 @@ namespace GameStory
 
         private IEnumerator ShowRole()
         {
-            // Debug.Log("MyRole : " + SharedData.Instance.Role);
-            // foreach (var sh in SharedDataList.Instance.SharedDatas)
-            // {
-            //     Debug.Log(sh.Role);
-            // }
+            Role myRole = GameManager.Instance.RoleDict[SharedData.Instance.Role];
+            roleName.text = myRole.Name;
+            roleDescription.text = myRole.Description;
             
             float fadeDuration = 0.6f;
 

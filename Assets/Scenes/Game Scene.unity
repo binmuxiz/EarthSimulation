@@ -364,7 +364,6 @@ GameObject:
   - component: {fileID: 142083596}
   - component: {fileID: 142083597}
   - component: {fileID: 142083595}
-  - component: {fileID: 142083594}
   m_Layer: 0
   m_Name: Panel - Role
   m_TagString: Untagged
@@ -394,18 +393,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1100, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &142083594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 142083592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f4306d577b5e7b44a2126e410aeda4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &142083595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1406,9 +1393,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD589\uC131\uC758 \uB300\uAE30\uC640 \uC0DD\uD0DC\uACC4\uB97C \uC870\uC815\uD558\uACE0,
-    \n\uC778\uAC04\uC774 \uC0B4 \uC218 \uC788\uB294 \uD658\uACBD\uC744 \uAD6C\uCD95\uD558\uB294
-    \uC804\uBB38\uAC00"
+  m_text: ...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1a8789307cf3c4f8f9bad0b80d9687d3, type: 2}
   m_sharedMaterial: {fileID: 4125754444047522841, guid: 1a8789307cf3c4f8f9bad0b80d9687d3, type: 2}
@@ -1548,6 +1533,9 @@ MonoBehaviour:
   roleCanvasGroup: {fileID: 142083597}
   storyText: {fileID: 884779686}
   textLoader: {fileID: 425786164}
+  roleImage: {fileID: 1497396745}
+  roleName: {fileID: 1206363323}
+  roleDescription: {fileID: 382153184}
 --- !u!4 &425786166
 Transform:
   m_ObjectHideFlags: 0
@@ -3058,7 +3046,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "[\uD658\uACBD \uACFC\uD559\uC790]\n\uC544\uB9AC\uC544 \uBC15\uC0AC"
+  m_text: "[\uD658\uACBD \uACFC\uD559\uC790]"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dcb3270443d2b43f0afaadddf532d432, type: 2}
   m_sharedMaterial: {fileID: 3697391153214165472, guid: dcb3270443d2b43f0afaadddf532d432, type: 2}
@@ -3530,7 +3518,6 @@ GameObject:
   - component: {fileID: 1326227072}
   - component: {fileID: 1326227071}
   - component: {fileID: 1326227073}
-  - component: {fileID: 1326227070}
   m_Layer: 0
   m_Name: Panel - Story
   m_TagString: Untagged
@@ -3559,18 +3546,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1100, y: 900}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1326227070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1326227068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c90cfaf392e646fdbc2576fc5a62ce2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1326227071
 MonoBehaviour:
   m_ObjectHideFlags: 0

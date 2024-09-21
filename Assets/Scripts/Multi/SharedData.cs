@@ -9,15 +9,14 @@ public class SharedData : NetworkBehaviour
     
     // 역할 
     [SerializeField]
-    private Role role; // 프로퍼티와 연결되어 있지 않음 
-    public Role Role { get; private set; }
+    private RoleType role; // 프로퍼티와 연결되어 있지 않음 
+    public RoleType Role { get; private set; }
     
-    // 대기
+    // Ready
     public static int ReadyCount { get; private set; }
-    public static int MaxCount { get; set; } = 2;
     
     // 스토리 읽은 플레이어 수
-    public static int ReadStoryCount { get; set; }
+    public static int ReadIntroCount { get; set; }
     
     // 스토리 데이터
     public static string RealJson;
@@ -45,19 +44,21 @@ public class SharedData : NetworkBehaviour
         Debug.Log($"ReadyCount Changed : {ReadyCount}");
     }
 
-    [Rpc(RpcSources.All, RpcTargets.All)]
-    public void CheckReadStoryDoneRpc() // 스토리 다 읽었는지 
+    // 인트로 다 봤는지
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RpcReadIntro() 
     {
-        ReadStoryCount++;
-        Debug.Log(ReadStoryCount);
+        ReadIntroCount++;
+        Debug.Log($"ReadIntroCount => {ReadIntroCount}");
     }
 
-    [Rpc(RpcSources.All, RpcTargets.All)]
-    public void ClearReadCountRpc() // 
+    // 인트로 읽은 수 초기화 
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RpcClearReadCount() 
     {
-        ReadStoryCount = 0;
+        ReadIntroCount = 0;
         GameUIManager.storyPermitted = true;
-        Debug.Log(ReadStoryCount);
+        Debug.Log($"ReadIntroCount => {ReadIntroCount}");
     }
 
     [Rpc(RpcSources.All, RpcTargets.All)]
@@ -77,7 +78,7 @@ public class SharedData : NetworkBehaviour
     
     // 역할 배정 
     [Rpc(RpcSources.All, RpcTargets.All)]
-    public void AssignJobRPC(Role role)
+    public void AssignJobRPC(RoleType role)
     {
         Role = role;
         this.role = role; 
