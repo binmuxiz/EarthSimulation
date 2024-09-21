@@ -1,11 +1,9 @@
-using System.Collections;
-using Global;
 using UnityEditor;
 using UnityEngine;
 
 namespace Home
 {
-    public class HomeMenu : Singleton<HomeMenu>
+    public class HomeMenu : MonoBehaviour
     {
         public void StartGame()
         {

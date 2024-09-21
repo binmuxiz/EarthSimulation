@@ -1,19 +1,22 @@
-using System.Collections;
-using Global;
 using UnityEngine;
 
 namespace Home
 {
-    public class StorySelection : Singleton<StorySelection>
+    public class StorySelection : MonoBehaviour
     {
+        [SerializeField]
+        private GameStarter gameStarter;
+        
         // 추후에 
         // story : 세션 그룹을 나누는 기준
         
-        public void Story_NovaTerra()
+        public void SelectStoryNovaTerra()
         {
             StartCoroutine(HomeUIManager.Instance.HideStorySelection());
-            MiniMenu.Instance.GameStory = GameStory.NovaTerra;
-            StartCoroutine(HomeUIManager.Instance.ShowMiniMenu());
+
+            gameStarter.gameStory = GameStarter.GameStory.NovaTerra;
+            
+            StartCoroutine(HomeUIManager.Instance.ShowGameStartMenu());
         }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using Global;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Home
 {
@@ -9,7 +10,7 @@ namespace Home
         [SerializeField] CanvasGroup introUI;
         [SerializeField] CanvasGroup menuUI;
         [SerializeField] CanvasGroup storySelectionUI;
-        [SerializeField] CanvasGroup miniMenuUI;
+        [SerializeField] CanvasGroup gameStartMenuUI;
         [SerializeField] GameObject loadingUI;
 
         private FadeController _fadeController;
@@ -21,19 +22,19 @@ namespace Home
             introUI.gameObject.SetActive(true);
             menuUI.gameObject.SetActive(true);
             storySelectionUI.gameObject.SetActive(true);
-            miniMenuUI.gameObject.SetActive(true);
+            gameStartMenuUI.gameObject.SetActive(true);
             
             loadingUI.SetActive(false);
 
             introUI.alpha = 0f;
             menuUI.alpha = 0f;
             storySelectionUI.alpha = 0f;
-            miniMenuUI.alpha = 0f;
+            gameStartMenuUI.alpha = 0f;
 
             introUI.interactable = introUI.blocksRaycasts = false;
             menuUI.interactable = menuUI.blocksRaycasts = false;
             storySelectionUI.interactable = storySelectionUI.blocksRaycasts = false;
-            miniMenuUI.interactable = miniMenuUI.blocksRaycasts = false;
+            gameStartMenuUI.interactable = gameStartMenuUI.blocksRaycasts = false;
             
         }
 
@@ -67,14 +68,14 @@ namespace Home
             yield return _fadeController.FadeOut(storySelectionUI, 1f);
         }
         
-        public IEnumerator ShowMiniMenu()
+        public IEnumerator ShowGameStartMenu()
         {
-            yield return _fadeController.FadeIn(miniMenuUI, 1f);
+            yield return _fadeController.FadeIn(gameStartMenuUI, 1f);
         }
         
-        public IEnumerator HideMiniMenu()
+        public IEnumerator HideGameStartMenu()
         {
-            yield return _fadeController.FadeOut(miniMenuUI, 1f);
+            yield return _fadeController.FadeOut(gameStartMenuUI, 1f);
         }
         
         public void ShowLoadingView()

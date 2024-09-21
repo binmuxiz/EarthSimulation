@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class UIManager : MonoBehaviour
+public class GameUIManager : MonoBehaviour
 {
     public Canvas storyCanvas;
     public Canvas choiceCanvas;

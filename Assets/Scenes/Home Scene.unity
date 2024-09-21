@@ -631,9 +631,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1539755336}
+      - m_Target: {fileID: 436690796}
         m_TargetAssemblyTypeName: Home.StorySelection, Assembly-CSharp
-        m_MethodName: Story_NovaTerra
+        m_MethodName: SelectStoryNovaTerra
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -908,51 +908,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 251575221}
   m_CullTransparentMesh: 1
---- !u!1 &330021277
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 330021278}
-  - component: {fileID: 330021279}
-  m_Layer: 0
-  m_Name: SharedDataList
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &330021278
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330021277}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &330021279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330021277}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0669fb9d4b4644c787d6f8d778e7ae7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sharedDatas: []
 --- !u!1 &336720074
 GameObject:
   m_ObjectHideFlags: 0
@@ -994,7 +949,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 366718748}
-  - component: {fileID: 366718749}
   m_Layer: 0
   m_Name: Menu
   m_TagString: Untagged
@@ -1018,18 +972,6 @@ Transform:
   - {fileID: 1570341546}
   m_Father: {fileID: 436690793}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &366718749
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 366718747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b692cb9f8c1041c4979ddde469b4752b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &436690792
 GameObject:
   m_ObjectHideFlags: 0
@@ -1041,6 +983,8 @@ GameObject:
   - component: {fileID: 436690793}
   - component: {fileID: 436690794}
   - component: {fileID: 436690795}
+  - component: {fileID: 436690797}
+  - component: {fileID: 436690796}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -1083,7 +1027,7 @@ MonoBehaviour:
   introUI: {fileID: 1931529951}
   menuUI: {fileID: 1570341548}
   storySelectionUI: {fileID: 917591481}
-  miniMenuUI: {fileID: 1604606040}
+  gameStartMenuUI: {fileID: 1604606040}
   loadingUI: {fileID: 900904053}
 --- !u!114 &436690795
 MonoBehaviour:
@@ -1097,6 +1041,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b692cb9f8c1041c4979ddde469b4752b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &436690796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 436690792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16225beddaf949e191b458c555eeca37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameStarter: {fileID: 436690797}
+--- !u!114 &436690797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 436690792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 321d2541d5a764c4aa5d70659f5e0291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runnerPrefab: {fileID: 7327705620745413389, guid: 5c471b2e7b06dee408e6251d64c65b0b, type: 3}
+  gameStory: 1
+  nickName: {fileID: 1623921395}
+  roomName: {fileID: 1658025089}
 --- !u!1 &487944122
 GameObject:
   m_ObjectHideFlags: 0
@@ -4007,7 +3980,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1539755335}
-  - component: {fileID: 1539755336}
   m_Layer: 0
   m_Name: StorySelection
   m_TagString: Untagged
@@ -4031,18 +4003,6 @@ Transform:
   - {fileID: 917591480}
   m_Father: {fileID: 436690793}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1539755336
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1539755334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16225beddaf949e191b458c555eeca37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1564827123
 GameObject:
   m_ObjectHideFlags: 0
@@ -4850,7 +4810,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 366718749}
+      - m_Target: {fileID: 436690795}
         m_TargetAssemblyTypeName: Home.HomeMenu, Assembly-CSharp
         m_MethodName: StartGame
         m_Mode: 1
@@ -5036,51 +4996,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1671294097}
   m_CullTransparentMesh: 1
---- !u!1 &1686878654
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1686878656}
-  - component: {fileID: 1686878657}
-  m_Layer: 0
-  m_Name: GameStarter
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1686878656
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1686878654}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1686878657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1686878654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 321d2541d5a764c4aa5d70659f5e0291, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  runnerPrefab: {fileID: 7096735533503378313, guid: 920a1bb599326034dbe528fc7e4181ef, type: 3}
 --- !u!1 &1760696748
 GameObject:
   m_ObjectHideFlags: 0
@@ -5977,9 +5892,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2043776462}
-  - component: {fileID: 2043776463}
   m_Layer: 0
-  m_Name: MiniMenu
+  m_Name: GameStartMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6001,20 +5915,6 @@ Transform:
   - {fileID: 1604606036}
   m_Father: {fileID: 436690793}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2043776463
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2043776461}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb21b33e1b45448b95f052e18ab646ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nickName: {fileID: 1623921395}
-  roomName: {fileID: 1658025089}
 --- !u!1 &2047818949
 GameObject:
   m_ObjectHideFlags: 0
@@ -6302,9 +6202,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2043776463}
-        m_TargetAssemblyTypeName: Home.MiniMenu, Assembly-CSharp
-        m_MethodName: StartGame
+      - m_Target: {fileID: 436690797}
+        m_TargetAssemblyTypeName: GameStarter, Assembly-CSharp
+        m_MethodName: OnGameStart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6359,6 +6259,4 @@ SceneRoots:
   - {fileID: 10138919}
   - {fileID: 2084935640}
   - {fileID: 585603378}
-  - {fileID: 1686878656}
   - {fileID: 436690793}
-  - {fileID: 330021278}

@@ -3,18 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using Data;
 using GameStory;
+using Global;
 using Multi;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     public GameIntroUIController gameIntroUIController;
 
-    private IEnumerator Start()
+    private void Start()
     {
-        AssignJob();
+  
         
-        yield return gameIntroUIController.ShowIntro();
+        // AssignJob();
+        
+        // yield return gameIntroUIController.ShowIntro();
         
         /*
         SharedData.Instance.CheckReadStoryDoneRpc();
@@ -33,11 +36,17 @@ public class GameManager : MonoBehaviour
         Debug.Log("I'm Master client");
 
         Role[] roles = (Role[])Enum.GetValues(typeof(Role));
-        List<SharedData> players =  SharedDataList.Instance.SharedDatas;
 
-        for (int i = 0; i < players.Count; i++)
+        foreach (var role in roles)
         {
-            players[i].AssignJobRPC(roles[i]);
+            Debug.Log(role);
         }
+        
+        // List<SharedData> players =  SharedDataList.Instance.SharedDatas;
+        //
+        // for (int i = 0; i < players.Count; i++)
+        // {
+        //     players[i].AssignJobRPC(roles[i]);
+        // }
     }
 }
