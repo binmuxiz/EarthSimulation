@@ -1,5 +1,6 @@
 using System.Collections;
 using Global;
+using Multi;
 using TMPro;
 using UnityEngine;
 
@@ -45,6 +46,12 @@ namespace GameStory
 
         private IEnumerator ShowRole()
         {
+            Debug.Log("MyRole : " + SharedData.Instance.Role);
+            foreach (var sh in SharedDataList.Instance.SharedDatas)
+            {
+                Debug.Log(sh.Role);
+            }
+            
             float fadeDuration = 0.6f;
 
             yield return FadeController.Instance.FadeIn(roleCanvasGroup, fadeDuration);

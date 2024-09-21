@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Fusion;
 using Fusion.Sockets;
+using Multi;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RunnerController : SimulationBehaviour, INetworkRunnerCallbacks
@@ -9,8 +12,6 @@ public class RunnerController : SimulationBehaviour, INetworkRunnerCallbacks
     
     public static NetworkRunner Runner;
     public NetworkPrefabRef SharedDataPrefab;
-    //public NetworkPrefabRef playerPrefab;
-    
     
     private void Awake()
     {
@@ -31,11 +32,27 @@ public class RunnerController : SimulationBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
+        int playerCnt = runner.ActivePlayers.Count();
+        Debug.Log($"현재 세션에 있는 플레이어 수 : {playerCnt}");
+        
+        foreach (var p in runner.ActivePlayers)
+        {
+            Debug.Log($"playerRef : {player}");
+        }
+        
         if (player == Runner.LocalPlayer)
         {
-            Runner.SpawnAsync(SharedDataPrefab, Vector3.zero, Quaternion.identity);
-            //Runner.SpawnAsync(playerPrefab, Vector3.zero, Quaternion.identity);
-            Debug.Log("생성한다");
+            Runner.Spawn(SharedDataPrefab, Vector3.zero, Quaternion.identity);
+        }
+
+        GameObject[] networkObjects = GameObject.FindGameObjectsWithTag("NetworkObject");
+
+        foreach (var obj in networkObjects)
+        {
+            if (!SharedDataList.Instance.SharedDatas.Contains(obj.GetComponent<SharedData>()))
+            {
+                SharedDataList.Instance.AddSharedData(obj.GetComponent<SharedData>());
+            }
         }
     }
 

@@ -1,3 +1,4 @@
+using Data;
 using Fusion;
 using UnityEngine;
 using Newtonsoft.Json;
@@ -5,15 +6,24 @@ using Newtonsoft.Json;
 public class SharedData : NetworkBehaviour
 {
     public static SharedData Instance;
-
     
-    public static int CountReadStoryDone { get; set; }
-    static int CountReady { get; set; }
-    
+    // 대기
+    public static int ReadyCount { get; set; }
     public static int MaxCount { get; set; } = 2;
-
+    
+    // 스토리 읽은 플레이어 수
+    public static int ReadStoryCount { get; set; }
+    
+    // 스토리 데이터
     public static string RealJson;
+    
+    // 직업
 
+    [SerializeField]
+    private Role role;
+    
+    public Role Role { get; set; }    
+    
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -23,11 +33,10 @@ public class SharedData : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void CheckReadyRpc() // 대기 - ready 버튼 
     {
-        CountReady++;
-        Debug.Log(CountReady);
+        ReadyCount++;
+        Debug.Log(ReadyCount);
 
-
-        if (CountReady >= 2)
+        if (ReadyCount >= 2)
         {
             Debug.Log("ok");
             if (RunnerController.Runner.IsSceneAuthority)
@@ -40,16 +49,16 @@ public class SharedData : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void CheckReadStoryDoneRpc() // 스토리 다 읽었는지 
     {
-        CountReadStoryDone++;
-        Debug.Log(CountReadStoryDone);
+        ReadStoryCount++;
+        Debug.Log(ReadStoryCount);
     }
 
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void ClearReadCountRpc() // 
     {
-        CountReadStoryDone = 0;
+        ReadStoryCount = 0;
         UIManager.storyPermitted = true;
-        Debug.Log(CountReadStoryDone);
+        Debug.Log(ReadStoryCount);
     }
 
     [Rpc(RpcSources.All, RpcTargets.All)]
@@ -67,4 +76,10 @@ public class SharedData : NetworkBehaviour
         Debug.Log("Parsing Complette");
     }
 
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void AssignJobRPC(Role role)
+    {
+        Role = role;
+        Debug.Log(Instance + "=> Role : " + role);
+    }
 }

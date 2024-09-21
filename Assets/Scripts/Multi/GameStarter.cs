@@ -5,27 +5,11 @@ using Fusion;
 using Global;
 using UnityEngine;
 
-public class FusionManager : Singleton<FusionManager>
+public class GameStarter : Singleton<GameStarter>
 {
     public GameObject runnerPrefab;
     
-    private static NetworkRunner Runner;
-
-    /*
-    public void StartGame(string roomName = null)
-    {
-        
-        if (string.IsNullOrEmpty(roomName)) roomName = "777";
-        
-        Runner.StartGame(new StartGameArgs()
-        {
-            SessionName = roomName,
-            GameMode = GameMode.Shared,
-            Scene = SceneRef.FromIndex(3),
-            PlayerCount = 4
-        });
-    }
-    */
+    private NetworkRunner Runner;
 
     public async Task StartGame(string roomName, Home.GameStory gameStory)
     {

@@ -12,19 +12,14 @@ public class NetworkManager : MonoBehaviour
     public static NetworkManager instance;
     public static GetData _getData;
     public static SendData _sendData;
-    public NetworkPrefabRef playerPrefab;
 
 
     public static string gettedJson;
-    
-    
-   
     
     private void Awake()
     {
         if (instance == null) instance = this;
         _sendData = new SendData();
-        RunnerController.Runner.SpawnAsync(playerPrefab, Vector3.zero, Quaternion.identity);
     }
 
     public async UniTask<string> StartSendDataProcess()
