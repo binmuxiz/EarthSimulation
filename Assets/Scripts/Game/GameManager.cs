@@ -1,7 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Data;
+using Fusion;
 using GameStory;
 using Global;
 using Multi;
@@ -11,11 +11,14 @@ public class GameManager : Singleton<GameManager>
 {
     public GameIntroUIController gameIntroUIController;
 
+    public List<SharedData> sharedDatas;
+
     private void Start()
     {
-  
+        sharedDatas = PlayerManager.Instance.players;
+        Destroy(PlayerManager.Instance.gameObject);
         
-        // AssignJob();
+        AssignJob();
         
         // yield return gameIntroUIController.ShowIntro();
         
@@ -31,22 +34,17 @@ public class GameManager : Singleton<GameManager>
     
     private void AssignJob()
     {
-        if (!RunnerController.Runner.IsSharedModeMasterClient) return;
-
-        Debug.Log("I'm Master client");
-
-        Role[] roles = (Role[])Enum.GetValues(typeof(Role));
-
-        foreach (var role in roles)
+        if (RunnerController.Runner.IsSharedModeMasterClient)
         {
-            Debug.Log(role);
+            Debug.Log("Im master client");
+            
+            Role[] roles = (Role[])Enum.GetValues(typeof(Role));
+
+            for (int i = 0; i < sharedDatas.Count; i++)
+            {
+                Debug.Log($"Role {i} : {roles[i]}");
+                sharedDatas[i].AssignJobRPC(roles[i]);
+            }    
         }
-        
-        // List<SharedData> players =  SharedDataList.Instance.SharedDatas;
-        //
-        // for (int i = 0; i < players.Count; i++)
-        // {
-        //     players[i].AssignJobRPC(roles[i]);
-        // }
     }
 }

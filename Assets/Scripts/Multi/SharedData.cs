@@ -9,8 +9,8 @@ public class SharedData : NetworkBehaviour
     
     // 역할 
     [SerializeField]
-    private Role role;
-    public Role Role { get; set; }
+    private Role role; // 프로퍼티와 연결되어 있지 않음 
+    public Role Role { get; private set; }
     
     // 대기
     public static int ReadyCount { get; private set; }
@@ -80,5 +80,6 @@ public class SharedData : NetworkBehaviour
     public void AssignJobRPC(Role role)
     {
         Role = role;
+        this.role = role; 
     }
 }
