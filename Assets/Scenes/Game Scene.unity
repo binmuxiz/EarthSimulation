@@ -2982,7 +2982,11 @@ MonoBehaviour:
   scoreParent: {fileID: 2030386104}
   storyText: {fileID: 1468223340}
   timerText: {fileID: 1507103917}
-  voteTexts: []
+  voteTexts:
+  - {fileID: 727248550}
+  - {fileID: 642238137}
+  - {fileID: 1577016632}
+  - {fileID: 1721926902}
   choices:
   - {fileID: 1482122573}
   - {fileID: 1419505874}
