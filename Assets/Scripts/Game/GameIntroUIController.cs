@@ -4,6 +4,7 @@ using Global;
 using Multi;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SubsystemsImplementation;
 using UnityEngine.UI;
 
 namespace GameStory
@@ -39,6 +40,8 @@ namespace GameStory
             yield return ShowStory();
             yield return new WaitForSeconds(1f);
             yield return ShowRole();
+            
+            Destroy(gameObject);
         }
 
         private IEnumerator ShowStory()
@@ -53,8 +56,8 @@ namespace GameStory
         private IEnumerator ShowRole()
         {
             Role myRole = GameManager.Instance.RoleDict[SharedData.Instance.Role];
-            roleName.text = myRole.Name;
-            roleDescription.text = myRole.Description + "\nNickname";
+            roleName.text = myRole.Name + "\nNickname";
+            roleDescription.text = myRole.Description;
             
             float fadeDuration = 0.6f;
 

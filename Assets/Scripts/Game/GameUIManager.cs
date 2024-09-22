@@ -19,8 +19,6 @@ public class GameUIManager : MonoBehaviour
     public TMP_Text storyText;
     public TMP_Text timerText;
     
-    private string[] storySentences;
-
     public Button[] choices;
     public bool[] _isSelected; // N개의 선택지 중 하나만 선택할 수 있도록 
     public GameObject[] votes;
@@ -31,36 +29,89 @@ public class GameUIManager : MonoBehaviour
     private bool isChoosed;
     private int _choiceNum = -1;
 
-    private const int timer = 10;
-    private const int _finalRound = 5;
+    private const int Timer = 10;
+    private const int FinalRound = 5;
+    
     public static bool storyPermitted = false;
-    // private bool isFirst = true;
     
     private void Awake()
     {
+        storyCanvas.gameObject.SetActive(false);
+        choiceCanvas.gameObject.SetActive(false);
+
         InitializeScore();
     }
 
     private async UniTaskVoid Start()
     {
-        Debug.Log("GameUIManager.Start()");
-        
-        storyCanvas.gameObject.SetActive(false);
-        choiceCanvas.gameObject.SetActive(false);
-
         await UniTask.WaitUntil(() => storyPermitted);
-        await ReceiveDataProcess();
+        await Process();
     }
 
-    private async UniTask ReceiveDataProcess()
+    private async UniTask Process()
     {
-        Debug.Log("GameUIManager.ReceiveDataProcess()");
+        await StoryProcess();
+        await EndingProcess();
+    }
+
+    private async UniTask StoryProcess()
+    {
+        for (int i = 1; i <= FinalRound; i++)
+        {
+            Debug.Log($"Round {i}");
+            if (i != 1) await RequestDataProcess();
+            else        await RequestDataProcess(true);
+            
+            // todo show UI Process
+
+            string[] storySentences = NetworkManager.GetData.story.Split(".");
+
+            if (storySentences == null)
+            {
+                throw new NullReferenceException("GetData is Null");
+            }
+            
+            for (int j = 0; j < storySentences.Length - 1; j++)
+            {
+                storySentences[j] += '.';
+            }
+            
+            await ShowStory(storySentences);
+            await ShowChoices(NetworkManager.GetData.choices);
+            SetScore(NetworkManager.GetData.choices[_choiceNum - 1].score);
+            
+            if (NetworkManager.GetData.round == FinalRound) break;
+            
+            
+            
+            
+            NetworkManager.GetData = null;
+        }
+    }
+
+    private async UniTask EndingProcess()
+    {
         
+    }
+
+    
+    // 데이터 요청하고 응답받는 프로세스 
+    private async UniTask RequestDataProcess(bool isFirstStory = false)
+    {
         // 마스터 클라이언트가 모델 서버에 데이터 요청 후 다른 클라이언트에게 데이터 전달 
         if (RunnerController.Runner.IsSharedModeMasterClient)
         {
             Debug.Log("ReceiveDataProcess() => RequestStartData");
-            var data = await NetworkManager.instance.RequestStartData();
+
+            string data = null;
+            if (isFirstStory) data = await NetworkManager.RequestStartData();
+            else              data = await NetworkManager.RequestData();
+
+            if (string.IsNullOrEmpty(data))
+            {
+                Debug.Log("Data is Null Or Empty");
+                return;
+            }
             
             Debug.Log("----------- 응답 받은 데이터 ----------");
             Debug.Log(data);
@@ -72,45 +123,10 @@ public class GameUIManager : MonoBehaviour
             await UniTask.WaitUntil(() => NetworkManager.GetData != null);
             Debug.Log(NetworkManager.GetData);
         }
-        
-        // while (true)
-        // {
-        //     if (RunnerController.Runner.IsSharedModeMasterClient)
-        //     {
-        //         data = await NetworkManager.instance.RequestData();
-        //         Debug.Log(data);
-        //         //SharedData.Instance.GettedJson = temp;
-        //     }
-        //     await UniTask.WaitUntil(() => !string.IsNullOrEmpty(NetworkManager._getData.story));
-        //     storySentences = NetworkManager._getData.story.Split(".");
-        //     
-        //
-        //     for (int j = 0; j < storySentences.Length - 1; j++)
-        //     {
-        //         storySentences[j] += '.';
-        //     }
-        //
-        //     await PresentingStory(storySentences);
-        //     await ShowChoices(NetworkManager._getData.choices);
-        //     SetScore(NetworkManager._getData.choices[_choiceNum - 1].score);
-        //
-        //     if (NetworkManager._getData.round == _finalRound) break;
-        // }
-        
-        // TODO 엔딩 
     }
-
-    private void StoryProcess()
-    {
-        
-    }
-
-    private void EndingProcess()
-    {
-        
-    }
-
-    async UniTask PresentingStory(string[] storySentences)
+    
+    // 스토리창 
+    async UniTask ShowStory(string[] storySentences)
     {
         storyCanvas.gameObject.SetActive(true);
         clickNextBtn = false;
@@ -125,6 +141,8 @@ public class GameUIManager : MonoBehaviour
         storyCanvas.gameObject.SetActive(false);
     }
 
+    
+    // 선택창
     async UniTask ShowChoices(List<Choice> choiceList)
     {
         // _UIState = UIState.Choice;
@@ -136,7 +154,7 @@ public class GameUIManager : MonoBehaviour
             // votes[i].text = "0";
         }
 
-        for (int t = timer; t >= 0; t--)
+        for (int t = Timer; t >= 0; t--)
         {
             timerText.text = $"남은 시간 : {t}";
             await UniTask.Delay(TimeSpan.FromSeconds(1));
@@ -151,7 +169,7 @@ public class GameUIManager : MonoBehaviour
         _choiceNum = -1;
     }
 
-    void Choice(int idx)
+    public void Choice(int idx)
     {
         if (_choiceNum == idx) return;
         
