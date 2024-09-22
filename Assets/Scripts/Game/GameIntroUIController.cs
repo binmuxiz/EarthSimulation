@@ -40,8 +40,6 @@ namespace GameStory
             yield return ShowStory();
             yield return new WaitForSeconds(1f);
             yield return ShowRole();
-            
-            Destroy(gameObject);
         }
 
         private IEnumerator ShowStory()

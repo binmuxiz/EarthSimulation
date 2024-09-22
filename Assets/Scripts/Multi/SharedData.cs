@@ -59,7 +59,7 @@ public class SharedData : NetworkBehaviour
     public void RpcReadDone() 
     {
         ReadCount++;
-        Debug.Log($"ReadIntroCount => {ReadCount}");
+        Debug.Log($"ReadCount => {ReadCount}");
     }
 
     // 인트로 읽은 수 초기화 
@@ -67,8 +67,7 @@ public class SharedData : NetworkBehaviour
     public void RpcClearReadCount() 
     {
         ReadCount = 0;
-        GameUIManager.storyPermitted = true;
-        Debug.Log($"ReadIntroCount => {ReadCount}");
+        Debug.Log($"ReadCount => {ReadCount}");
     }
 
     // 다른 클라이언트에게 스토리 데이터 전송
