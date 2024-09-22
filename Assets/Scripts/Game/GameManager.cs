@@ -25,9 +25,12 @@ public class GameManager : Singleton<GameManager>
 
         yield return gameIntroUIController.ShowIntro();
         
-        SharedData.Instance.RpcReadIntro();
-        // 모든 클라이언트가 인트로를 다 볼때까지 대기
-        yield return new WaitUntil(() => RunnerController.Runner.SessionInfo.PlayerCount <= SharedData.ReadIntroCount);
+        SharedData.Instance.RpcReadDone();
+        // 다른 클라이언트가 인트로를 다 볼때까지 대기
+        
+        // Debug.Log("RunnerController.Runner.SessionInfo.PlayerCount);
+        
+        yield return new WaitUntil(() => RunnerController.Runner.SessionInfo.PlayerCount <= SharedData.ReadCount);
         SharedData.Instance.RpcClearReadCount();
         Debug.Log("ReadAll");
 

@@ -138,6 +138,14 @@ public class GameUIManager : MonoBehaviour
             await UniTask.WaitUntil(() => clickNextBtn);
             clickNextBtn = false;
         }
+        
+        SharedData.Instance.RpcReadDone();
+        // 다른 클라이언트가 스토리를 다 읽을 때까지 대기 
+        await UniTask.WaitUntil(() => RunnerController.Runner.SessionInfo.PlayerCount <= SharedData.ReadCount);
+        
+        Debug.Log("All Read");
+        SharedData.Instance.RpcClearReadCount();
+        
         storyCanvas.gameObject.SetActive(false);
     }
 
@@ -145,7 +153,8 @@ public class GameUIManager : MonoBehaviour
     // 선택창
     async UniTask ShowChoices(List<Choice> choiceList)
     {
-        // _UIState = UIState.Choice;
+        Debug.Log("ShowChoices()");
+
         choiceCanvas.gameObject.SetActive(true);
         
         for (int i = 0; i < choices.Length; i++)

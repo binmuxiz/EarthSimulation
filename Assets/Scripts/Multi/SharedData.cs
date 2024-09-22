@@ -18,7 +18,7 @@ public class SharedData : NetworkBehaviour
     public static int ReadyCount { get; private set; }
     
     // 스토리 읽은 플레이어 수
-    public static int ReadIntroCount { get; set; }
+    public static int ReadCount { get; set; }
     
     // 스토리 데이터
     public static string StoryData;
@@ -56,19 +56,19 @@ public class SharedData : NetworkBehaviour
 
     // 인트로 다 봤는지
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    public void RpcReadIntro() 
+    public void RpcReadDone() 
     {
-        ReadIntroCount++;
-        Debug.Log($"ReadIntroCount => {ReadIntroCount}");
+        ReadCount++;
+        Debug.Log($"ReadIntroCount => {ReadCount}");
     }
 
     // 인트로 읽은 수 초기화 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     public void RpcClearReadCount() 
     {
-        ReadIntroCount = 0;
+        ReadCount = 0;
         GameUIManager.storyPermitted = true;
-        Debug.Log($"ReadIntroCount => {ReadIntroCount}");
+        Debug.Log($"ReadIntroCount => {ReadCount}");
     }
 
     // 다른 클라이언트에게 스토리 데이터 전송
