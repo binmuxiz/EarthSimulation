@@ -145,6 +145,8 @@ public class GameUIManager : MonoBehaviour
         SharedData.Instance.RpcReadDone();
         // 다른 클라이언트가 스토리를 다 읽을 때까지 대기 
         await UniTask.WaitUntil(() => RunnerController.Runner.SessionInfo.PlayerCount <= SharedData.ReadCount);
+
+        await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
         
         Debug.Log("All Read");
         SharedData.Instance.RpcClearReadCount();
