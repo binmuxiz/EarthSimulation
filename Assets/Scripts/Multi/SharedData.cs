@@ -10,6 +10,8 @@ public class SharedData : NetworkBehaviour
 {
     public static SharedData Instance;
     
+    [Networked] public TickTimer timer { get; set; }
+    
     // 역할 
     [SerializeField]
     private RoleType role; // 프로퍼티와 연결되어 있지 않음 
@@ -115,6 +117,15 @@ public class SharedData : NetworkBehaviour
         {
             Votes[idx] -= 1;
             OnVoted.Invoke(Votes);
+
+        }
+    }
+
+    public void SetTimer(float time)
+    {
+        if (RunnerController.Runner.IsSharedModeMasterClient)
+        {
+            timer = TickTimer.CreateFromSeconds(RunnerController.Runner, time);
         }
     }
 }

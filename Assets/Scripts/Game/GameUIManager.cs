@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Fusion;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -186,14 +187,18 @@ public class GameUIManager : MonoBehaviour
             voteTexts[i].text = "0";
         }
 
+        SharedData.Instance.SetTimer(11f);
+        
         for (int t = Timer; t >= 0; t--)
         {
             timerText.text = $"남은 시간 : {t}";
+            
             await UniTask.Delay(TimeSpan.FromSeconds(1));
         }
         
         // 아무 선택이 없었을 때 랜덤 선택 
         if (!isChoosed) Choice(Random.Range(0, choices.Length));
+        await UniTask.WaitUntil(() => SharedData.Instance.timer.Expired(RunnerController.Runner));
         
         choiceCanvas.gameObject.SetActive(false);
         isChoosed = false;
@@ -245,8 +250,6 @@ public class GameUIManager : MonoBehaviour
         
         myChoice = idx;
         isChoosed = true;
-
-        
     }
 
     private void SetScore(Score score)
