@@ -54,7 +54,7 @@ namespace GameStory
         {
             Role myRole = GameManager.Instance.RoleDict[SharedData.Instance.Role];
             roleName.text = myRole.Name;
-            roleDescription.text = myRole.Description;
+            roleDescription.text = myRole.Description + "\nNickname";
             
             float fadeDuration = 0.6f;
 

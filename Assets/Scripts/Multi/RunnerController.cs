@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using Fusion;
 using Fusion.Sockets;
+using Global;
+using Newtonsoft.Json;
 using UnityEngine;
 
 public class RunnerController : MonoBehaviour, INetworkRunnerCallbacks
 {
-    
     public static NetworkRunner Runner;
     
     private void Awake()
@@ -18,6 +19,15 @@ public class RunnerController : MonoBehaviour, INetworkRunnerCallbacks
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         Debug.Log($"OnPlayerJoined : {player.PlayerId}");
+    }
+    
+    public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data)
+    {
+        if (key.Equals(ReliableKey.FromInts(11, 22, 0, 0)))
+        {
+            string str = TypeConverter.ByteToString(data.Array);
+            NetworkManager.GetData = JsonConvert.DeserializeObject<GetData>(str);
+        }
     }
     
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
@@ -80,9 +90,6 @@ public class RunnerController : MonoBehaviour, INetworkRunnerCallbacks
     {
     }
 
-    public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data)
-    {
-    }
 
     public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress)
     {

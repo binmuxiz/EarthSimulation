@@ -1,7 +1,9 @@
+using System;
 using Data;
 using Fusion;
+using Fusion.Sockets;
+using Global;
 using UnityEngine;
-using Newtonsoft.Json;
 
 public class SharedData : NetworkBehaviour
 {
@@ -19,11 +21,10 @@ public class SharedData : NetworkBehaviour
     public static int ReadIntroCount { get; set; }
     
     // 스토리 데이터
-    public static string RealJson;
-    
+    public static string StoryData;
+
     private void Awake()
     {
-        if (Instance == null) Instance = this;
         DontDestroyOnLoad(this);
     }
 
@@ -43,6 +44,15 @@ public class SharedData : NetworkBehaviour
         ReadyCount++;
         Debug.Log($"ReadyCount Changed : {ReadyCount}");
     }
+    
+        
+    // 역할 배정 
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void AssignJobRPC(RoleType role)
+    {
+        Role = role;
+        this.role = role; 
+    }
 
     // 인트로 다 봤는지
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
@@ -61,26 +71,18 @@ public class SharedData : NetworkBehaviour
         Debug.Log($"ReadIntroCount => {ReadIntroCount}");
     }
 
-    [Rpc(RpcSources.All, RpcTargets.All)]
-    public void TransferJsonRpc(string Json) // 다른 클라이언트에게 스토리 데이터 전송 
+    // 다른 클라이언트에게 스토리 데이터 전송
+    public void SendJsonDataToPlayer(string data)
     {
-        RealJson = Json;
-        Debug.Log(RealJson);
-    }
-    
-    [Rpc(RpcSources.All, RpcTargets.All)]
-    public void ParsingRpc(string Json) 
-    {
-        NetworkManager._getData = JsonConvert.DeserializeObject<GetData>(Json);
-        Debug.Log("Parsing Complette");
-    }
-    
-    
-    // 역할 배정 
-    [Rpc(RpcSources.All, RpcTargets.All)]
-    public void AssignJobRPC(RoleType role)
-    {
-        Role = role;
-        this.role = role; 
+        var bytes = TypeConverter.StringToByte(data);
+        var key = ReliableKey.FromInts(11, 22, 0, 0);
+
+        foreach (var playerRef in RunnerController.Runner.ActivePlayers)
+        {
+            if (playerRef != RunnerController.Runner.LocalPlayer)
+            {
+                RunnerController.Runner.SendReliableDataToPlayer(playerRef, key, bytes);     
+            }
+        }
     }
 }

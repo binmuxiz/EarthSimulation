@@ -34,17 +34,17 @@ public class GameUIManager : MonoBehaviour
     private const int timer = 10;
     private const int _finalRound = 5;
     public static bool storyPermitted = false;
-    private bool isFirst = true;
-
-
+    // private bool isFirst = true;
+    
     private void Awake()
     {
         InitializeScore();
     }
-    
 
     private async UniTaskVoid Start()
     {
+        Debug.Log("GameUIManager.Start()");
+        
         storyCanvas.gameObject.SetActive(false);
         choiceCanvas.gameObject.SetActive(false);
 
@@ -54,53 +54,48 @@ public class GameUIManager : MonoBehaviour
 
     private async UniTask ReceiveDataProcess()
     {
-        var temp = "";
-        if (RunnerController.Runner.IsSceneAuthority)
+        Debug.Log("GameUIManager.ReceiveDataProcess()");
+        
+        // 마스터 클라이언트가 모델 서버에 데이터 요청 후 다른 클라이언트에게 데이터 전달 
+        if (RunnerController.Runner.IsSharedModeMasterClient)
         {
-            temp = await NetworkManager.instance.StartSendDataProcess();
-            Debug.Log(temp);
-            NetworkManager.gettedJson = temp;
-            SharedData.Instance.TransferJsonRpc(NetworkManager.gettedJson);
+            Debug.Log("ReceiveDataProcess() => RequestStartData");
+            var data = await NetworkManager.instance.RequestStartData();
             
-            
-            //Debug.Log(NetworkManager.gettedJson);
-            
+            Debug.Log("----------- 응답 받은 데이터 ----------");
+            Debug.Log(data);
+            SharedData.Instance.SendJsonDataToPlayer(data);
         }
         else
         {
-            await UniTask.WaitUntil(() => !string.IsNullOrEmpty(temp));
+            // 다른 클라이언트는 데이터 대기
+            await UniTask.WaitUntil(() => NetworkManager.GetData != null);
+            Debug.Log(NetworkManager.GetData);
         }
-
-        while (true)
-        {
-            if (!isFirst)
-            {
-                if (RunnerController.Runner.IsSceneAuthority)
-                {
-                    temp = await NetworkManager.instance.SendDataProcess();
-                    Debug.Log(temp);
-                    //SharedData.Instance.GettedJson = temp;
-                }
-            }
-            isFirst = false;
-
-            await UniTask.WaitUntil(() => !string.IsNullOrEmpty(NetworkManager._getData.story));
-            storySentences = NetworkManager._getData.story.Split(".");
-            
-
-            for (int j = 0; j < storySentences.Length - 1; j++)
-            {
-                storySentences[j] += '.';
-            }
-
-            await PresentingStory(storySentences);
-            await ShowChoices(NetworkManager._getData.choices);
-            SetScore(NetworkManager._getData.choices[_choiceNum - 1].score);
-
-            if (NetworkManager._getData.round == _finalRound) break;
-            
-            
-        }
+        
+        // while (true)
+        // {
+        //     if (RunnerController.Runner.IsSharedModeMasterClient)
+        //     {
+        //         data = await NetworkManager.instance.RequestData();
+        //         Debug.Log(data);
+        //         //SharedData.Instance.GettedJson = temp;
+        //     }
+        //     await UniTask.WaitUntil(() => !string.IsNullOrEmpty(NetworkManager._getData.story));
+        //     storySentences = NetworkManager._getData.story.Split(".");
+        //     
+        //
+        //     for (int j = 0; j < storySentences.Length - 1; j++)
+        //     {
+        //         storySentences[j] += '.';
+        //     }
+        //
+        //     await PresentingStory(storySentences);
+        //     await ShowChoices(NetworkManager._getData.choices);
+        //     SetScore(NetworkManager._getData.choices[_choiceNum - 1].score);
+        //
+        //     if (NetworkManager._getData.round == _finalRound) break;
+        // }
         
         // TODO 엔딩 
     }
@@ -175,7 +170,7 @@ public class GameUIManager : MonoBehaviour
         //     }
         // }
 
-        NetworkManager._sendData.choice_index = _choiceNum;
+        // NetworkManager._sendData.choice_index = _choiceNum;
     }
 
     private void SetScore(Score score)
