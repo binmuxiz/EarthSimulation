@@ -44,7 +44,10 @@ public class GameUIManager : MonoBehaviour
 
     private async UniTaskVoid Start()
     {
+        Debug.Log("GameUIManager.Start()");
         await UniTask.WaitUntil(() => storyPermitted);
+        
+        Debug.Log("storyPermitted => " + storyPermitted);
         await Process();
     }
 

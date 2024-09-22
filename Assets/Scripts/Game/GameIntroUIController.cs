@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace GameStory
 {
-    public class GameIntroUIController : MonoBehaviour
+    public class GameIntroUIController : Singleton<GameIntroUIController>
     {
         public CanvasGroup storyCanvasGroup;
         public CanvasGroup roleCanvasGroup;
