@@ -1,17 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Fusion;
 using Fusion.Sockets;
-using Multi;
-using Unity.VisualScripting;
+using Global;
+using Newtonsoft.Json;
 using UnityEngine;
 
-public class RunnerController : SimulationBehaviour, INetworkRunnerCallbacks
+public class RunnerController : MonoBehaviour, INetworkRunnerCallbacks
 {
-    
     public static NetworkRunner Runner;
-    public NetworkPrefabRef SharedDataPrefab;
     
     private void Awake()
     {
@@ -19,7 +16,20 @@ public class RunnerController : SimulationBehaviour, INetworkRunnerCallbacks
         Runner = GetComponent<NetworkRunner>();
         
     }
-
+    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+    {
+        Debug.Log($"OnPlayerJoined : {player.PlayerId}");
+    }
+    
+    public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data)
+    {
+        if (key.Equals(ReliableKey.FromInts(11, 22, 0, 0)))
+        {
+            string str = TypeConverter.ByteToString(data.Array);
+            NetworkManager.GetData = JsonConvert.DeserializeObject<GetData>(str);
+        }
+    }
+    
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
     {
         
@@ -28,32 +38,6 @@ public class RunnerController : SimulationBehaviour, INetworkRunnerCallbacks
     public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
     {
        
-    }
-
-    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
-    {
-        int playerCnt = runner.ActivePlayers.Count();
-        Debug.Log($"현재 세션에 있는 플레이어 수 : {playerCnt}");
-        
-        foreach (var p in runner.ActivePlayers)
-        {
-            Debug.Log($"playerRef : {player}");
-        }
-        
-        if (player == Runner.LocalPlayer)
-        {
-            Runner.Spawn(SharedDataPrefab, Vector3.zero, Quaternion.identity);
-        }
-
-        GameObject[] networkObjects = GameObject.FindGameObjectsWithTag("NetworkObject");
-
-        foreach (var obj in networkObjects)
-        {
-            if (!SharedDataList.Instance.SharedDatas.Contains(obj.GetComponent<SharedData>()))
-            {
-                SharedDataList.Instance.AddSharedData(obj.GetComponent<SharedData>());
-            }
-        }
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
@@ -106,9 +90,6 @@ public class RunnerController : SimulationBehaviour, INetworkRunnerCallbacks
     {
     }
 
-    public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data)
-    {
-    }
 
     public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress)
     {

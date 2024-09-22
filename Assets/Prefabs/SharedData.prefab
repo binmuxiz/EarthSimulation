@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7096735533503378313
+--- !u!1 &1175459784203331263
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6052812860838164463}
-  - component: {fileID: 5264078149069910460}
-  - component: {fileID: 2139113726162757388}
+  - component: {fileID: 7657122127092582297}
+  - component: {fileID: 8318229932618665282}
+  - component: {fileID: 3707762542480738395}
   m_Layer: 0
-  m_Name: Runner
+  m_Name: SharedData
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6052812860838164463
+--- !u!4 &7657122127092582297
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7096735533503378313}
+  m_GameObject: {fileID: 1175459784203331263}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -33,29 +33,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5264078149069910460
+--- !u!114 &8318229932618665282
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7096735533503378313}
+  m_GameObject: {fileID: 1175459784203331263}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1199893898, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Script: {fileID: 11500000, guid: cfb759980f5f11b438aed1ad3021faff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2139113726162757388
+--- !u!114 &3707762542480738395
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7096735533503378313}
+  m_GameObject: {fileID: 1175459784203331263}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b89b2a51a2e8bf24cb6b7c02a8b8585c, type: 3}
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SharedDataPrefab:
-    RawGuidValue: 23d1f1ad0840f874ba02f13a4499f70c
+  SortKey: 612844943
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 8318229932618665282}
