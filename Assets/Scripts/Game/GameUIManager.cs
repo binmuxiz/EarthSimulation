@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using Fusion;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -104,7 +103,7 @@ public class GameUIManager : MonoBehaviour
             
 // TODO 내 선택 말고 다수결 선택 받은 선택지 인덱스로 점수 저장 
             
-            // SetScore(NetworkManager.GetData.choices[myChoice - 1].score);
+            SetScore(NetworkManager.GetData.choices[NetworkManager.SendData.choice_index].score);
             
             if (NetworkManager.GetData.round == FinalRound) break;
             
@@ -193,7 +192,7 @@ public class GameUIManager : MonoBehaviour
         for (int t = Timer; t >= 0; t--)
         {
             timerText.text = $"남은 시간 : {t}";
-            
+            Debug.Log("IsRunning : " + SharedData.Instance.timer.IsRunning);
             await UniTask.Delay(TimeSpan.FromSeconds(1));
         }
         
@@ -201,11 +200,13 @@ public class GameUIManager : MonoBehaviour
         if (!isChoosed) Choice(Random.Range(0, choices.Length));
         await UniTask.WaitUntil(() => SharedData.Instance.timer.Expired(RunnerController.Runner));
         
+        await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
+        
         choiceCanvas.gameObject.SetActive(false);
         isChoosed = false;
         myChoice = -1;
 
-        int maxChoiceIndex;
+        int maxChoiceIndex = 0;
         
         // todo 가장 많은 투표를 받은 선택지 인덱스 SendData에 저장
         if (RunnerController.Runner.IsSharedModeMasterClient)
@@ -240,6 +241,7 @@ public class GameUIManager : MonoBehaviour
             }
             NetworkManager.SendData.choice_index = maxChoiceIndex;
         }
+        Debug.Log("maxChoiceIndex : " + maxChoiceIndex);
     }
 
     public void Choice(int idx)
