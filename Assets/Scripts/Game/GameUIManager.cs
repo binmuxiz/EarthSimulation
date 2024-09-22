@@ -47,13 +47,14 @@ public class GameUIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        SharedData.Instance.OnVoted += RefreshUI;
+        Debug.Log("OnEnable()");
+        SharedData.OnVoted += RefreshUI;
     }
 
-    private void OnDisable()
-    {
-        SharedData.Instance.OnVoted -= RefreshUI;
-    }
+    // private void OnDisable()
+    // {
+    //     SharedData.Instance.OnVoted -= RefreshUI;
+    // }
 
     private void RefreshUI(Dictionary<int, int> votes)
     {

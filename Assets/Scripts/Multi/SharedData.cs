@@ -29,16 +29,16 @@ public class SharedData : NetworkBehaviour
     // 투표 (key: index, value: count)
     public static Dictionary<int, int> Votes { get; set; } = new Dictionary<int, int>();
     
-    public Action<Dictionary<int, int>> OnVoted;
+    public static Action<Dictionary<int, int>> OnVoted;
 
     private void Awake()
     {
         DontDestroyOnLoad(this);
-        
-        Votes.Add(0, 0);
-        Votes.Add(1, 0);
-        Votes.Add(2, 0);
-        Votes.Add(3, 0);
+
+        for (int i = 0; i < 4; i++)
+        {
+            Votes.TryAdd(i, 0);
+        }
     }
 
     public override void Spawned()
