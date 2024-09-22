@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -18,16 +20,16 @@ public class GameUIManager : MonoBehaviour
 
     public TMP_Text storyText;
     public TMP_Text timerText;
+
+    public TMP_Text[] voteTexts; // 투표 개수 보이는 텍스트 
+    public Button[] choices; 
     
-    public Button[] choices;
-    public bool[] _isSelected; // N개의 선택지 중 하나만 선택할 수 있도록 
-    public GameObject[] votes;
-    public GameObject checkmarkPrefab;
+    public bool[] isSelected; // N개의 선택지 중 하나만 선택할 수 있도록 
 
     private bool clickNextBtn;
     
     private bool isChoosed;
-    private int _choiceNum = -1;
+    private int myChoice = -1;
 
     private const int Timer = 10;
     private const int FinalRound = 5;
@@ -38,10 +40,28 @@ public class GameUIManager : MonoBehaviour
     {
         storyCanvas.gameObject.SetActive(false);
         choiceCanvas.gameObject.SetActive(false);
-
+        
         InitializeScore();
     }
 
+    private void OnEnable()
+    {
+        SharedData.Instance.OnVoted += RefreshUI;
+    }
+
+    private void OnDisable()
+    {
+        SharedData.Instance.OnVoted -= RefreshUI;
+    }
+
+    private void RefreshUI(Dictionary<int, int> votes)
+    {
+        for (var i = 0; i < votes.Count; ++i)
+        {
+            voteTexts[i].text = $"{votes[i]}";
+        }
+    }
+    
     private async UniTaskVoid Start()
     {
         Debug.Log("GameUIManager.Start()");
@@ -65,8 +85,6 @@ public class GameUIManager : MonoBehaviour
             if (i != 1) await RequestDataProcess();
             else        await RequestDataProcess(true);
             
-            // todo show UI Process
-
             string[] storySentences = NetworkManager.GetData.story.Split(".");
 
             if (storySentences == null)
@@ -81,12 +99,12 @@ public class GameUIManager : MonoBehaviour
             
             await ShowStory(storySentences);
             await ShowChoices(NetworkManager.GetData.choices);
-            SetScore(NetworkManager.GetData.choices[_choiceNum - 1].score);
+            
+// TODO 내 선택 말고 다수결 선택 받은 선택지 인덱스로 점수 저장 
+            
+            // SetScore(NetworkManager.GetData.choices[myChoice - 1].score);
             
             if (NetworkManager.GetData.round == FinalRound) break;
-            
-            
-            
             
             NetworkManager.GetData = null;
         }
@@ -165,7 +183,7 @@ public class GameUIManager : MonoBehaviour
         for (int i = 0; i < choices.Length; i++)
         {
             choices[i].GetComponentInChildren<TMP_Text>().text = choiceList[i].text;
-            // votes[i].text = "0";
+            voteTexts[i].text = "0";
         }
 
         for (int t = Timer; t >= 0; t--)
@@ -177,32 +195,58 @@ public class GameUIManager : MonoBehaviour
         // 아무 선택이 없었을 때 랜덤 선택 
         if (!isChoosed) Choice(Random.Range(0, choices.Length));
         
-        
         choiceCanvas.gameObject.SetActive(false);
         isChoosed = false;
-        _choiceNum = -1;
+        myChoice = -1;
+
+        int maxChoiceIndex;
+        
+        // todo 가장 많은 투표를 받은 선택지 인덱스 SendData에 저장
+        if (RunnerController.Runner.IsSharedModeMasterClient)
+        {
+            Dictionary<int, int> votes = SharedData.Votes;
+            
+            // case 1111
+            if (votes[0] == 1 && votes[1] == 1 && votes[2] == 1 && votes[3] == 1)
+            {
+                maxChoiceIndex = Random.Range(0, 4);
+            }
+            else
+            {
+                // votes 내림차순 정렬
+                var sortedVotes = votes.OrderByDescending(x => x.Value);
+
+                // case 2200
+                var first = sortedVotes.First();
+                var second = sortedVotes.ElementAt(1);
+
+                if (first.Value == 2 && second.Value == 2)
+                { 
+                    int rand = Random.Range(0, 2);
+                    
+                    if (rand == 0) maxChoiceIndex = first.Key;
+                    else maxChoiceIndex = second.Key;
+                }
+                else
+                {
+                    maxChoiceIndex = first.Key;
+                }
+            }
+            NetworkManager.SendData.choice_index = maxChoiceIndex;
+        }
     }
 
     public void Choice(int idx)
     {
-        if (_choiceNum == idx) return;
+        if (myChoice == idx) return; // 동일 선택지 선택시 return
         
-        _choiceNum = idx;
+        SharedData.Instance.RpcVote(idx);
+        if (isChoosed) SharedData.Instance.RpcVoteCancel(myChoice);    
+        
+        myChoice = idx;
         isChoosed = true;
 
-        // if (_isSelected[_choiceNum])
-        // {
-        //     _isSelected[_choiceNum] = false;
-        //     
-        //     int voteNum = votes[_choiceNum].transform.childCount;
-        //     if (voteNum > 0)
-        //     {
-        //         // checkmark 제거 
-        //         Destroy(votes[_choiceNum].transform.GetChild(voteNum-1));
-        //     }
-        // }
-
-        // NetworkManager._sendData.choice_index = _choiceNum;
+        
     }
 
     private void SetScore(Score score)

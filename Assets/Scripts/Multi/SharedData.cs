@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Data;
 using Fusion;
 using Fusion.Sockets;
@@ -22,6 +23,11 @@ public class SharedData : NetworkBehaviour
     
     // 스토리 데이터
     public static string StoryData;
+    
+    // 투표 (key: index, value: count)
+    public static Dictionary<int, int> Votes { get; set; }
+    
+    public Action<Dictionary<int, int>> OnVoted;
 
     private void Awake()
     {
@@ -82,6 +88,28 @@ public class SharedData : NetworkBehaviour
             {
                 RunnerController.Runner.SendReliableDataToPlayer(playerRef, key, bytes);     
             }
+        }
+    }
+
+    // 투표 
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RpcVote(int idx)
+    {
+        Debug.Log("RpcVote : " + idx);
+        Votes[idx] += 1;
+        OnVoted.Invoke(Votes);
+    }
+
+    // 투표 취소
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RpcVoteCancel(int idx)
+    {
+        Debug.Log("RpcVoteCancel : " + idx);
+
+        if (Votes[idx] != 0)
+        {
+            Votes[idx] -= 1;
+            OnVoted.Invoke(Votes);
         }
     }
 }
