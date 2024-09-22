@@ -188,18 +188,19 @@ public class GameUIManager : MonoBehaviour
             voteTexts[i].text = "0";
         }
 
-        SharedData.Instance.SetTimer(11f);
+        //SharedData.Instance.SetTimer(11f);
         
         for (int t = Timer; t >= 0; t--)
         {
             timerText.text = $"남은 시간 : {t}";
-            
+            //Debug.Log(SharedData.Instance.timer.IsRunning);
+            //Debug.Log(SharedData.Ok);
             await UniTask.Delay(TimeSpan.FromSeconds(1));
         }
         
         // 아무 선택이 없었을 때 랜덤 선택 
         if (!isChoosed) Choice(Random.Range(0, choices.Length));
-        await UniTask.WaitUntil(() => SharedData.Instance.timer.Expired(RunnerController.Runner));
+        //await UniTask.WaitUntil(() => SharedData.Ok);
         
         choiceCanvas.gameObject.SetActive(false);
         isChoosed = false;

@@ -9,7 +9,8 @@ using UnityEngine;
 public class SharedData : NetworkBehaviour
 {
     public static SharedData Instance;
-    
+
+    public static bool Ok = false;
     [Networked] public TickTimer timer { get; set; }
     
     // 역할 
@@ -40,6 +41,8 @@ public class SharedData : NetworkBehaviour
             Votes.TryAdd(i, 0);
         }
     }
+    
+    
 
     public override void Spawned()
     {
@@ -121,11 +124,22 @@ public class SharedData : NetworkBehaviour
         }
     }
 
+    
+    
+
     public void SetTimer(float time)
     {
         if (RunnerController.Runner.IsSharedModeMasterClient)
         {
             timer = TickTimer.CreateFromSeconds(RunnerController.Runner, time);
+        }
+    }
+    
+    public override void FixedUpdateNetwork()
+    {
+        if (timer.Expired(RunnerController.Runner))
+        {
+            Ok = true;
         }
     }
 }
