@@ -14,7 +14,7 @@ public class GameUIManager : MonoBehaviour
     public Canvas choiceCanvas;
     
     public Transform scoreParent;
-    private TMP_Text[] scoreTexts;
+    public TMP_Text[] scoreTexts;
     
     private Data.Score _score;
 
@@ -244,6 +244,7 @@ public class GameUIManager : MonoBehaviour
             NetworkManager.SendData.choice_index = maxChoiceIndex;
         }
         Debug.Log("maxChoiceIndex : " + maxChoiceIndex);
+        SharedData.ClearVotes();
     }
 
     public void Choice(int idx)
@@ -280,13 +281,6 @@ public class GameUIManager : MonoBehaviour
         _score = new Data.Score();
         
         // score text 초기화
-        int scoreCnt = scoreParent.childCount;
-        scoreTexts = new TMP_Text[scoreCnt];
-        for (int i = 0; i < scoreCnt; i++)
-        {
-            scoreTexts[i] = scoreParent.GetChild(i).GetComponentInChildren<TMP_Text>();
-        }
-
         scoreTexts[0].text = _score.Environment.ToString();
         scoreTexts[1].text = _score.Society.ToString();
         scoreTexts[2].text = _score.Technology.ToString();

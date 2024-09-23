@@ -124,8 +124,16 @@ public class SharedData : NetworkBehaviour
         }
     }
 
-    
-    
+    public static void ClearVotes()
+    {
+        Debug.Log("ClearVotes()");
+        
+        for (int i = 0; i < Votes.Count; i++)
+        {
+            Votes[i] = 0;
+        }
+    }
+        
 
     public void SetTimer(float time)
     {

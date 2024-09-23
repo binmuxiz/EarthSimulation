@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Rotate : MonoBehaviour
 {
-    float fh1 = 100.0f; // 회전 속도
+    public float fh1 = 25f; // 회전 속도
     Vector3 previousMousePosition;
 
     void Update()

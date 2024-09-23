@@ -11,12 +11,16 @@ public class GameManager : Singleton<GameManager>
 {
     public GameIntroUIController gameIntroUIController;
 
+    public GameObject eventWarningGO;
+    public GameObject[] earthObjects;
+    
     public List<SharedData> sharedDatas;
 
     public Dictionary<RoleType, Role> RoleDict = new();
 
     private IEnumerator Start()
     {
+        eventWarningGO.SetActive(false);
         sharedDatas = PlayerManager.Instance.players;
         Destroy(PlayerManager.Instance.gameObject);
         
@@ -37,7 +41,27 @@ public class GameManager : Singleton<GameManager>
         
         GameIntroUIController.Instance.gameObject.SetActive(false);
     }
+
+    private bool KeyDownE = false;
     
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (KeyDownE)
+            {
+                eventWarningGO.SetActive(false);
+                earthObjects[0].SetActive(false);
+                earthObjects[1].SetActive(true);
+            }
+            else
+            {
+                KeyDownE = true;
+                eventWarningGO.SetActive(true);
+            }
+        }
+    }
+
     private void AssignJob()
     {
         if (RunnerController.Runner.IsSharedModeMasterClient)
