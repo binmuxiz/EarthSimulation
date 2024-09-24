@@ -8,33 +8,56 @@ using UnityEngine;
 
 public class SharedData : NetworkBehaviour
 {
-    public static SharedData Instance;
 
-    public static bool Ok = false;
-    [Networked] public TickTimer timer { get; set; }
+    // public static bool Ok = false;
+    // [Networked] public TickTimer timer { get; set; }
     
+    
+/*
+ * ------------ Non - Static ---------------
+ */
+
     // 역할 
     [SerializeField]
     private RoleType role; // 프로퍼티와 연결되어 있지 않음 
     public RoleType Role { get; private set; }
     
+    
+    
+/*
+ * ------------ Static ---------------
+ */
+    public static SharedData Instance;  // StateAuthority SharedData
+    
+    public static Action<Dictionary<int, int>> onVoted;
+
+
     // Ready
     public static int ReadyCount { get; private set; }
     
     // 스토리 읽은 플레이어 수
-    public static int ReadCount { get; set; }
+    public static int ReadCount { get; private set; }
     
-    // 스토리 데이터
-    public static string StoryData;
-    
-    // 투표 (key: index, value: count)
-    public static Dictionary<int, int> Votes { get; set; } = new Dictionary<int, int>();
-    
-    public static Action<Dictionary<int, int>> OnVoted;
+    // 투표
+    // (key: index, value: count)
+    public static Dictionary<int, int> Votes { get; } = new();
 
-    private void Awake()
+
+    public static bool HasAggregated { get; set; } 
+    
+
+    
+/*
+ * ------------ Methods ---------------
+ */
+    
+    public override void Spawned()
     {
-        DontDestroyOnLoad(this);
+        if (!HasStateAuthority) return;
+
+        Instance = this;
+        
+        ReadyCount = 0;
 
         for (int i = 0; i < 4; i++)
         {
@@ -42,16 +65,11 @@ public class SharedData : NetworkBehaviour
         }
     }
     
-    
-
-    public override void Spawned()
+    private void Awake()
     {
-        if (!HasStateAuthority) return;
-
-        Instance = this;
-
-        ReadyCount = 0;
+        DontDestroyOnLoad(this);
     }
+
 
     // ready 버튼  
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
@@ -62,7 +80,7 @@ public class SharedData : NetworkBehaviour
     }
     
         
-    // 역할 배정 
+// 역할 배정 
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void AssignJobRPC(RoleType role)
     {
@@ -70,7 +88,7 @@ public class SharedData : NetworkBehaviour
         this.role = role; 
     }
 
-    // 인트로 다 봤는지
+// 인트로 다 봤는지
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     public void RpcReadDone() 
     {
@@ -78,7 +96,7 @@ public class SharedData : NetworkBehaviour
         Debug.Log($"ReadCount => {ReadCount}");
     }
 
-    // 인트로 읽은 수 초기화 
+// 인트로 읽은 수 초기화 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     public void RpcClearReadCount() 
     {
@@ -86,7 +104,7 @@ public class SharedData : NetworkBehaviour
         Debug.Log($"ReadCount => {ReadCount}");
     }
 
-    // 다른 클라이언트에게 스토리 데이터 전송
+// 다른 클라이언트에게 스토리 데이터 전송
     public void SendJsonDataToPlayer(string data)
     {
         var bytes = TypeConverter.StringToByte(data);
@@ -101,16 +119,16 @@ public class SharedData : NetworkBehaviour
         }
     }
 
-    // 투표 
+// 투표 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     public void RpcVote(int idx)
     {
         Debug.Log("RpcVote : " + idx);
         Votes[idx] += 1;
-        OnVoted.Invoke(Votes);
+        onVoted.Invoke(Votes);
     }
 
-    // 투표 취소
+// 투표 취소
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     public void RpcVoteCancel(int idx)
     {
@@ -119,11 +137,12 @@ public class SharedData : NetworkBehaviour
         if (Votes[idx] != 0)
         {
             Votes[idx] -= 1;
-            OnVoted.Invoke(Votes);
+            onVoted.Invoke(Votes);
 
         }
     }
 
+// 투표 초기화 
     public static void ClearVotes()
     {
         Debug.Log("ClearVotes()");
@@ -133,21 +152,42 @@ public class SharedData : NetworkBehaviour
             Votes[i] = 0;
         }
     }
-        
-
-    public void SetTimer(float time)
+    
+// 집계했는지 여부
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RpcHasAggregated()
     {
-        if (RunnerController.Runner.IsSharedModeMasterClient)
-        {
-            timer = TickTimer.CreateFromSeconds(RunnerController.Runner, time);
-        }
+        HasAggregated = true;
     }
     
-    public override void FixedUpdateNetwork()
-    {
-        if (timer.Expired(RunnerController.Runner))
-        {
-            Ok = true;
-        }
-    }
+
+    // public void SetTimer(float time)
+    // {
+    //     if (RunnerController.Runner.IsSharedModeMasterClient)
+    //     {
+    //         timer = TickTimer.CreateFromSeconds(RunnerController.Runner, time);
+    //     }
+    // }
+    //
+    // public override void FixedUpdateNetwork()
+    // {
+    //     if (timer.Expired(RunnerController.Runner))
+    //     {
+    //         Ok = true;
+    //     }
+    // }    // public void SetTimer(float time)
+    // {
+    //     if (RunnerController.Runner.IsSharedModeMasterClient)
+    //     {
+    //         timer = TickTimer.CreateFromSeconds(RunnerController.Runner, time);
+    //     }
+    // }
+    //
+    // public override void FixedUpdateNetwork()
+    // {
+    //     if (timer.Expired(RunnerController.Runner))
+    //     {
+    //         Ok = true;
+    //     }
+    // }
 }

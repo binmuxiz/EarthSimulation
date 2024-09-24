@@ -2,78 +2,52 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Data;
-using GameStory;
+using Game;
 using Global;
 using Multi;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    public GameIntroUIController gameIntroUIController;
+    public readonly Dictionary<RoleType, Role> RoleDict = new();
 
-    public GameObject eventWarningGO;
-    public GameObject[] earthObjects;
-    
-    public List<SharedData> sharedDatas;
-
-    public Dictionary<RoleType, Role> RoleDict = new();
-
-    private IEnumerator Start()
+    private void Start()
     {
-        eventWarningGO.SetActive(false);
-        sharedDatas = PlayerManager.Instance.players;
-        Destroy(PlayerManager.Instance.gameObject);
-        
+        StartCoroutine(Process());
+    }
+
+    private IEnumerator Process()
+    {
         AssignJob(); // 직업 배정 
 
-        yield return gameIntroUIController.ShowIntro();
+        yield return GameIntroUIController.Instance.ShowIntro();
         
-        SharedData.Instance.RpcReadDone();
+        SharedData.Instance.RpcReadDone(); // 난 다 읽었어 
         
         // 다른 클라이언트가 인트로를 다 볼때까지 대기
         yield return new WaitUntil(() => RunnerController.Runner.SessionInfo.PlayerCount <= SharedData.ReadCount);
-
-        yield return new WaitForSeconds(1.5f);
-        SharedData.Instance.RpcClearReadCount();
         Debug.Log("ReadAll");
         
-        GameUIManager.storyPermitted = true;
-        
+        // SharedData.Instance.RpcClearReadCount(); // ReadCount 초기화 
+
+        StoryManager.Instance.processPermitted = true; // 스토리 시작 
         GameIntroUIController.Instance.gameObject.SetActive(false);
     }
-
-    private bool KeyDownE = false;
     
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (KeyDownE)
-            {
-                eventWarningGO.SetActive(false);
-                earthObjects[0].SetActive(false);
-                earthObjects[1].SetActive(true);
-            }
-            else
-            {
-                KeyDownE = true;
-                eventWarningGO.SetActive(true);
-            }
-        }
-    }
 
-    private void AssignJob()
+/*
+ * 직업 랜덤으로 배정해야 함. 근데 랜덤으로 되고 있는건지 안되는건지 어케 알건데  알빠야??
+ */
+
+    private void AssignJob()                  
     {
         if (RunnerController.Runner.IsSharedModeMasterClient)
         {
-            Debug.Log("Im master client");
-            
             RoleType[] roleTypes = (RoleType[])Enum.GetValues(typeof(RoleType));
-
-            for (int i = 0; i < sharedDatas.Count; i++)
+            
+            for (int i = 0; i < PlayerManager.Instance.players.Count; i++)
             {
-                Debug.Log($"Role {i} : {roleTypes[i]}");
-                sharedDatas[i].AssignJobRPC(roleTypes[i]);
+                PlayerManager.Instance.players[i].AssignJobRPC(roleTypes[i]);
             }    
         }
     }

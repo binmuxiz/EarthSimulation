@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Fusion;
 using Fusion.Sockets;
 using Global;
+using Network;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -26,7 +27,7 @@ public class RunnerController : MonoBehaviour, INetworkRunnerCallbacks
         if (key.Equals(ReliableKey.FromInts(11, 22, 0, 0)))
         {
             string str = TypeConverter.ByteToString(data.Array);
-            NetworkManager.GetData = JsonConvert.DeserializeObject<GetData>(str);
+            NetworkManager.Instance.GetData = JsonConvert.DeserializeObject<GetData>(str);
         }
     }
     
