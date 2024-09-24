@@ -66,7 +66,7 @@ public class WaitingRoom : MonoBehaviour
 
             if (sharedData != null)
             {
-                PlayerManager.Instance.players.Add(sharedData);
+                SharedDataList.Instance.sharedDatas.Add(sharedData);
             }
         }
 

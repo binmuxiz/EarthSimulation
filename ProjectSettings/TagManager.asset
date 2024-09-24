@@ -6,6 +6,9 @@ TagManager:
   tags:
   - NetworkObject
   - SharedData
+  - RoleImage
+  - NickName
+  - Role
   layers:
   - Default
   - TransparentFX

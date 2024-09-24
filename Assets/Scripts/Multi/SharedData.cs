@@ -4,6 +4,7 @@ using Data;
 using Fusion;
 using Fusion.Sockets;
 using Global;
+using TMPro;
 using UnityEngine;
 
 public class SharedData : NetworkBehaviour
@@ -12,17 +13,16 @@ public class SharedData : NetworkBehaviour
     // public static bool Ok = false;
     // [Networked] public TickTimer timer { get; set; }
     
-    
 /*
  * ------------ Non - Static ---------------
  */
 
     // 역할 
     [SerializeField]
-    private RoleType role; // 프로퍼티와 연결되어 있지 않음 
+    private RoleType role;      // 프로퍼티와 연결되어 있지 않음 
     public RoleType Role { get; private set; }
-    
-    
+
+    public string NickName { get; private set; }
     
 /*
  * ------------ Static ---------------
@@ -58,7 +58,6 @@ public class SharedData : NetworkBehaviour
         if (!HasStateAuthority) return;
 
         Instance = this;
-        
         ReadyCount = 0;
 
         for (int i = 0; i < 4; i++)
@@ -66,7 +65,14 @@ public class SharedData : NetworkBehaviour
             Votes.TryAdd(i, 0);
         }
     }
-    
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RpcSetNickName(string nickName)
+    {
+        NickName = nickName;
+        Debug.Log($"OnNicknameChanged: {nickName}");
+    }
+
     private void Awake()
     {
         DontDestroyOnLoad(this);
@@ -160,6 +166,7 @@ public class SharedData : NetworkBehaviour
         HasAggregated = true;
         SelectedNum = num;
     }
+
     
 // Max 투표
     // [Rpc(RpcSources.StateAuthority, RpcTargets.All)]

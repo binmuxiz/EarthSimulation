@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Data;
 using Fusion;
 using Home;
 using TMPro;
@@ -39,7 +40,8 @@ public class GameStarter : MonoBehaviour
             Debug.Log("닉네임을 입력하세요");
             return;
         }
-            
+
+        NickName.value = nickName.text;
         StartCoroutine(HomeUIManager.Instance.HideGameStartMenu());
          
         // 로딩 화면 

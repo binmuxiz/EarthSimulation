@@ -11,6 +11,7 @@ public class GameManager : Singleton<GameManager>
 {
     public readonly Dictionary<RoleType, Role> RoleDict = new();
 
+
     private void Start()
     {
         StartCoroutine(Process());
@@ -18,6 +19,7 @@ public class GameManager : Singleton<GameManager>
 
     private IEnumerator Process()
     {
+        SetNickName();
         AssignJob(); // 직업 배정 
 
         yield return GameIntroUIController.Instance.ShowIntro();
@@ -28,7 +30,7 @@ public class GameManager : Singleton<GameManager>
         yield return new WaitUntil(() => RunnerController.Runner.SessionInfo.PlayerCount <= SharedData.ReadCount);
         
         Debug.Log("ReadAll");
-        
+        PlayerManager.Instance.SetPlayersInfo();
 
         StoryManager.Instance.processPermitted = true; // 스토리 시작 
         GameIntroUIController.Instance.gameObject.SetActive(false);
@@ -45,12 +47,19 @@ public class GameManager : Singleton<GameManager>
         {
             RoleType[] roleTypes = (RoleType[])Enum.GetValues(typeof(RoleType));
             
-            for (int i = 0; i < PlayerManager.Instance.players.Count; i++)
+            for (int i = 0; i < SharedDataList.Instance.sharedDatas.Count; i++)
             {
-                PlayerManager.Instance.players[i].AssignJobRPC(roleTypes[i]);
+                SharedDataList.Instance.sharedDatas[i].AssignJobRPC(roleTypes[i]);
             }    
         }
     }
+
+    private void SetNickName()
+    {
+        Debug.Log("SetNickName()");
+        SharedData.Instance.RpcSetNickName(NickName.value);
+    }
+    
     
     private void Awake()
     {

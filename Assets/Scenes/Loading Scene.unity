@@ -900,7 +900,7 @@ GameObject:
   - component: {fileID: 1511466770}
   - component: {fileID: 1511466771}
   m_Layer: 0
-  m_Name: PlayerManager
+  m_Name: SharedDataList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -933,7 +933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dba59849af83413daa40b6660fb43db7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  players: []
+  sharedDatas: []
 --- !u!1 &1874473736
 GameObject:
   m_ObjectHideFlags: 0

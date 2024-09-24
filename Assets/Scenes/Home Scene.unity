@@ -806,7 +806,7 @@ GameObject:
   - component: {fileID: 227624556}
   - component: {fileID: 227624555}
   m_Layer: 5
-  m_Name: InputTItle
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
