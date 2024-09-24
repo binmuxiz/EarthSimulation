@@ -41,10 +41,10 @@ public class GameIntroUIController : Singleton<GameIntroUIController>
     private IEnumerator ShowStory()
     {
         float fadeDuration = 0.6f;
-        yield return FadeController.Instance.FadeIn(storyCanvasGroup, fadeDuration);
+        yield return FadeController.FadeIn(storyCanvasGroup, fadeDuration);
         yield return textLoader.LoadText("game_story", storyText, true);
         yield return new WaitForSeconds(3f);
-        yield return FadeController.Instance.FadeOut(storyCanvasGroup, fadeDuration);
+        yield return FadeController.FadeOut(storyCanvasGroup, fadeDuration);
     }
 
     private IEnumerator ShowRole()
@@ -55,8 +55,8 @@ public class GameIntroUIController : Singleton<GameIntroUIController>
         
         float fadeDuration = 0.6f;
 
-        yield return FadeController.Instance.FadeIn(roleCanvasGroup, fadeDuration);
+        yield return FadeController.FadeIn(roleCanvasGroup, fadeDuration);
         yield return new WaitForSeconds(3f);
-        yield return FadeController.Instance.FadeOut(roleCanvasGroup, fadeDuration);
+        yield return FadeController.FadeOut(roleCanvasGroup, fadeDuration);
     }
 }

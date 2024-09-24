@@ -13,12 +13,8 @@ namespace Home
         [SerializeField] CanvasGroup gameStartMenuUI;
         [SerializeField] GameObject loadingUI;
 
-        private FadeController _fadeController;
-        
         private void Awake()
         {
-            _fadeController = FadeController.Instance;
-            
             introUI.gameObject.SetActive(true);
             menuUI.gameObject.SetActive(true);
             storySelectionUI.gameObject.SetActive(true);
@@ -40,9 +36,9 @@ namespace Home
 
         private IEnumerator Start()
         {
-            yield return _fadeController.FadeIn(introUI, 1f);
+            yield return FadeController.FadeIn(introUI, 1f);
             yield return new WaitForSeconds(2f);
-            yield return _fadeController.FadeOut(introUI, 1f);
+            yield return FadeController.FadeOut(introUI, 1f);
 
             yield return ShowMenu();
             introUI.gameObject.SetActive(false);
@@ -50,32 +46,32 @@ namespace Home
         
         public IEnumerator ShowMenu()
         {
-            yield return _fadeController.FadeIn(menuUI, 1f);
+            yield return FadeController.FadeIn(menuUI, 1f);
         }
 
         public IEnumerator HideMenu()
         {
-            yield return _fadeController.FadeOut(menuUI, 1f);
+            yield return FadeController.FadeOut(menuUI, 1f);
         }
 
         public IEnumerator ShowStorySelection()
         {
-            yield return _fadeController.FadeIn(storySelectionUI, 1f);
+            yield return FadeController.FadeIn(storySelectionUI, 1f);
         }
         
         public IEnumerator HideStorySelection()
         {
-            yield return _fadeController.FadeOut(storySelectionUI, 1f);
+            yield return FadeController.FadeOut(storySelectionUI, 1f);
         }
         
         public IEnumerator ShowGameStartMenu()
         {
-            yield return _fadeController.FadeIn(gameStartMenuUI, 1f);
+            yield return FadeController.FadeIn(gameStartMenuUI, 1f);
         }
         
         public IEnumerator HideGameStartMenu()
         {
-            yield return _fadeController.FadeOut(gameStartMenuUI, 1f);
+            yield return FadeController.FadeOut(gameStartMenuUI, 1f);
         }
         
         public void ShowLoadingView()

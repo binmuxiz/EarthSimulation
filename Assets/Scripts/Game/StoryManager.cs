@@ -99,6 +99,8 @@ namespace Game
         // 스토리창 
         async UniTask ShowStory(string[] story)
         {
+            SharedData.Instance.RpcClearReadCount(); // ReadCount 초기화 
+
             _clickNextBtn = false;
 
             for (int i = 0; i < story.Length - 1; i++)
@@ -108,16 +110,14 @@ namespace Game
                 await UniTask.WaitUntil(() => _clickNextBtn);
                 _clickNextBtn = false;
             }
-        
-            SharedData.Instance.RpcReadDone();
-            // 다른 클라이언트가 스토리를 다 읽을 때까지 대기 
-            await UniTask.WaitUntil(() => RunnerController.Runner.SessionInfo.PlayerCount <= SharedData.ReadCount);
 
-            await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
+            MessageManager.Instance.ShowWaitOtherClientMessage();
         
+            SharedData.Instance.RpcReadDone();      
+            await UniTask.WaitUntil(() => RunnerController.Runner.SessionInfo.PlayerCount <= SharedData.ReadCount);
             Debug.Log("All Read");
-            SharedData.Instance.RpcClearReadCount();
-        
+          
+            MessageManager.Instance.HideWaitOtherClientMessage();
         }
 
 
@@ -131,7 +131,6 @@ namespace Game
                 choices[i].text = texts[i];
                 // VoteManager.Instance.voteTexts[i].text = "0";  
             }
-
         }
         
             

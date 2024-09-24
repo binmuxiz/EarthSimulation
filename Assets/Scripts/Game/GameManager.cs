@@ -26,9 +26,9 @@ public class GameManager : Singleton<GameManager>
         
         // 다른 클라이언트가 인트로를 다 볼때까지 대기
         yield return new WaitUntil(() => RunnerController.Runner.SessionInfo.PlayerCount <= SharedData.ReadCount);
+        
         Debug.Log("ReadAll");
         
-        // SharedData.Instance.RpcClearReadCount(); // ReadCount 초기화 
 
         StoryManager.Instance.processPermitted = true; // 스토리 시작 
         GameIntroUIController.Instance.gameObject.SetActive(false);

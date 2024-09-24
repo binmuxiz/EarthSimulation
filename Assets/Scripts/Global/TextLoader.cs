@@ -6,13 +6,6 @@ public class TextLoader : MonoBehaviour
 {
     public TypingEffect typingEffect;
 
-    private void Start()
-    {
-        Debug.Log("TypingEffect is exist : " + (typingEffect != null));
-        
-        // DontDestroyOnLoad(gameObject);
-    }
-
     public IEnumerator LoadText(string filename, TMP_Text tmpText, bool effect)
     {
         var textAsset = Resources.Load<TextAsset>(filename);
