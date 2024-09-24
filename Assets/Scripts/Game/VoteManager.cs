@@ -55,7 +55,6 @@ public class VoteManager : Singleton<VoteManager>
         { 
             maxChoice = MaxChoice();
             NetworkManager.Instance.SendData.choice_index = maxChoice;
-            SharedData.HasAggregated = true;
             SharedData.Instance.RpcHasAggregated();
         }
         else
