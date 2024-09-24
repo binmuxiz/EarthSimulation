@@ -53,22 +53,22 @@ namespace Game
         {
             SharedData.ClearVotes();
             
-            await RequestDataProcess();
+            await RequestData();
 
             ActiveStoryUI(true);
             
-            await ShowStory(NetworkManager.Instance.GetStory());  // 스토리  UI
+            await ShowStory();  // 스토리  UI
 
             ActiveStoryUI(false);
             ActiveChoiceUI(true);
             
-            await ShowChoices(NetworkManager.Instance.GetChoices()); // 선택지 UI
+            await ShowChoices(); // 선택지 UI
             
             int maxChoice = await VoteManager.Instance.VoteProcess();
-        
-// TODO 내 선택 말고 다수결 선택 받은 선택지 인덱스로 점수 저장 
-        
-            ScoreManager.Instance.SetScore(NetworkManager.Instance.GetScore(maxChoice));
+            Debug.Log($"MaxChoice => {maxChoice}");
+
+            Score score = NetworkManager.Instance.GetScore(maxChoice);
+            ScoreManager.Instance.SetScore(score);
         
             if (_currentRound == FinalRound) return;
         
@@ -78,13 +78,18 @@ namespace Game
         }
         
         
-        private async UniTask RequestDataProcess()
+        private async UniTask RequestData()
         {
             NetworkManager.Instance.GetData = null;
             
             if (RunnerController.Runner.IsSharedModeMasterClient) // 마스터 클라이언트인 경우 
             {
-                string data = await RequestData(); // 데이터 요청 
+                string data;
+                if (_currentRound == 1) 
+                    data = await NetworkManager.Instance.RequestStartData();
+                else              
+                    data = await NetworkManager.Instance.RequestData();
+
                 SharedData.Instance.SendJsonDataToPlayer(data); // 다른 클라이언트에게 데이터 전달 
             }
             else
@@ -97,15 +102,16 @@ namespace Game
 
         
         // 스토리창 
-        async UniTask ShowStory(string[] story)
+        async UniTask ShowStory()
         {
             SharedData.Instance.RpcClearReadCount(); // ReadCount 초기화 
+            string[] texts = NetworkManager.Instance.GetStory();
 
             _clickNextBtn = false;
 
-            for (int i = 0; i < story.Length - 1; i++)
+            for (int i = 0; i < texts.Length - 1; i++)
             {
-                storyText.text = story[i];
+                storyText.text = texts[i];
             
                 await UniTask.WaitUntil(() => _clickNextBtn);
                 _clickNextBtn = false;
@@ -122,8 +128,10 @@ namespace Game
 
 
         // 선택창
-        async UniTask ShowChoices(string[] texts)
+        async UniTask ShowChoices()
         {
+            string[] texts = NetworkManager.Instance.GetChoices();
+            
             Debug.Log("ShowChoices()");
             
             for (int i = 0; i < texts.Length; i++)
@@ -134,15 +142,7 @@ namespace Game
         }
         
             
-        // 데이터 요청하고 응답받는 프로세스 
-        private async UniTask<string> RequestData()
-        {
-            if (_currentRound == 1) 
-                return await NetworkManager.Instance.RequestStartData();
-            else              
-                return await NetworkManager.Instance.RequestData();
-        }
-            
+
         public void NextButton() // OnClicked
         {
             _clickNextBtn = true;   

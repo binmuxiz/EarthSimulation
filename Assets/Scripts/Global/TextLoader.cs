@@ -12,8 +12,6 @@ public class TextLoader : MonoBehaviour
 
         if (textAsset != null)
         {
-            Debug.Log(textAsset.text);
-
             if (effect)
             {
                 yield return StartCoroutine(typingEffect.TypeText(textAsset.text, tmpText));
