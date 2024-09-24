@@ -14,7 +14,6 @@ public class VoteManager : Singleton<VoteManager>
     public TMP_Text[] voteTexts; // 투표 개수 보이는 텍스트 
     public TMP_Text timerText;
 
-    
     private bool _voted;
     private int _myVote = -1;
     
@@ -42,32 +41,30 @@ public class VoteManager : Singleton<VoteManager>
     //     SharedData.Instance.OnVoted -= RefreshUI;
     // }
     
-    public async UniTask<int> VoteProcess()
+    public async UniTask VoteProcess()
     {
+        ClearMyVote();
         SharedData.HasAggregated = false;
+        
         await TimerProcess(); 
-        RandomChoice(); // 아무 선택이 없을 때 랜덤 선택 (내 선택만)
+        RandomVote(); // 아무 선택이 없을 때 랜덤 선택 (내 선택만)
             
         // await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
 
-        int maxChoice = 0;
         if (RunnerController.Runner.IsSharedModeMasterClient) // 투표의 일관성을 위해 마스터 클라이언트가 투표 집계 
         { 
-            maxChoice = MaxChoice();
-            NetworkManager.Instance.SendData.choice_index = maxChoice;
-            SharedData.Instance.RpcHasAggregated();
+            int selectedNum = Aggregate();
+            NetworkManager.Instance.SendData.choice_index = selectedNum;
+            SharedData.Instance.RpcHasAggregated(selectedNum);
         }
         else
         {
             await UniTask.WaitUntil(() => SharedData.HasAggregated);
         }
-            
-        ClearMyVote();
-        return maxChoice;
     }
     
     
-    private int MaxChoice()
+    private int Aggregate()
     {
         int maxChoiceIndex;
             
@@ -103,8 +100,23 @@ public class VoteManager : Singleton<VoteManager>
         return maxChoiceIndex;
     }
     
+    public void Vote(int idx)
+    {
+        if (_myVote == idx) return; // 동일 선택지 선택시 return
+        
+        SharedData.Instance.RpcVote(idx);
     
-    private void RandomChoice()
+        if (_voted) SharedData.Instance.RpcVoteCancel(_myVote);    
+
+        _myVote = idx;
+        _voted = true;
+        Debug.Log($"My Vote => {idx}");
+    }
+
+    
+    
+    
+    private void RandomVote()
     {
         if (!_voted)
         {
@@ -112,18 +124,6 @@ public class VoteManager : Singleton<VoteManager>
         } 
     }
     
-    
-    public void Vote(int idx)
-    {
-        if (_myVote == idx) return; // 동일 선택지 선택시 return
-    
-        SharedData.Instance.RpcVote(idx);
-        if (_voted) SharedData.Instance.RpcVoteCancel(_myVote);    
-    
-        _myVote = idx;
-        _voted = true;
-    }
-
 
     private void ClearMyVote()
     {
@@ -137,7 +137,7 @@ public class VoteManager : Singleton<VoteManager>
         for (int t = Timer; t >= 0; t--)
         {
             timerText.text = $"남은 시간 : {t}";
-            await UniTask.Delay(TimeSpan.FromSeconds(1));
+            await UniTask.Delay(1000);
         }
     }
 }

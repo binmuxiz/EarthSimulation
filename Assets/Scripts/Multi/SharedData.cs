@@ -41,8 +41,12 @@ public class SharedData : NetworkBehaviour
     // 스토리 읽은 플레이어 수
     public static int ReadCount { get; private set; }
     
+    
+    // 집계 완료
     public static bool HasAggregated { get; set; } 
     
+    // 투표된 선택지 번호
+    public static int SelectedNum { get; set; }
 
     
 /*
@@ -136,7 +140,6 @@ public class SharedData : NetworkBehaviour
         {
             Votes[idx] -= 1;
             onVoted.Invoke(Votes);
-
         }
     }
 
@@ -152,11 +155,19 @@ public class SharedData : NetworkBehaviour
     
 // 집계했는지 여부
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    public void RpcHasAggregated()
+    public void RpcHasAggregated(int num)
     {
         HasAggregated = true;
+        SelectedNum = num;
     }
     
+// Max 투표
+    // [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    // public void RpcSelectedNum(int num)
+    // {
+    //     SelectedNum = num;
+    // }
+    //
 
     // public void SetTimer(float time)
     // {

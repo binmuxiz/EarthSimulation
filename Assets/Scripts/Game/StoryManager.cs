@@ -64,10 +64,10 @@ namespace Game
             
             await ShowChoices(); // 선택지 UI
             
-            int maxChoice = await VoteManager.Instance.VoteProcess();
-            Debug.Log($"MaxChoice => {maxChoice}");
+            await VoteManager.Instance.VoteProcess();
+            Debug.Log($"Selected Num => {SharedData.SelectedNum}");
 
-            Score score = NetworkManager.Instance.GetScore(maxChoice);
+            Score score = NetworkManager.Instance.GetScore(SharedData.SelectedNum);
             ScoreManager.Instance.SetScore(score);
         
             if (_currentRound == FinalRound) return;
