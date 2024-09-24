@@ -51,6 +51,8 @@ namespace Game
 
         private async UniTask Process()
         {
+            SharedData.ClearVotes();
+            
             await RequestDataProcess();
 
             ActiveStoryUI(true);
@@ -89,6 +91,7 @@ namespace Game
             {
                 await UniTask.WaitUntil(() => NetworkManager.Instance.GetData != null);
             }
+            Debug.Log(NetworkManager.Instance.GetData);
         }
 
 

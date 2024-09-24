@@ -23,13 +23,14 @@ public class VoteManager : Singleton<VoteManager>
     
     private void OnEnable()
     {
-        Debug.Log("OnEnable()");
         SharedData.onVoted += RefreshUI;
     }
     
         
     private void RefreshUI(Dictionary<int, int> votes)
     {
+        Debug.Log("RefreshUI()");
+        
         for (var i = 0; i < votes.Count; ++i)
         {
             voteTexts[i].text = $"{votes[i]}";

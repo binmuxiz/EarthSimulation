@@ -31,6 +31,9 @@ public class SharedData : NetworkBehaviour
     
     public static Action<Dictionary<int, int>> onVoted;
 
+    // 투표
+    // (key: index, value: count)
+    public static Dictionary<int, int> Votes { get; } = new();
 
     // Ready
     public static int ReadyCount { get; private set; }
@@ -38,11 +41,6 @@ public class SharedData : NetworkBehaviour
     // 스토리 읽은 플레이어 수
     public static int ReadCount { get; private set; }
     
-    // 투표
-    // (key: index, value: count)
-    public static Dictionary<int, int> Votes { get; } = new();
-
-
     public static bool HasAggregated { get; set; } 
     
 
@@ -76,7 +74,7 @@ public class SharedData : NetworkBehaviour
     public void RpcReady() 
     {
         ReadyCount++;
-        Debug.Log($"ReadyCount Changed : {ReadyCount}");
+        Debug.Log($"Ready Count : {ReadyCount}");
     }
     
         
@@ -145,12 +143,11 @@ public class SharedData : NetworkBehaviour
 // 투표 초기화 
     public static void ClearVotes()
     {
-        Debug.Log("ClearVotes()");
-        
         for (int i = 0; i < Votes.Count; i++)
         {
             Votes[i] = 0;
         }
+        onVoted.Invoke(Votes);
     }
     
 // 집계했는지 여부
