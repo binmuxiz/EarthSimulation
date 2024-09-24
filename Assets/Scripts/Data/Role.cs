@@ -1,4 +1,5 @@
 
+
 namespace Data
 {
     public enum RoleType

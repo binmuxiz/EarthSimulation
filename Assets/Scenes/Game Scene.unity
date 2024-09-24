@@ -4055,6 +4055,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ac63e3868314fadac1678e0209f8ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: e58cf63108a184461ab55d52ba918b77, type: 3}
+  - {fileID: 21300000, guid: 2007b7f5762d050499d9d7f665f47b37, type: 3}
+  - {fileID: 21300000, guid: 6f538758b58fd86499c1195a3eb4a72b, type: 3}
+  - {fileID: 21300000, guid: 5f5b7cfa64511c34e8cfbb35e07ed3c5, type: 3}
+  roleImages:
+  - {fileID: 2042235902}
+  - {fileID: 138549324}
+  - {fileID: 280711993}
+  - {fileID: 234911781}
   nickNames:
   - {fileID: 585631154}
   - {fileID: 1110100437}
