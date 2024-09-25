@@ -5,20 +5,20 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameIntroUIController : Singleton<GameIntroUIController>
+public class GameIntroUIController : MonoBehaviour
 {
     public CanvasGroup storyCanvasGroup;
-    public CanvasGroup roleCanvasGroup;
 
     public TMP_Text storyText;
     public TextLoader textLoader;
 
-    public Image roleImage;
-    public TMP_Text roleName;
-    public TMP_Text roleDescription;
+    public CanvasGroup roleCanvasGroup;
+    [SerializeField] private Image roleImage;
+    [SerializeField] private Sprite[] roleSprites;
     
     private void Awake()
     {
+        storyText.text = null;
         textLoader = GetComponent<TextLoader>();
         
         storyCanvasGroup.gameObject.SetActive(true);
@@ -34,7 +34,6 @@ public class GameIntroUIController : Singleton<GameIntroUIController>
     public IEnumerator ShowIntro()
     {
         yield return ShowStory();
-        yield return new WaitForSeconds(1f);
         yield return ShowRole();
     }
 
@@ -49,14 +48,11 @@ public class GameIntroUIController : Singleton<GameIntroUIController>
 
     private IEnumerator ShowRole()
     {
-        Role myRole = GameManager.Instance.RoleDict[SharedData.Instance.Role];
-        roleName.text = myRole.Name;
-        roleDescription.text = myRole.Description;
+        roleImage.sprite = roleSprites[(int) SharedData.Instance.Role];
         
         float fadeDuration = 0.6f;
-
         yield return FadeController.FadeIn(roleCanvasGroup, fadeDuration);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(7f);
         yield return FadeController.FadeOut(roleCanvasGroup, fadeDuration);
     }
 }

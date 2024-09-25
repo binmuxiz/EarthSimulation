@@ -9,15 +9,14 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] private GameObject gameIntroUIGameObject;
+    [SerializeField] private GameIntroUIController gameIntroUIController;
+    [SerializeField] private GameObject introUIGameObject;
 
     public readonly Dictionary<RoleType, Role> RoleDict = new();
 
         
     private void Awake()
     {
-        gameIntroUIGameObject.SetActive(true);
-        
         RoleDict.Add(RoleType.Environment, new Role(
             "환경 과학자", "행성의 대기와 생태계를 조정하고, 인간이 살 수 있는 환경을 구축하는 전문가."));
         RoleDict.Add(RoleType.Society, new Role("사회학자", "새로운 사회 구조와 문명을 설계하여, 인류가 새로운 행성에서 평화롭게 살아갈 수 있는 기반을 마련하는 전문가."));
@@ -35,7 +34,7 @@ public class GameManager : Singleton<GameManager>
         SetNickName();
         AssignJob(); // 직업 배정 
 
-        yield return GameIntroUIController.Instance.ShowIntro();
+        yield return gameIntroUIController.ShowIntro();
         
         SharedData.Instance.RpcReadDone(); // 난 다 읽었어 
         
@@ -46,7 +45,8 @@ public class GameManager : Singleton<GameManager>
         PlayerManager.Instance.SetPlayersInfo();
 
         StoryManager.Instance.processPermitted = true; // 스토리 시작 
-        GameIntroUIController.Instance.gameObject.SetActive(false);
+
+        introUIGameObject.SetActive(false);
     }
     
 
