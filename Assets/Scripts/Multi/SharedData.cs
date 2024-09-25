@@ -4,13 +4,10 @@ using Data;
 using Fusion;
 using Fusion.Sockets;
 using Global;
-using TMPro;
 using UnityEngine;
 
 public class SharedData : NetworkBehaviour
 {
-    
-    
     
 /*
  * ------------ Non - Static ---------------
@@ -176,19 +173,7 @@ public class SharedData : NetworkBehaviour
     {
         Debug.Log($"RpcEndingIndex({index}) 호출");
         EndingIndex = index;
-        Debug.Log($"EndingIndex : {EndingIndex}"); // 괘씸한놈
     } 
-    
-    /*
-    //Ending 번호 전송 받았는지 세는 함수
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    public void EndingCountRpc()
-    {
-        endingCount++;
-        Debug.Log("endingCount : " + endingCount);
-    }
-    */
-    
     
     
     // Max 투표
