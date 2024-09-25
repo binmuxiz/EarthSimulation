@@ -13,7 +13,7 @@ namespace Network
         private const string base_url = "https://eternal-leopard-hopelessly.ngrok-free.app";
 
         private SendData _sendData;
-        private static GetEndingData _getEndingData;
+        private GetEndingData _getEndingData;
         public GetData GetData { get; set; }
 
         public const int ChoiceNum = 4; 
@@ -39,7 +39,6 @@ namespace Network
             Debug.Log("요청 보냄");
             await req.SendWebRequest();
             Debug.Log("응답 생성됨"); 
-            
             
             string received = req.downloadHandler.text;
             GetData = JsonConvert.DeserializeObject<GetData>(received);
@@ -76,7 +75,8 @@ namespace Network
             if (!string.IsNullOrEmpty(temp))
             {
                 _getEndingData = JsonConvert.DeserializeObject<GetEndingData>(temp);
-                return _getEndingData.end_story;
+                Debug.Log(_getEndingData.endingIdx);
+                return _getEndingData.endingIdx;
             }
             else
             {

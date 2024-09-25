@@ -23,16 +23,18 @@ namespace Game
                 Debug.Log("Master Client");
                 int data = await NetworkManager.Instance.RequestEnding();
                 Debug.Log("ending idx : " + data);
-                SharedData.Instance.RpcTransmitEndingIndex(data);
+                SharedData.Instance.RpcEndingIndex(data);
+                Debug.Log("RpcEndingIndex() 호출 완료 ");
             }
-            else
+            else 
             {
                 Debug.Log("Not Master Client");
                 await UniTask.WaitUntil(() => SharedData.EndingIndex != -1);
+                Debug.Log("Wait 완료");
             }
             await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
             
-            Debug.Log("endingIndex : " + SharedData.EndingIndex);
+            Debug.Log($"Ending Index 결과 : {SharedData.EndingIndex}");
             /*
             SharedData.Instance.EndingCountRpc();
             Debug.Log(SharedData.endingCount);

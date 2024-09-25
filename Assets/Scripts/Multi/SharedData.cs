@@ -172,10 +172,11 @@ public class SharedData : NetworkBehaviour
     
     //Ending 인덱스 전송
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    public void RpcTransmitEndingIndex(int index)
+    public void RpcEndingIndex(int index)
     {
+        Debug.Log($"RpcEndingIndex({index}) 호출");
         EndingIndex = index;
-        Debug.Log(EndingIndex); // 괘씸한놈
+        Debug.Log($"EndingIndex : {EndingIndex}"); // 괘씸한놈
     } 
     
     /*
