@@ -50,7 +50,7 @@ public class GameIntroUIController : Singleton<GameIntroUIController>
     private IEnumerator ShowRole()
     {
         Role myRole = GameManager.Instance.RoleDict[SharedData.Instance.Role];
-        roleName.text = myRole.Name + "\nNickname 넣어야 함";
+        roleName.text = myRole.Name;
         roleDescription.text = myRole.Description;
         
         float fadeDuration = 0.6f;
