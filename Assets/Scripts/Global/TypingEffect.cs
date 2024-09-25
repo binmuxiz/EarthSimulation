@@ -24,7 +24,12 @@ public class TypingEffect : MonoBehaviour
                 uiText.text += str[i];
                 yield return new WaitForSeconds(typingSpeed);
             }
-            else break;
+            else
+            {
+                EffectSoundManager.Instance.ButtonEffect();
+
+                break;
+            }
         }
 
         if (i != str.Length)

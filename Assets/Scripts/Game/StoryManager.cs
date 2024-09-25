@@ -166,6 +166,7 @@ namespace Game
 
         public void NextButton() // OnClicked
         {
+            EffectSoundManager.Instance.ButtonEffect();
             _clickNextBtn = true;   
         }
                 
