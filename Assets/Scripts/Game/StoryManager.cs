@@ -1,9 +1,10 @@
-using System;
 using Cysharp.Threading.Tasks;
 using Global;
+using Handler;
 using Network;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game
 {
@@ -12,6 +13,9 @@ namespace Game
 /*
  * ---------------- Fields -----------------
  */
+        public VideoHandler mVideoHandler;
+        public RawImage mScreen;
+
         public bool processPermitted = false;
         
         public Canvas storyCanvas;
@@ -37,6 +41,7 @@ namespace Game
         {
             await UniTask.WaitUntil(() => processPermitted); // 스토리 시작 대기
             _currentRound = 0;
+            await mVideoHandler.PrepareVideo(mScreen);
 
             for (int i = 1; i <= FinalRound; i++)
             {
@@ -44,7 +49,8 @@ namespace Game
                 Debug.Log($"Round {i}");
                 await Process();
             }
-                
+            
+            mVideoHandler.StopVideo();
             EndingManager.Instance.processPermitted = true; // 엔딩 시작 
         }
 
@@ -52,10 +58,14 @@ namespace Game
         private async UniTask Process()
         {
             SharedData.ClearVotes();
+            ActiveStoryUI(true);  
+            mScreen.gameObject.SetActive(true);
+            mVideoHandler.PlayVideo(VideoHandler.VideoType.Loading); // 로딩 영상 재생 
             
             await RequestData();
 
-            ActiveStoryUI(true);
+            mScreen.gameObject.SetActive(false);
+            mVideoHandler.PauseVideo();                             // 로딩 영상 일시정지 
             
             await ShowStory();  // 스토리  UI
 
@@ -150,6 +160,10 @@ namespace Game
                 
         private void ActiveStoryUI(bool active)
         {
+            if (active)
+            {
+                storyText.text = null; // text 초기화 
+            }
             storyCanvas.gameObject.SetActive(active);    
         }
         
