@@ -1,89 +1,101 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
+using Data;
 
 public class EventManager : MonoBehaviour
 {
-    public GameObject[] earthObjects;  // 각 이벤트에 대응하는 지구 오브젝트 배열
-    public GameObject[] eventUIs;  // 각 이벤트에 대응하는 UI 오브젝트 배열
-    public Data.Score scoreSystem;  // 점수 시스템
+    [SerializeField] private GameObject primalObject;
+    [SerializeField] private GameObject[] planetObjects;  // 각 이벤트에 대응하는 지구 오브젝트 배열
+    
+    [SerializeField] private CanvasGroup eventUICanvasGroup;
+    [SerializeField] private Sprite[] eventUISprites;  // 각 이벤트에 대응하는 UI 오브젝트 배열
+    
+    private Image _eventUIImage;
 
-    private GameObject previousEarthObject;  // 이전에 활성화된 지구 오브젝트
-    private GameObject previousUIObject;  // 이전에 활성화된 UI 오브젝트
-    private int currentEventIndex = -1;  // 현재 발생한 이벤트 인덱스
+    private int _currentIdx;  // 현재 발생한 이벤트 인덱스
 
     // 각 이벤트의 조건을 관리하는 델리게이트 배열
-    private System.Func<bool>[] eventConditions;
+    private Func<bool>[] _eventConditions;
 
-    void Start()
+    private void Awake()
     {
-        // 모든 오브젝트 비활성화
-        foreach (GameObject obj in earthObjects)
-        {
-            obj.SetActive(false);
-        }
-        foreach (GameObject ui in eventUIs)
-        {
-            ui.SetActive(false);
-        }
-
+        _eventUIImage = eventUICanvasGroup.gameObject.GetComponentInChildren<Image>();
+        
         // 이벤트 조건 배열 설정
-        eventConditions = new System.Func<bool>[]
+        _eventConditions = new Func<bool>[]
         {
-            () => scoreSystem.Technology >= 25,  // 첨단 산업 발전 조건
-            () => scoreSystem.Environment <= 10, // 대기 오염 조건
-            () => scoreSystem.Environment <= 5,  // 산림 파괴 조건
-            () => scoreSystem.Economy <= 10,     // 경제 붕괴 조건
-            () => scoreSystem.Society >= 50,     // 사회 복지 시스템 확장 조건
+            () => Score.Environment < 10,                                                      // 환경 파괴
+            () => Score.Environment >= 10 && Score.Technology >= 25 && Score.Economy >= 25,  // 첨단 산업 발전
+            () => Score.Environment >= 20 && Score.Technology >= 20,                          // 지속 가능한 발전을 위한 한 걸음 
+            () => Score.Society >= 25 && Score.Technology >= 15 && Score.Economy >= 15,      // 사회 복지 시스템 확장
         };
     }
 
-    void Update()
+    void Start()
     {
-        // 반복문으로 조건 배열을 돌면서 조건이 만족되는지 확인
-        for (int i = 0; i < eventConditions.Length; i++)
+        eventUICanvasGroup.alpha = 0;
+        eventUICanvasGroup.interactable = eventUICanvasGroup.blocksRaycasts = false;
+
+        // 모든 오브젝트 비활성화
+        foreach (GameObject obj in planetObjects)
         {
-            if (eventConditions[i]())  // 조건이 만족되면
+            obj.SetActive(false);
+        }
+    }
+
+    public void Event()
+    {
+        for (int i = 0; i < _eventConditions.Length; i++)
+        {
+            if (_eventConditions[i]())  // 조건이 만족되면
             {
+                if (primalObject.activeSelf) primalObject.SetActive(false);
+                Debug.Log($"이벤트 만족한 인덱스 : {i}");
                 TriggerEvent(i);  // 해당 이벤트 발생
                 break;  // 한번 이벤트가 발생하면 반복문 종료
             }
         }
     }
 
-    void TriggerEvent(int eventIndex)
+    void TriggerEvent(int idx)
     {
         // 같은 이벤트가 중복 발생하지 않도록 확인
-        if (currentEventIndex == eventIndex) return;
+        if (_currentIdx == idx)
+        {
+            Debug.Log($"{idx}번 이미 띄우고 있음");
+            return;
+        }
 
+        int previous = _currentIdx;
+        _currentIdx = idx;
+        
         // 이전에 활성화된 지구 오브젝트와 UI를 비활성화
-        if (previousEarthObject != null)
+        if (planetObjects[previous] != null)
         {
-            previousEarthObject.SetActive(false);
+            planetObjects[previous].SetActive(false);
         }
-        if (previousUIObject != null)
-        {
-            previousUIObject.SetActive(false);
-        }
+        
+        // UI 알림을 8초 동안 띄운 후 자동으로 끔
+        StartCoroutine(ShowEventUI(idx));
 
         // 새로운 지구 오브젝트와 UI를 활성화
-        earthObjects[eventIndex].SetActive(true);
-        eventUIs[eventIndex].SetActive(true);
-
-        // 현재 오브젝트 추적
-        previousEarthObject = earthObjects[eventIndex];
-        previousUIObject = eventUIs[eventIndex];
-
-        // 현재 이벤트 인덱스 업데이트
-        currentEventIndex = eventIndex;
-
-        // UI 알림을 8초 동안 띄운 후 자동으로 끔
-        StartCoroutine(ShowEventUI(eventIndex));
+        if (planetObjects[_currentIdx] != null)
+        {
+            planetObjects[_currentIdx].SetActive(true);
+        }
     }
 
-    IEnumerator ShowEventUI(int eventIndex)
+    IEnumerator ShowEventUI(int idx)
     {
-        eventUIs[eventIndex].SetActive(true);
-        yield return new WaitForSeconds(8f);
-        earthObjects[eventIndex].SetActive(false);
+        if (eventUISprites[idx] != null)
+        {
+            _eventUIImage.sprite = eventUISprites[idx];
+            
+            eventUICanvasGroup.alpha = 1;            
+            yield return new WaitForSeconds(8f);
+            eventUICanvasGroup.alpha = 0;            
+        }
     }
 }
