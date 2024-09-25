@@ -1,30 +1,28 @@
+using System.Collections;
 using Global;
 using TMPro;
 using UnityEngine;
 
 public class MessageManager : Singleton<MessageManager>
 {
-    public CanvasGroup messageCanvas;
-    
-    private const string WaitOtherClient = "다른 팀원이 스토리를 읽는 중입니다.";
+    [SerializeField] private CanvasGroup messageCanvasGroup;
+    [SerializeField] private TMP_Text waitingMessage;
 
-    private TMP_Text _message;
+    private const string WaitOtherClientMessage = "다른 팀원이 스토리를 읽는 중입니다.";
 
     private void Awake()
     {
-        messageCanvas.gameObject.SetActive(false);
-        _message = messageCanvas.gameObject.GetComponentInChildren<TMP_Text>();
+        messageCanvasGroup.gameObject.SetActive(true);
+        waitingMessage.text = WaitOtherClientMessage;
     }
 
     public void ShowWaitOtherClientMessage()
     {
-        messageCanvas.gameObject.SetActive(true);
-        _message.text = WaitOtherClient;
+        messageCanvasGroup.alpha = 1f;
     }
     
     public void HideWaitOtherClientMessage()
     {
-        messageCanvas.gameObject.SetActive(false);
-        _message.text = null;
+        messageCanvasGroup.alpha = 0f;
     }
 }
