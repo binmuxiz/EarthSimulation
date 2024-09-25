@@ -9,9 +9,8 @@ using UnityEngine;
 
 public class SharedData : NetworkBehaviour
 {
-
-    // public static bool Ok = false;
-    // [Networked] public TickTimer timer { get; set; }
+    
+    
     
 /*
  * ------------ Non - Static ---------------
@@ -30,6 +29,9 @@ public class SharedData : NetworkBehaviour
     public static SharedData Instance;  // StateAuthority SharedData
     
     public static Action<Dictionary<int, int>> onVoted;
+    public static int EndingIndex { get; private set; } = -1;
+    
+    // public static int endingCount { get; set; } //엔딩 번호 다 받았는지 세는 변수
 
     // 투표
     // (key: index, value: count)
@@ -168,7 +170,27 @@ public class SharedData : NetworkBehaviour
     }
 
     
-// Max 투표
+    //Ending 인덱스 전송
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RpcTransmitEndingIndex(int index)
+    {
+        EndingIndex = index;
+        Debug.Log(EndingIndex); // 괘씸한놈
+    } 
+    
+    /*
+    //Ending 번호 전송 받았는지 세는 함수
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void EndingCountRpc()
+    {
+        endingCount++;
+        Debug.Log("endingCount : " + endingCount);
+    }
+    */
+    
+    
+    
+    // Max 투표
     // [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     // public void RpcSelectedNum(int num)
     // {

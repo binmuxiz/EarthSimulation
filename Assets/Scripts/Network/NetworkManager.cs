@@ -4,6 +4,7 @@ using Global;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.Purchasing;
 
 namespace Network
 {
@@ -12,6 +13,7 @@ namespace Network
         private const string base_url = "https://eternal-leopard-hopelessly.ngrok-free.app";
 
         private SendData _sendData;
+        private static GetEndingData _getEndingData;
         public GetData GetData { get; set; }
 
         public const int ChoiceNum = 4; 
@@ -26,6 +28,7 @@ namespace Network
         {
             GetData = null;
             _sendData = new SendData();
+            _getEndingData = new GetEndingData();
         }
 
     
@@ -36,10 +39,10 @@ namespace Network
             Debug.Log("요청 보냄");
             await req.SendWebRequest();
             Debug.Log("응답 생성됨"); 
-        
+            
+            
             string received = req.downloadHandler.text;
             GetData = JsonConvert.DeserializeObject<GetData>(received);
-
             return received;
         }
 
@@ -55,16 +58,33 @@ namespace Network
 
             var received = req.downloadHandler.text;
             GetData = JsonConvert.DeserializeObject<GetData>(received);
-        
+
             return received;
         }
         
 // 엔딩 요청
 
-        // public async UniTask<string> RequestEnding()
-        // {
-        //     
-        // }
+        public async UniTask<int> RequestEnding()
+        {
+            var req = UnityWebRequest.Get(base_url + "/end");
+            
+            Debug.Log("엔딩 데이터 요청");
+            await req.SendWebRequest();
+            
+            string temp = req.downloadHandler.text;
+
+            if (!string.IsNullOrEmpty(temp))
+            {
+                _getEndingData = JsonConvert.DeserializeObject<GetEndingData>(temp);
+                return _getEndingData.end_story;
+            }
+            else
+            {
+                throw new NullReceiptException();
+            }
+        }
+
+        
 
         public string[] GetStory()
         {

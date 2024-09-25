@@ -1,4 +1,6 @@
+using System;
 using Cysharp.Threading.Tasks;
+using Fusion;
 using Global;
 using Handler;
 using Network;
@@ -26,7 +28,7 @@ namespace Game
         private bool _clickNextBtn;
         private int _currentRound;
         
-        private const int FinalRound = 5;
+        private const int FinalRound =3;
         
 /*
  * ----------------- Methods -----------------
@@ -106,6 +108,8 @@ namespace Game
             {
                 await UniTask.WaitUntil(() => NetworkManager.Instance.GetData != null);
             }
+            
+            
             Debug.Log(NetworkManager.Instance.GetData);
         }
 
