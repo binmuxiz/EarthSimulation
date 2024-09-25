@@ -28,13 +28,16 @@ namespace Game
         private bool _clickNextBtn;
         private int _currentRound;
         
-        private const int FinalRound =3;
+        private const int FinalRound = 3;
+
+        private EventManager _eventManager;
         
 /*
  * ----------------- Methods -----------------
  */
         private void Awake()
         {
+            _eventManager = GetComponent<EventManager>();
             storyCanvas.gameObject.SetActive(false);
             choiceCanvas.gameObject.SetActive(false);
         }
@@ -81,7 +84,9 @@ namespace Game
 
             Score score = NetworkManager.Instance.GetScore(SharedData.SelectedNum);
             ScoreManager.Instance.SetScore(score);
-        
+            
+            _eventManager.Event();
+                
             if (_currentRound == FinalRound) return;
         
             NetworkManager.Instance.GetData = null;

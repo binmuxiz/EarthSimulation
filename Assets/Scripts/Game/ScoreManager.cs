@@ -1,41 +1,43 @@
-using System;
 using Global;
-using Network;
 using TMPro;
+using Data;
+using UnityEngine;
 
-public class ScoreManager : Singleton<ScoreManager>
+namespace Game
 {
-    public TMP_Text[] scoreTexts;
-
-    private Data.Score _score;
-
-    private void Start()
+    public class ScoreManager : Singleton<ScoreManager>
     {
-        InitializeScore();
-    }
-
-    public void SetScore(Score score)
-    {
-        _score.Environment += score.envScore;
-        _score.Society += score.societyScore;
-        _score.Technology += score.techScore;
-        _score.Economy += score.economyScore;
+        [SerializeField] private TMP_Text envScoreText;
+        [SerializeField] private TMP_Text societyScoreText;
+        [SerializeField] private TMP_Text techScoreText;
+        [SerializeField] private TMP_Text ecoScoreText;
         
-        scoreTexts[0].text = _score.Environment.ToString();
-        scoreTexts[1].text = _score.Society.ToString();
-        scoreTexts[2].text = _score.Technology.ToString();
-        scoreTexts[3].text = _score.Economy.ToString();       
-    }
+        private void Start()
+        {
+            InitializeScore();
+        }
+
+        public void SetScore(Network.Score score)
+        {
+            Score.Environment += score.envScore;
+            Score.Society += score.societyScore;
+            Score.Technology += score.techScore;
+            Score.Economy += score.economyScore;
+        
+            envScoreText.text = Score.Environment.ToString();
+            societyScoreText.text = Score.Society.ToString();
+            techScoreText.text = Score.Technology.ToString();
+            ecoScoreText.text = Score.Economy.ToString();       
+        }
 
     
-    private void InitializeScore()
-    {
-        _score = new Data.Score();
-    
-        // score text 초기화
-        scoreTexts[0].text = _score.Environment.ToString();
-        scoreTexts[1].text = _score.Society.ToString();
-        scoreTexts[2].text = _score.Technology.ToString();
-        scoreTexts[3].text = _score.Economy.ToString();        
+        private void InitializeScore()
+        {
+            // score text 초기화
+            envScoreText.text = Score.Environment.ToString();
+            societyScoreText.text = Score.Society.ToString();
+            techScoreText.text = Score.Technology.ToString();
+            ecoScoreText.text = Score.Economy.ToString();        
+        }
     }
 }
