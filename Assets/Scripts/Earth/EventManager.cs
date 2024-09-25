@@ -41,7 +41,7 @@ public class EventManager : MonoBehaviour
         // 모든 오브젝트 비활성화
         foreach (GameObject obj in planetObjects)
         {
-            obj.SetActive(false);
+            if (obj != null) obj.SetActive(false);
         }
     }
 

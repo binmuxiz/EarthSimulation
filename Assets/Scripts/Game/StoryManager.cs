@@ -23,7 +23,8 @@ namespace Game
         public Canvas storyCanvas;
         public Canvas choiceCanvas;
         public TMP_Text storyText;
-        public TMP_Text[] choices; 
+        public TMP_Text[] choices;
+        public TMP_Text roundText;
         
         private bool _clickNextBtn;
         private int _currentRound;
@@ -52,6 +53,7 @@ namespace Game
             {
                 _currentRound = i;
                 Debug.Log($"Round {i}");
+                roundText.text = $"Round {i}";
                 await Process();
             }
             
