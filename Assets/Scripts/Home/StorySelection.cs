@@ -12,6 +12,8 @@ namespace Home
         
         public void SelectStoryNovaTerra()
         {
+            EffectSoundManager.Instance.ButtonEffect();
+
             StartCoroutine(HomeUIManager.Instance.HideStorySelection());
 
             gameStarter.gameStory = GameStarter.GameStory.NovaTerra;

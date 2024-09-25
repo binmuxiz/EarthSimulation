@@ -19,6 +19,8 @@ public class WaitingRoom : MonoBehaviour
 
     public void Ready()
     {
+        EffectSoundManager.Instance.ButtonEffect();
+
         _isReady = true;
         readyButton.interactable = false;
         SharedData.Instance.RpcReady();
@@ -70,6 +72,9 @@ public class WaitingRoom : MonoBehaviour
             }
         }
 
+        //인트로 스토리 사운드로 배경음 변경
+        BGMManger.Instance.SoundChange(BGMManger.Bgm.IntroStory);
+        
         // 게임 씬으로 이동 
         if (RunnerController.Runner.IsSharedModeMasterClient)
         {

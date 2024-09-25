@@ -102,6 +102,8 @@ public class VoteManager : Singleton<VoteManager>
     
     public void Vote(int idx)
     {
+        EffectSoundManager.Instance.ButtonEffect();
+
         if (_myVote == idx) return; // 동일 선택지 선택시 return
         
         SharedData.Instance.RpcVote(idx);

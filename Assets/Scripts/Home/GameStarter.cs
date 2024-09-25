@@ -35,6 +35,8 @@ public class GameStarter : MonoBehaviour
 
     public void OnGameStart()
     {
+        EffectSoundManager.Instance.ButtonEffect();
+
         if (nickName.text.IsNullOrEmpty())
         {
             Debug.Log("닉네임을 입력하세요");
