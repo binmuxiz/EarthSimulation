@@ -53,7 +53,7 @@ namespace Game
             {
                 _currentRound = i;
                 Debug.Log($"Round {i}");
-                roundText.text = $"Round {i}";
+                //oundText.text = $"Round {i}";
                 await Process();
             }
             
