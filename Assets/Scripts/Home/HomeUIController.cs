@@ -3,21 +3,23 @@ using Cysharp.Threading.Tasks;
 using Global;
 using Handler;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Home
 {
     public class HomeUIController : Singleton<HomeUIController>
     {
-        [SerializeField] CanvasGroup introUI;
-        [SerializeField] CanvasGroup menuUI;
-        [SerializeField] CanvasGroup storySelectionUI;
-        [SerializeField] CanvasGroup loginMenuUI;
-        [SerializeField] CanvasGroup connectingUI;
+        public CanvasGroup introUI;
+        public CanvasGroup menuUI;
+        public CanvasGroup loginMenuUI;
+        public CanvasGroup connectingUI;
+
+        public CanvasGroup storySelectionUI;
+        public Image storySelectionImage;
+        public Sprite[] storySelectionSprites;
         
-        [SerializeField] VideoHandler videoHandler;
-        [SerializeField] RawImage screen;
+        public VideoHandler videoHandler;
+        public RawImage screen;
 
         private void Awake()
         {
@@ -60,22 +62,22 @@ namespace Home
 
         public IEnumerator HideMenu()
         {
-            yield return FadeController.FadeOut(menuUI, 1f);
+            yield return FadeController.FadeOut(menuUI, 0f);
         }
 
         public IEnumerator ShowStorySelection()
         {
-            yield return FadeController.FadeIn(storySelectionUI, 1f);
+            yield return FadeController.FadeIn(storySelectionUI, 1.5f);
         }
         
         public IEnumerator HideStorySelection()
         {
-            yield return FadeController.FadeOut(storySelectionUI, 1f);
+            yield return FadeController.FadeOut(storySelectionUI, 0f);
         }
         
         public IEnumerator ShowLoginMenu()
         {
-            yield return FadeController.FadeIn(loginMenuUI, 1f);
+            yield return FadeController.FadeIn(loginMenuUI, 0.5f);
         }
         
         public IEnumerator HideLoginMenu()
@@ -99,6 +101,22 @@ namespace Home
         public void HideConnectingView()
         {
             videoHandler.StopVideo();
+        }
+
+        public void ShowSelectStoryUI(int idx)
+        {
+            if (storySelectionSprites[idx] != null)
+            {
+                storySelectionImage.sprite = storySelectionSprites[idx];
+            }
+        }
+
+        public void InitializeSelectStoryUI()
+        {
+            if (storySelectionSprites[0] != null)
+            {
+                storySelectionImage.sprite = storySelectionSprites[0];
+            }
         }
     }
 }

@@ -52,13 +52,13 @@ public class WaitingRoom : MonoBehaviour
         {
             var totalCount = RunnerController.Runner.SessionInfo.PlayerCount;
             var currentCount = SharedData.ReadyCount;
-            readyText.text = $"Ready?\n{currentCount}/{totalCount}";
+            readyText.text = $"대기인원 {currentCount}/{totalCount}";
 
             yield return wfs;
 
             if (currentCount == totalCount) break;
         }
-        readyText.text = $"Ready?\n{SharedData.ReadyCount}/{RunnerController.Runner.SessionInfo.PlayerCount}";
+        readyText.text = $"대기인원 {SharedData.ReadyCount}/{RunnerController.Runner.SessionInfo.PlayerCount}";
         yield return wfs;
 
         // 모든 SharedData를 리스트에 추가 
