@@ -75,12 +75,12 @@ namespace Home
         
         public IEnumerator HideStorySelection()
         {
-            yield return FadeController.FadeOut(storySelectionUI, 2f);
+            yield return FadeController.FadeOut(storySelectionUI, 0f);
         }
         
         public IEnumerator ShowLoginMenu()
         {
-            yield return FadeController.FadeIn(loginMenuUI, 0.5f);
+            yield return FadeController.FadeIn(loginMenuUI, 1f);
         }
         
         public IEnumerator HideLoginMenu()

@@ -67,15 +67,20 @@ namespace Handler
             {
                 Debug.LogError("비디오가 준비되지 않았습니다.");
             }
-
         }
 
+
+        public void SetVideoClip(VideoClip clip)
+        {
+            _videoPlayer.clip = clip;
+        }
 
         public void StopVideo()
         {
             if (_videoPlayer != null && _videoPlayer.isPrepared)
             {
                 _videoPlayer.Stop();
+                _videoPlayer.clip = null;
             }
         }
 

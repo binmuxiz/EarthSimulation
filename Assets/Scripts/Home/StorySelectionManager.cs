@@ -41,7 +41,7 @@ namespace Home
             
             StartCoroutine(_uiController.HideStorySelection());
             
-            await UniTask.WaitForSeconds(2f); 
+            // await UniTask.WaitForSeconds(2f); 
 
             MoveToLoginMenu();
         }

@@ -57,5 +57,6 @@ public class LoginManager : MonoBehaviour
         await _uiController.ShowConnectingView(); 
         
         RoomCreator.Instance.CreateRoom(roomName.text, StorySelectionManager.Instance.StoryNum, LoadingSceneName);
+        
     }
 }
