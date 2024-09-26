@@ -13,6 +13,9 @@ public class MessageManager : Singleton<MessageManager>
     private void Awake()
     {
         messageCanvasGroup.gameObject.SetActive(true);
+        messageCanvasGroup.alpha = 0f;
+        messageCanvasGroup.interactable = messageCanvasGroup.blocksRaycasts = false;
+        
         waitingMessage.text = WaitOtherClientMessage;
     }
 

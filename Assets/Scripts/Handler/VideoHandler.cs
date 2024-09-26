@@ -49,7 +49,7 @@ namespace Handler
                 Debug.Log("preparing...");
                 await UniTask.WaitForSeconds(0.5f);
             }
-            
+
             
             Debug.Log($"mScreen.texture: {mScreen.texture}");
         }
