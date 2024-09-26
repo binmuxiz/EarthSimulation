@@ -38,6 +38,7 @@ namespace Game
  */
         private void Awake()
         {
+            mVideoHandler = GameObject.Find("Video Player").GetComponent<VideoHandler>();
             _eventManager = GetComponent<EventManager>();
             storyCanvas.gameObject.SetActive(false);
             choiceCanvas.gameObject.SetActive(false);
