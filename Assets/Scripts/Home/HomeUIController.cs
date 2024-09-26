@@ -24,6 +24,8 @@ namespace Home
 
         private void Awake()
         {
+            videoHandler = GameObject.Find("Video Player").GetComponent<VideoHandler>();
+            
             introUI.gameObject.SetActive(true);
             menuUI.gameObject.SetActive(true);
             storySelectionUI.gameObject.SetActive(true);
