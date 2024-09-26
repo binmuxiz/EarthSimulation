@@ -2528,7 +2528,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mVideoClips:
   - {fileID: 32900000, guid: 5ea055a182f3d4243a12e85fe703a292, type: 3}
-  - {fileID: 32900000, guid: d07bd25a10b37bf4a9d5e40ab988840a, type: 3}
+  - {fileID: 32900000, guid: 1d0c182c0f13fd041a0bd87c256b10a4, type: 3}
   - {fileID: 32900000, guid: 1d0c182c0f13fd041a0bd87c256b10a4, type: 3}
   - {fileID: 32900000, guid: f5a441554a6d09b4aa8e532a9fe48a85, type: 3}
   - {fileID: 32900000, guid: 9e814057fd3c1a7488663a661169c08d, type: 3}

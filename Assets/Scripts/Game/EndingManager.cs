@@ -13,6 +13,7 @@ namespace Game
     {
         public bool processPermitted = false;
         public VideoHandler vh;
+        public GameObject curtain;
         
         
         public GameObject EndingUICanvas;
@@ -20,7 +21,9 @@ namespace Game
 
         private void Awake()
         {
+            curtain.SetActive(false);
             EndingUICanvas.SetActive(false);
+            vh = GameObject.Find("Video Player").GetComponent<VideoHandler>();
         }
 
         private async void Start()
@@ -57,8 +60,8 @@ namespace Game
         
         private async void EndingVideoPlay(int videoIndex)
         {
-            int temp = videoIndex + 1;
-            vh.StopVideo();
+            curtain.SetActive(true);
+            int temp = videoIndex + 2;
             await vh.PrepareVideo(EndingVideoScreen, (VideoHandler.VideoType)temp);
             Debug.Log((VideoHandler.VideoType)temp);
             vh.PlayVideo();
