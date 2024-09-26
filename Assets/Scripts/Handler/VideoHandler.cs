@@ -15,6 +15,9 @@ namespace Handler
         {
             Loading,
             Connecting,
+            Ending1,
+            Ending2,
+            Ending3
         }
 
         private void Awake()
@@ -64,6 +67,7 @@ namespace Handler
             }
 
         }
+
 
         public void StopVideo()
         {

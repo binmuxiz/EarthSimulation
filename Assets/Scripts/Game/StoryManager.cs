@@ -47,7 +47,7 @@ namespace Game
         {
             await UniTask.WaitUntil(() => processPermitted); // 스토리 시작 대기
             _currentRound = 0;
-            await mVideoHandler.PrepareVideo(mScreen, VideoHandler.VideoType.Loading);
+            await mVideoHandler.PrepareVideo(mScreen,VideoHandler.VideoType.Loading);
 
             for (int i = 1; i <= FinalRound; i++)
             {

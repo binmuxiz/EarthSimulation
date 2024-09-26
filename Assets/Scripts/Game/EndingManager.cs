@@ -1,14 +1,28 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Global;
+using Handler;
 using Network;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Video;
 
 namespace Game
 {
     public class EndingManager : Singleton<EndingManager>
     {
         public bool processPermitted = false;
+        public VideoHandler vh;
+        
+        
+        public GameObject EndingUICanvas;
+        public RawImage EndingVideoScreen;
+
+        private void Awake()
+        {
+            EndingUICanvas.SetActive(false);
+        }
+
         private async void Start()
         {
             await UniTask.WaitUntil(() => processPermitted);
@@ -35,7 +49,20 @@ namespace Game
             Debug.Log("영상 재생");
 
             //영상 띄우기
+            EndingVideoPlay(SharedData.EndingIndex);
+            
+            
 
+        }
+        
+        private async void EndingVideoPlay(int videoIndex)
+        {
+            int temp = videoIndex + 1;
+            vh.StopVideo();
+            await vh.PrepareVideo(EndingVideoScreen, (VideoHandler.VideoType)temp);
+            Debug.Log((VideoHandler.VideoType)temp);
+            vh.PlayVideo();
+            EndingUICanvas.SetActive(true);
         }
     }
 }
