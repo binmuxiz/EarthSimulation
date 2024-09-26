@@ -35,6 +35,7 @@ public class LoginManager : MonoBehaviour
 
     private async UniTask Process()
     {
+        BGMManger.Instance.SoundStop();
         Debug.Log("Enter() -> Process()");
         
         EffectSoundManager.Instance.ButtonEffect();  // 버튼 클릭 소리 
@@ -44,6 +45,7 @@ public class LoginManager : MonoBehaviour
             Debug.Log("닉네임을 입력하세요");
             return;
         }
+        
         if (string.IsNullOrEmpty(roomName.text))
         {
             roomName.text = null; // 빈 문자열 이름의 방이 생성되지 않고, null로 초기화하여 임의방 접속/생성 하도록 

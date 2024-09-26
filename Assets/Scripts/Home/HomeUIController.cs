@@ -101,6 +101,8 @@ namespace Home
             videoHandler.PlayVideo();
             
             await UniTask.WaitForSeconds(3f);
+            
+            BGMManger.Instance.SoundChange(BGMManger.Bgm.WaitingRoom);
         }
 
         public void HideConnectingView()

@@ -5,11 +5,11 @@ public class BGMManger : MonoBehaviour
     public enum Bgm
     {
         Intro = 0,
+        WaitingRoom,
         IntroStory,
         ChoiceTime,
         GamePlaying,
-        Ending,
-        Default
+        Ending
     }
 
     [SerializeField] private bool isSoundPlaying;
@@ -34,17 +34,20 @@ public class BGMManger : MonoBehaviour
             case Bgm.Intro:
                 audiosource.clip = sounds[0];
                 break;
-            case Bgm.IntroStory:
+            case Bgm.WaitingRoom:
                 audiosource.clip = sounds[1];
                 break;
-            case Bgm.GamePlaying:
+            case Bgm.IntroStory:
                 audiosource.clip = sounds[2];
                 break;
-            case Bgm.ChoiceTime:
+            case Bgm.GamePlaying:
                 audiosource.clip = sounds[3];
                 break;
-            case Bgm.Ending:
+            case Bgm.ChoiceTime:
                 audiosource.clip = sounds[4];
+                break;
+            case Bgm.Ending:
+                audiosource.clip = sounds[5];
                 break;
            
         }
@@ -54,6 +57,7 @@ public class BGMManger : MonoBehaviour
 
     public void SoundChange(Bgm _Bgm)
     {
+        Debug.Log(_Bgm);
         this._Bgm= _Bgm;
         SoundStop();
         isSoundPlaying = false;
