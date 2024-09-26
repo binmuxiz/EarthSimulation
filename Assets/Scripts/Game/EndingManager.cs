@@ -20,6 +20,7 @@ namespace Game
 
         private void Awake()
         {
+            vh = GameObject.Find("Video Player").GetComponent<VideoHandler>();
             EndingUICanvas.SetActive(false);
         }
 
