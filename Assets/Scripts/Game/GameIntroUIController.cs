@@ -52,7 +52,7 @@ public class GameIntroUIController : MonoBehaviour
         
         float fadeDuration = 0.6f;
         yield return FadeController.FadeIn(roleCanvasGroup, fadeDuration);
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(5f);
         yield return FadeController.FadeOut(roleCanvasGroup, fadeDuration);
     }
 }
