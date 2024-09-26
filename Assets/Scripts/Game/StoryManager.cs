@@ -47,7 +47,7 @@ namespace Game
         {
             await UniTask.WaitUntil(() => processPermitted); // 스토리 시작 대기
             _currentRound = 0;
-            await mVideoHandler.PrepareVideo(mScreen);
+            await mVideoHandler.PrepareVideo(mScreen,VideoHandler.VideoType.Loading);
 
             for (int i = 1; i <= FinalRound; i++)
             {
@@ -67,7 +67,7 @@ namespace Game
             SharedData.ClearVotes();
             ActiveStoryUI(true);  
             mScreen.gameObject.SetActive(true);
-            mVideoHandler.PlayVideo(VideoHandler.VideoType.Loading); // 로딩 영상 재생 
+            mVideoHandler.PlayVideo(); // 로딩 영상 재생 
             
             await RequestData();
 
