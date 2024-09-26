@@ -1882,7 +1882,7 @@ MonoBehaviour:
   m_HideSoftKeyboard: 0
   m_CharacterValidation: 0
   m_RegexValue: 
-  m_GlobalPointSize: 14
+  m_GlobalPointSize: 26
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
@@ -1916,7 +1916,7 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_RichText: 1
-  m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_GlobalFontAsset: {fileID: 11400000, guid: 86e1aff81d1995143b4de88475e8f483, type: 2}
   m_OnFocusSelectAll: 1
   m_ResetOnDeActivation: 1
   m_KeepTextSelectionVisible: 0
@@ -2232,8 +2232,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uBC29 \uBC88\uD638\uB97C \uC785\uB825\uD558\uC138\uC694."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b8fe5863fe20b3b45839631957d332cb, type: 2}
-  m_sharedMaterial: {fileID: 6005471869293185348, guid: b8fe5863fe20b3b45839631957d332cb, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 86e1aff81d1995143b4de88475e8f483, type: 2}
+  m_sharedMaterial: {fileID: 4008433955381872332, guid: 86e1aff81d1995143b4de88475e8f483, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3784,8 +3784,8 @@ MonoBehaviour:
   m_HideSoftKeyboard: 0
   m_CharacterValidation: 0
   m_RegexValue: 
-  m_GlobalPointSize: 14
-  m_CharacterLimit: 0
+  m_GlobalPointSize: 26
+  m_CharacterLimit: 10
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -3818,7 +3818,7 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_RichText: 1
-  m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_GlobalFontAsset: {fileID: 11400000, guid: 86e1aff81d1995143b4de88475e8f483, type: 2}
   m_OnFocusSelectAll: 1
   m_ResetOnDeActivation: 1
   m_KeepTextSelectionVisible: 0
@@ -4031,8 +4031,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b8fe5863fe20b3b45839631957d332cb, type: 2}
-  m_sharedMaterial: {fileID: 6005471869293185348, guid: b8fe5863fe20b3b45839631957d332cb, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 86e1aff81d1995143b4de88475e8f483, type: 2}
+  m_sharedMaterial: {fileID: 4008433955381872332, guid: 86e1aff81d1995143b4de88475e8f483, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
