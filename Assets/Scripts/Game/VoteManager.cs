@@ -16,10 +16,16 @@ public class VoteManager : Singleton<VoteManager>
 
     private bool _voted;
     private int _myVote = -1;
+    private bool isTimer = false;
+    private bool a = false;
     
-    private const int Timer = 10;
+    private const float Timer = 10;
 
-    
+    private void Awake()
+    {
+        timerText.gameObject.SetActive(false);
+    }
+
     private void OnEnable()
     {
         SharedData.onVoted += RefreshUI;
@@ -136,10 +142,54 @@ public class VoteManager : Singleton<VoteManager>
     
     private async UniTask TimerProcess()
     {
-        for (int t = Timer; t >= 0; t--)
+        timerText.gameObject.SetActive(true);
+        
+        isTimer = true;
+        await UniTask.Delay(TimeSpan.FromSeconds(10f));
+        isTimer = false;
+
+        for (int i = 0; i < 3; i++)
         {
-            timerText.text = $"남은 시간 : {t}";
-            await UniTask.Delay(1000);
+            timerText.alpha = 0;
+            await UniTask.Delay(400);
+            timerText.alpha = 1;
+            await UniTask.Delay(400);
+        }
+        
+        timerText.gameObject.SetActive(false);
+    }
+
+    async UniTask VoteTimer()
+    {
+        bool isFirst = true;
+        float time = 0;
+        
+        if (isFirst)
+        {
+            time = Timer;
+            isFirst = false;
+        }
+        
+        while (time > 0.1f)
+        {
+            Debug.Log(time);
+            var temp = time.ToString("F2").Split('.');
+            timerText.text = temp[0] + " : " + temp[1];
+            time -= Time.deltaTime;
+            await UniTask.Yield();
+        }
+
+        timerText.text = "00 : 00"; 
+    }
+
+    private void Update()
+    {
+        if (!isTimer) return;
+
+        if (!a)
+        {
+            VoteTimer().Forget();
+            a = true;
         }
     }
 }
