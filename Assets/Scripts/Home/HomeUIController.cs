@@ -10,14 +10,17 @@ namespace Home
 {
     public class HomeUIController : Singleton<HomeUIController>
     {
-        [SerializeField] CanvasGroup introUI;
-        [SerializeField] CanvasGroup menuUI;
-        [SerializeField] CanvasGroup storySelectionUI;
-        [SerializeField] CanvasGroup loginMenuUI;
-        [SerializeField] CanvasGroup connectingUI;
+        public CanvasGroup introUI;
+        public CanvasGroup menuUI;
+        public CanvasGroup loginMenuUI;
+        public CanvasGroup connectingUI;
+
+        public CanvasGroup storySelectionUI;
+        public Image storySelectionImage;
+        public Sprite[] storySelectionSprites;
         
-        [SerializeField] VideoHandler videoHandler;
-        [SerializeField] RawImage screen;
+        public VideoHandler videoHandler;
+        public RawImage screen;
 
         private void Awake()
         {
@@ -99,6 +102,22 @@ namespace Home
         public void HideConnectingView()
         {
             videoHandler.StopVideo();
+        }
+
+        public void ShowSelectStoryUI(int idx)
+        {
+            if (storySelectionSprites[idx] != null)
+            {
+                storySelectionImage.sprite = storySelectionSprites[idx];
+            }
+        }
+
+        public void InitializeSelectStoryUI()
+        {
+            if (storySelectionSprites[0] != null)
+            {
+                storySelectionImage.sprite = storySelectionSprites[0];
+            }
         }
     }
 }
