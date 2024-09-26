@@ -155,7 +155,8 @@ public class VoteManager : Singleton<VoteManager>
             timerText.alpha = 1;
             await UniTask.Delay(400);
         }
-        
+
+        a = false;
         timerText.gameObject.SetActive(false);
     }
 
