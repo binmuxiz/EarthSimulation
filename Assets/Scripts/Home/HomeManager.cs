@@ -30,11 +30,19 @@ namespace Home
  */
         public void StartGame()
         {
+            StartCoroutine(StartGameProcess());
+        }
+
+        private IEnumerator StartGameProcess()
+        {
             EffectSoundManager.Instance.ButtonEffect();
+
+            yield return new WaitForSeconds(1f);
             
             StartCoroutine(_uiController.HideMenu());
             StartCoroutine(_uiController.ShowStorySelection());
         }
+        
 
         public void QuitGame()
         {

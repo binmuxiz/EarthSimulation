@@ -35,6 +35,7 @@ public class LoginManager : MonoBehaviour
 
     private async UniTask Process()
     {
+        await UniTask.WaitForSeconds(2f);
         BGMManger.Instance.SoundStop();
         Debug.Log("Enter() -> Process()");
         
@@ -52,7 +53,7 @@ public class LoginManager : MonoBehaviour
         }
         NickName.value = nickName.text;
 
-        await _uiController.HideLoginMenu();
+        StartCoroutine(_uiController.HideLoginMenu());
         await _uiController.ShowConnectingView(); 
         
         RoomCreator.Instance.CreateRoom(roomName.text, StorySelectionManager.Instance.StoryNum, LoadingSceneName);
