@@ -83,6 +83,9 @@ namespace Game
             
             await VoteManager.Instance.VoteProcess();
             Debug.Log($"Selected Num => {SharedData.SelectedNum}");
+            
+            //바로 넘어가길래 잠깐 기다림
+            await UniTask.Delay(1000);
 
             Score score = NetworkManager.Instance.GetScore(SharedData.SelectedNum);
             ScoreManager.Instance.SetScore(score);
