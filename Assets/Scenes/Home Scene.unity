@@ -5193,11 +5193,11 @@ MonoBehaviour:
   isSoundPlaying: 0
   sounds:
   - {fileID: 8300000, guid: 876a8c359dbc0104897b8fbe66563bea, type: 3}
-  - {fileID: 8300000, guid: 876a8c359dbc0104897b8fbe66563bea, type: 3}
-  - {fileID: 8300000, guid: 876a8c359dbc0104897b8fbe66563bea, type: 3}
-  - {fileID: 8300000, guid: 876a8c359dbc0104897b8fbe66563bea, type: 3}
-  - {fileID: 8300000, guid: 876a8c359dbc0104897b8fbe66563bea, type: 3}
-  - {fileID: 8300000, guid: 876a8c359dbc0104897b8fbe66563bea, type: 3}
+  - {fileID: 8300000, guid: a7f26e1509366264cbe52859643437db, type: 3}
+  - {fileID: 8300000, guid: c726177fc487b7c42af6f7fcc35dbbe2, type: 3}
+  - {fileID: 8300000, guid: 78d8c6f50a3e92146be8453e8a543f41, type: 3}
+  - {fileID: 8300000, guid: a292db788b4f773448c639832bc80fa8, type: 3}
+  - {fileID: 8300000, guid: a292db788b4f773448c639832bc80fa8, type: 3}
   _Bgm: 0
 --- !u!1 &2130051820
 GameObject:

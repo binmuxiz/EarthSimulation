@@ -67,6 +67,8 @@ public class VoteManager : Singleton<VoteManager>
         {
             await UniTask.WaitUntil(() => SharedData.HasAggregated);
         }
+        
+        BGMManger.Instance.SoundChange(BGMManger.Bgm.GamePlaying);
     }
     
     
@@ -146,6 +148,7 @@ public class VoteManager : Singleton<VoteManager>
         
         isTimer = true;
         await UniTask.Delay(TimeSpan.FromSeconds(10f));
+        BGMManger.Instance.SoundStop();
         isTimer = false;
 
         for (int i = 0; i < 3; i++)

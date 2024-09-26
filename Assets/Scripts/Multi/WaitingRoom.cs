@@ -29,6 +29,8 @@ public class WaitingRoom : MonoBehaviour
     private void Start()
     {
         StartCoroutine(Process());
+        BGMManger.Instance.SoundChange(BGMManger.Bgm.WaitingRoom);
+
     }
 
     private IEnumerator Process()
