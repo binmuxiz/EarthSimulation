@@ -172,7 +172,7 @@ public class VoteManager : Singleton<VoteManager>
         
         while (time > 0.1f)
         {
-            Debug.Log(time);
+            // Debug.Log(time);
             var temp = time.ToString("F2").Split('.');
             timerText.text = temp[0] + " : " + temp[1];
             time -= Time.deltaTime;

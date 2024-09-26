@@ -53,8 +53,7 @@ namespace Game
             for (int i = 1; i <= FinalRound; i++)
             {
                 _currentRound = i;
-                Debug.Log($"Round {i}");
-                //oundText.text = $"Round {i}";
+                roundText.text = $"Round {i}";
                 await Process();
             }
             

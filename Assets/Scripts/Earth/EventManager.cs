@@ -26,9 +26,8 @@ public class EventManager : MonoBehaviour
         // 이벤트 조건 배열 설정
         _eventConditions = new Func<bool>[]
         {
-            () => Score.Environment < 10,                                                      // 환경 파괴
             () => Score.Environment >= 10 && Score.Technology >= 25 && Score.Economy >= 25,  // 첨단 산업 발전
-            () => Score.Environment >= 20 && Score.Technology >= 20,                          // 지속 가능한 발전을 위한 한 걸음 
+            () => Score.Environment >= 25,                                                  // 환경 긍정 이벤트 
             () => Score.Society >= 25 && Score.Technology >= 15 && Score.Economy >= 15,      // 사회 복지 시스템 확장
         };
     }

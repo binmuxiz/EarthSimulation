@@ -32,26 +32,23 @@ public class GameIntroUIController : MonoBehaviour
 
     public IEnumerator ShowIntro()
     {
+        roleImage.sprite = roleSprites[(int) SharedData.Instance.Role];
         yield return ShowStory();
         yield return ShowRole();
     }
 
     private IEnumerator ShowStory()
     {
-        float fadeDuration = 0.6f;
-        yield return FadeController.FadeIn(storyCanvasGroup, fadeDuration);
+        yield return FadeController.FadeIn(storyCanvasGroup, 0.6f);
         yield return textLoader.LoadText("game_story", storyText, true);
         yield return new WaitForSeconds(3f);
-        yield return FadeController.FadeOut(storyCanvasGroup, fadeDuration);
+        StartCoroutine(FadeController.FadeOut(storyCanvasGroup, 0.6f));
     }
 
     private IEnumerator ShowRole()
     {
-        roleImage.sprite = roleSprites[(int) SharedData.Instance.Role];
-        
-        float fadeDuration = 0.6f;
-        yield return FadeController.FadeIn(roleCanvasGroup, fadeDuration);
-        yield return new WaitForSeconds(5f);
-        yield return FadeController.FadeOut(roleCanvasGroup, fadeDuration);
+        yield return FadeController.FadeIn(roleCanvasGroup, 0.6f);
+        yield return new WaitForSeconds(3f);
+        yield return FadeController.FadeOut(roleCanvasGroup, 1f);
     }
 }

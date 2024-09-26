@@ -24,20 +24,17 @@ namespace Game
             Score.Technology += score.techScore;
             Score.Economy += score.economyScore;
         
-            envScoreText.text = Score.Environment.ToString();
-            societyScoreText.text = Score.Society.ToString();
-            techScoreText.text = Score.Technology.ToString();
-            ecoScoreText.text = Score.Economy.ToString();       
+            InitializeScore();
         }
 
     
         private void InitializeScore()
         {
             // score text 초기화
-            envScoreText.text = Score.Environment.ToString();
-            societyScoreText.text = Score.Society.ToString();
-            techScoreText.text = Score.Technology.ToString();
-            ecoScoreText.text = Score.Economy.ToString();        
+            envScoreText.text = $"{Score.Environment.ToString()}%";
+            societyScoreText.text = $"{Score.Society.ToString()}%";
+            techScoreText.text = $"{Score.Technology.ToString()}%";
+            ecoScoreText.text = $"{Score.Economy.ToString()}%";           
         }
     }
 }
