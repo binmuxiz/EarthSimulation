@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using Data;
@@ -44,7 +45,7 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    public void Event()
+    public async UniTask Event()
     {
         for (int i = 0; i < _eventConditions.Length; i++)
         {
@@ -52,13 +53,13 @@ public class EventManager : MonoBehaviour
             {
                 if (primalObject.activeSelf) primalObject.SetActive(false);
                 Debug.Log($"이벤트 만족한 인덱스 : {i}");
-                TriggerEvent(i);  // 해당 이벤트 발생
+                await TriggerEvent(i);  // 해당 이벤트 발생
                 break;  // 한번 이벤트가 발생하면 반복문 종료
             }
         }
     }
 
-    void TriggerEvent(int idx)
+    private async UniTask TriggerEvent(int idx)
     {
         // 같은 이벤트가 중복 발생하지 않도록 확인
         if (_currentIdx == idx)
@@ -77,7 +78,7 @@ public class EventManager : MonoBehaviour
         }
         
         // UI 알림을 8초 동안 띄운 후 자동으로 끔
-        StartCoroutine(ShowEventUI(idx));
+        await ShowEventUI(idx);
 
         // 새로운 지구 오브젝트와 UI를 활성화
         if (planetObjects[_currentIdx] != null)
@@ -86,14 +87,14 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    IEnumerator ShowEventUI(int idx)
+    private async UniTask ShowEventUI(int idx)
     {
         if (eventUISprites[idx] != null)
         {
             _eventUIImage.sprite = eventUISprites[idx];
             
-            eventUICanvasGroup.alpha = 1;            
-            yield return new WaitForSeconds(8f);
+            eventUICanvasGroup.alpha = 1;
+            await UniTask.WaitForSeconds(7f);
             eventUICanvasGroup.alpha = 0;            
         }
     }

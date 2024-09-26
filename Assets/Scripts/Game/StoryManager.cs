@@ -57,7 +57,11 @@ namespace Game
                 await Process();
             }
             
+            /*
+             *  ----------------------------------------------------------------------------------------------------------------------------------------------------------?/????
+             */
             mVideoHandler.StopVideo();
+            
             EndingManager.Instance.processPermitted = true; // 엔딩 시작 
         }
 
@@ -91,8 +95,10 @@ namespace Game
             Score score = NetworkManager.Instance.GetScore(SharedData.SelectedNum);
             ScoreManager.Instance.SetScore(score);
             
-            _eventManager.Event();
+            Debug.Log("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
+            await _eventManager.Event();
                 
+            Debug.Log("siasisidasdjfasldfasjdlfkjasdklfjasdklfjasdklfjasdklfjasdklf");
             if (_currentRound == FinalRound) return;
         
             NetworkManager.Instance.GetData = null;
