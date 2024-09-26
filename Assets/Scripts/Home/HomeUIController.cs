@@ -3,7 +3,6 @@ using Cysharp.Threading.Tasks;
 using Global;
 using Handler;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Home
@@ -63,22 +62,22 @@ namespace Home
 
         public IEnumerator HideMenu()
         {
-            yield return FadeController.FadeOut(menuUI, 1f);
+            yield return FadeController.FadeOut(menuUI, 0f);
         }
 
         public IEnumerator ShowStorySelection()
         {
-            yield return FadeController.FadeIn(storySelectionUI, 1f);
+            yield return FadeController.FadeIn(storySelectionUI, 1.5f);
         }
         
         public IEnumerator HideStorySelection()
         {
-            yield return FadeController.FadeOut(storySelectionUI, 1f);
+            yield return FadeController.FadeOut(storySelectionUI, 0f);
         }
         
         public IEnumerator ShowLoginMenu()
         {
-            yield return FadeController.FadeIn(loginMenuUI, 1f);
+            yield return FadeController.FadeIn(loginMenuUI, 0.5f);
         }
         
         public IEnumerator HideLoginMenu()

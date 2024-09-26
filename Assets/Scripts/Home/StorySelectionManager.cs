@@ -32,7 +32,6 @@ namespace Home
             await UniTask.WaitForSeconds(2f); // todo 초 수정
             
             StartCoroutine(_uiController.HideStorySelection());
-
             MoveToLoginMenu();
         }
             
@@ -40,7 +39,6 @@ namespace Home
         private void MoveToLoginMenu()
         {
             StartCoroutine(_uiController.ShowLoginMenu());
-            
             _uiController.InitializeSelectStoryUI();
         }
     }

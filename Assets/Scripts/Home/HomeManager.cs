@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Global;
 using UnityEditor;
@@ -21,8 +20,6 @@ namespace Home
             yield return _uiController.HideIntro();
             
             yield return _uiController.ShowMenu();
-            
-            // introUI.gameObject.SetActive(false);                                          
         }
         
 /*
@@ -31,6 +28,7 @@ namespace Home
         public void StartGame()
         {
             EffectSoundManager.Instance.ButtonEffect();
+            
             
             StartCoroutine(_uiController.HideMenu());
             StartCoroutine(_uiController.ShowStorySelection());
