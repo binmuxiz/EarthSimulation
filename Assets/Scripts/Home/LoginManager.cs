@@ -50,8 +50,8 @@ public class LoginManager : MonoBehaviour
         }
         NickName.value = nickName.text;
 
+        await _uiController.HideLoginMenu();
         await _uiController.ShowConnectingView(); 
-        StartCoroutine(_uiController.HideLoginMenu());
         
         RoomCreator.Instance.CreateRoom(roomName.text, StorySelectionManager.Instance.StoryNum, LoadingSceneName);
     }

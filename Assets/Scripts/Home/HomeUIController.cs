@@ -85,6 +85,8 @@ namespace Home
         
         public async UniTask ShowConnectingView()
         {
+            connectingUI.alpha = 1f;
+            
             Debug.Log("ShowConnectingView()");
             
             await videoHandler.PrepareVideo(screen, VideoHandler.VideoType.Connecting);
