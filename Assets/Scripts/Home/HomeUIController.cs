@@ -102,7 +102,7 @@ namespace Home
             
             await UniTask.WaitForSeconds(3f);
             
-            BGMManger.Instance.SoundChange(BGMManger.Bgm.WaitingRoom);
+            //BGMManger.Instance.SoundChange(BGMManger.Bgm.WaitingRoom);
         }
 
         public void HideConnectingView()

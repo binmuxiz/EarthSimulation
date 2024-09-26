@@ -79,6 +79,7 @@ namespace Game
             ActiveStoryUI(false);
             ActiveChoiceUI(true);
             
+            BGMManger.Instance.SoundChange(BGMManger.Bgm.ChoiceTime);
             await ShowChoices(); // 선택지 UI
             
             await VoteManager.Instance.VoteProcess();
