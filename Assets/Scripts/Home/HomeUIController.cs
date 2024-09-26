@@ -1,48 +1,57 @@
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using Global;
+using Handler;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace Home
 {
-    public class HomeUIManager : Singleton<HomeUIManager>
+    public class HomeUIController : Singleton<HomeUIController>
     {
         [SerializeField] CanvasGroup introUI;
         [SerializeField] CanvasGroup menuUI;
         [SerializeField] CanvasGroup storySelectionUI;
-        [SerializeField] CanvasGroup gameStartMenuUI;
-        [SerializeField] GameObject loadingUI;
+        [SerializeField] CanvasGroup loginMenuUI;
+        [SerializeField] CanvasGroup connectingUI;
+        
+        [SerializeField] VideoHandler videoHandler;
+        [SerializeField] RawImage screen;
 
         private void Awake()
         {
             introUI.gameObject.SetActive(true);
             menuUI.gameObject.SetActive(true);
             storySelectionUI.gameObject.SetActive(true);
-            gameStartMenuUI.gameObject.SetActive(true);
-            
-            loadingUI.SetActive(false);
+            loginMenuUI.gameObject.SetActive(true);
+            connectingUI.gameObject.SetActive(true);
 
             introUI.alpha = 0f;
             menuUI.alpha = 0f;
             storySelectionUI.alpha = 0f;
-            gameStartMenuUI.alpha = 0f;
+            loginMenuUI.alpha = 0f;
+            connectingUI.alpha = 0f;
 
             introUI.interactable = introUI.blocksRaycasts = false;
             menuUI.interactable = menuUI.blocksRaycasts = false;
             storySelectionUI.interactable = storySelectionUI.blocksRaycasts = false;
-            gameStartMenuUI.interactable = gameStartMenuUI.blocksRaycasts = false;
-            
+            loginMenuUI.interactable = loginMenuUI.blocksRaycasts = false;
+            connectingUI.interactable = connectingUI.blocksRaycasts = false;
+
         }
 
-        private IEnumerator Start()
+        public IEnumerator ShowIntro()
         {
             yield return FadeController.FadeIn(introUI, 1f);
-            yield return new WaitForSeconds(2f);
+        }
+        
+        public IEnumerator HideIntro()
+        {
             yield return FadeController.FadeOut(introUI, 1f);
-
-            yield return ShowMenu();
             introUI.gameObject.SetActive(false);
         }
+        
         
         public IEnumerator ShowMenu()
         {
@@ -64,19 +73,30 @@ namespace Home
             yield return FadeController.FadeOut(storySelectionUI, 1f);
         }
         
-        public IEnumerator ShowGameStartMenu()
+        public IEnumerator ShowLoginMenu()
         {
-            yield return FadeController.FadeIn(gameStartMenuUI, 1f);
+            yield return FadeController.FadeIn(loginMenuUI, 1f);
         }
         
-        public IEnumerator HideGameStartMenu()
+        public IEnumerator HideLoginMenu()
         {
-            yield return FadeController.FadeOut(gameStartMenuUI, 1f);
+            yield return FadeController.FadeOut(loginMenuUI, 1f);
         }
         
-        public void ShowLoadingView()
+        public async UniTask ShowConnectingView()
         {
-            loadingUI.SetActive(true);
+            Debug.Log("ShowConnectingView()");
+            
+            await videoHandler.PrepareVideo(screen, VideoHandler.VideoType.Connecting);
+            
+            videoHandler.PlayVideo();
+            
+            await UniTask.WaitForSeconds(3f);
+        }
+
+        public void HideConnectingView()
+        {
+            videoHandler.StopVideo();
         }
     }
 }
