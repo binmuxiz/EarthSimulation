@@ -948,15 +948,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: '10 : 00'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b8fe5863fe20b3b45839631957d332cb, type: 2}
-  m_sharedMaterial: {fileID: 6005471869293185348, guid: b8fe5863fe20b3b45839631957d332cb, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6979fc2c037f8764694180889f76dc97, type: 2}
+  m_sharedMaterial: {fileID: -7396912255416935670, guid: 6979fc2c037f8764694180889f76dc97, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4294961579
+  m_fontColor: {r: 0.66981125, g: 0.9137255, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -973,8 +973,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70
-  m_fontSizeBase: 70
+  m_fontSize: 102.2
+  m_fontSizeBase: 102.2
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1462,7 +1462,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &506243006
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2874,8 +2874,8 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.6981132, g: 0.6948202, b: 0.6948202, a: 1}
-    m_PressedColor: {r: 0.4245283, g: 0.41451585, b: 0.41451585, a: 1}
-    m_SelectedColor: {r: 0, g: 0, b: 0, a: 1}
+    m_PressedColor: {r: 0.4245283, g: 0.41451585, b: 0.41451585, a: 0.54901963}
+    m_SelectedColor: {r: 0, g: 0, b: 0, a: 0.5803922}
     m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -3076,8 +3076,8 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.6981132, g: 0.6948202, b: 0.6948202, a: 1}
-    m_PressedColor: {r: 0.4245283, g: 0.41451585, b: 0.41451585, a: 1}
-    m_SelectedColor: {r: 0, g: 0, b: 0, a: 1}
+    m_PressedColor: {r: 0.4245283, g: 0.41451585, b: 0.41451585, a: 0.54901963}
+    m_SelectedColor: {r: 0, g: 0, b: 0, a: 0.5803922}
     m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -3301,6 +3301,7 @@ GameObject:
   - component: {fileID: 886441951}
   - component: {fileID: 886441952}
   - component: {fileID: 886441953}
+  - component: {fileID: 886441954}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -3477,6 +3478,18 @@ MonoBehaviour:
   - {fileID: 21300000, guid: d1395c6f88939f947834c388775f779a, type: 3}
   - {fileID: 21300000, guid: d1395c6f88939f947834c388775f779a, type: 3}
   - {fileID: 21300000, guid: d1395c6f88939f947834c388775f779a, type: 3}
+--- !u!114 &886441954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886441943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d65164cf47371544a609085e91070eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &913898562
 GameObject:
   m_ObjectHideFlags: 0
@@ -5792,8 +5805,8 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.6981132, g: 0.6948202, b: 0.6948202, a: 1}
-    m_PressedColor: {r: 0.4245283, g: 0.41451585, b: 0.41451585, a: 1}
-    m_SelectedColor: {r: 0, g: 0, b: 0, a: 1}
+    m_PressedColor: {r: 0.4245283, g: 0.41451585, b: 0.41451585, a: 0.54901963}
+    m_SelectedColor: {r: 0, g: 0, b: 0, a: 0.5803922}
     m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -5960,15 +5973,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Round 1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 86e1aff81d1995143b4de88475e8f483, type: 2}
-  m_sharedMaterial: {fileID: 4008433955381872332, guid: 86e1aff81d1995143b4de88475e8f483, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cf0c4d61a9f542546a0ab12049edb99e, type: 2}
+  m_sharedMaterial: {fileID: 6438124016015625283, guid: cf0c4d61a9f542546a0ab12049edb99e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4294833109
+  m_fontColor: {r: 0.8343419, g: 0.95197123, b: 0.99371064, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -7971,8 +7984,8 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.6981132, g: 0.6948202, b: 0.6948202, a: 1}
-    m_PressedColor: {r: 0.4245283, g: 0.41451585, b: 0.41451585, a: 1}
-    m_SelectedColor: {r: 0, g: 0, b: 0, a: 1}
+    m_PressedColor: {r: 0.4245283, g: 0.41451585, b: 0.41451585, a: 0.54901963}
+    m_SelectedColor: {r: 0, g: 0, b: 0, a: 0.5803922}
     m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
