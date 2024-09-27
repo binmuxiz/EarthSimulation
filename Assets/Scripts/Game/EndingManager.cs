@@ -13,6 +13,8 @@ namespace Game
     {
         public bool processPermitted = false;
         public VideoHandler vh;
+        private GameObject _videoPlayer;
+        public CanvasGroup FadeScreen;
         
         
         public GameObject EndingUICanvas;
@@ -20,7 +22,8 @@ namespace Game
 
         private void Awake()
         {
-            vh = GameObject.Find("Video Player").GetComponent<VideoHandler>();
+            _videoPlayer = GameObject.Find("Video Player");
+            vh = _videoPlayer.GetComponent<VideoHandler>();
             EndingUICanvas.SetActive(false);
         }
 
@@ -50,20 +53,37 @@ namespace Game
             Debug.Log("영상 재생");
 
             //영상 띄우기
-            EndingVideoPlay(SharedData.EndingIndex);
+            EndingVideoPlay();
             
             
 
         }
         
-        private async void EndingVideoPlay(int videoIndex)
+        private async void EndingVideoPlay()
         {
-            int temp = videoIndex + 1;
             vh.StopVideo();
-            await vh.PrepareVideo(EndingVideoScreen, (VideoHandler.VideoType)temp);
-            Debug.Log((VideoHandler.VideoType)temp);
+            await vh.PrepareVideo(EndingVideoScreen, VideoHandler.VideoType.Ending);
             vh.PlayVideo();
+            _videoPlayer.GetComponent<VideoPlayer>().isLooping = false;
             EndingUICanvas.SetActive(true);
+            await UniTask.WaitUntil(() => !_videoPlayer.GetComponent<VideoPlayer>().isPlaying);
+
+            Fade(2f).Forget();
+            
+            BGMManger.Instance.SoundStop();
+
+        }
+
+        async UniTask Fade(float duraion)
+        {
+            float time = 0;
+            FadeScreen.gameObject.SetActive(true);
+            while (time <= duraion)
+            {
+                time += Time.deltaTime;
+                FadeScreen.alpha += time / duraion;
+                await UniTask.Yield();
+            }
         }
     }
 }

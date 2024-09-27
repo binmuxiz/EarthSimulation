@@ -15,9 +15,7 @@ namespace Handler
         {
             Loading,
             Connecting,
-            Ending1,
-            Ending2,
-            Ending3
+            Ending,
         }
 
         private void Awake()
