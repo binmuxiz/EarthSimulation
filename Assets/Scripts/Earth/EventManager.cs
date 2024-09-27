@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,11 +16,13 @@ public class EventManager : MonoBehaviour
     
     private Image _eventUIImage;
 
-    private int _currentIdx;  // 현재 발생한 이벤트 인덱스
+    private int _currentIdx = -1;  // 현재 발생한 이벤트 인덱스
 
     // 각 이벤트의 조건을 관리하는 델리게이트 배열
     private Func<bool>[] _eventConditions;
 
+    private List<int> used = new List<int>();
+    
     private void Awake()
     {
         _eventUIImage = eventUICanvasGroup.gameObject.GetComponentInChildren<Image>();
@@ -27,9 +30,9 @@ public class EventManager : MonoBehaviour
         // 이벤트 조건 배열 설정
         _eventConditions = new Func<bool>[]
         {
-            () => Score.Technology >= 20,           // 첨단 산업 발전
-            () => Score.Environment >= 20,          // 환경 긍정 이벤트 
-            () => Score.Society >= 20,              // 사회 복지 시스템 확장
+            () => Score.Environment >= 18,   // 지속 가능
+            () => Score.Technology >= 18,    // 첨단 산업 발전   
+            () => Score.Society >= 18         // 사회 복지 시스템 확장
         };
     }
 
@@ -49,11 +52,15 @@ public class EventManager : MonoBehaviour
     {
         for (int i = 0; i < _eventConditions.Length; i++)
         {
+            if (used.Contains(i))
+                continue;
+            
             if (_eventConditions[i]())  // 조건이 만족되면
             {
                 if (primalObject.activeSelf) primalObject.SetActive(false);
                 Debug.Log($"이벤트 만족한 인덱스 : {i}");
                 await TriggerEvent(i);  // 해당 이벤트 발생
+                used.Add(i);
                 break;  // 한번 이벤트가 발생하면 반복문 종료
             }
         }
@@ -70,11 +77,18 @@ public class EventManager : MonoBehaviour
 
         int previous = _currentIdx;
         _currentIdx = idx;
-        
-        // 이전에 활성화된 지구 오브젝트와 UI를 비활성화
-        if (planetObjects[previous] != null)
+
+        if (previous == -1)
         {
-            planetObjects[previous].SetActive(false);
+            primalObject.SetActive(false);
+        }
+        else
+        {
+            // 이전에 활성화된 지구 오브젝트와 UI를 비활성화
+            if (planetObjects[previous] != null)
+            {
+                planetObjects[previous].SetActive(false);
+            }     
         }
         
         // UI 알림을 8초 동안 띄운 후 자동으로 끔

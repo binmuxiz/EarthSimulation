@@ -22,7 +22,7 @@ public class VoteManager : Singleton<VoteManager>
     private bool isTimer = false;
     private bool a = false;
     
-    private const float Timer = 10;
+    private const float Timer = 30;
     private void Awake()
     {
         timerText.gameObject.SetActive(false);
