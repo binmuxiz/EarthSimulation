@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Fusion;
 using Global;
 using Network;
 using TMPro;
@@ -55,8 +56,10 @@ public class VoteManager : Singleton<VoteManager>
         SharedData.HasAggregated = false;
         
         await TimerProcess(); 
-        RandomVote(); // 아무 선택이 없을 때 랜덤 선택 (내 선택만)
-            
+        RandomVote();
+        // 아무 선택이 없을 때 랜덤 선택 (내 선택만)
+
+        
         // await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
 
         if (RunnerController.Runner.IsSharedModeMasterClient) // 투표의 일관성을 위해 마스터 클라이언트가 투표 집계 
@@ -173,8 +176,8 @@ public class VoteManager : Singleton<VoteManager>
 
     async UniTask VoteTimer()
     {
-        //if(RunnerController.Runner.IsSharedModeMasterClient)
-            //SharedData.Instance.SyncTimer.
+        
+        
         bool isFirst = true;
         float time = 0;
         
