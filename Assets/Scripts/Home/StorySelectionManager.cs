@@ -32,7 +32,7 @@ namespace Home
 
         private async UniTask ChangeStorySelectionUI()
         {
-            await UniTask.WaitForSeconds(1f);
+            await UniTask.WaitForSeconds(0.5f);
          
             imagesGameObject.SetActive(false);
             
