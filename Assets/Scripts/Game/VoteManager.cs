@@ -6,6 +6,7 @@ using Global;
 using Network;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class VoteManager : Singleton<VoteManager>
@@ -13,6 +14,7 @@ public class VoteManager : Singleton<VoteManager>
     
     public TMP_Text[] voteTexts; // 투표 개수 보이는 텍스트 
     public TMP_Text timerText;
+    public Button[] ChoiceButtons;
 
     private bool _voted;
     private int _myVote = -1;
@@ -130,15 +132,21 @@ public class VoteManager : Singleton<VoteManager>
     {
         if (!_voted)
         {
-            Vote(Random.Range(0, NetworkManager.ChoiceNum));
+            int buttonIndex = Random.Range(0, NetworkManager.ChoiceNum);
+            Vote(buttonIndex);
+            ChoiceButtons[buttonIndex].image.color = ChoiceButtons[buttonIndex].colors.selectedColor;
         } 
     }
     
 
     private void ClearMyVote()
     {
+        if(_myVote != -1)
+            ChoiceButtons[_myVote].image.color = Color.white;
+        
         _voted = false;
         _myVote = -1;
+        
     }
     
     
@@ -165,6 +173,8 @@ public class VoteManager : Singleton<VoteManager>
 
     async UniTask VoteTimer()
     {
+        //if(RunnerController.Runner.IsSharedModeMasterClient)
+            //SharedData.Instance.SyncTimer.
         bool isFirst = true;
         float time = 0;
         

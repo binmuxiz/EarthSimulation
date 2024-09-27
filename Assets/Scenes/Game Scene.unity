@@ -3374,6 +3374,11 @@ MonoBehaviour:
   - {fileID: 1067743458}
   - {fileID: 1338198613}
   timerText: {fileID: 302443765}
+  ChoiceButtons:
+  - {fileID: 1482122573}
+  - {fileID: 814181565}
+  - {fileID: 2128422549}
+  - {fileID: 855216579}
 --- !u!114 &886441948
 MonoBehaviour:
   m_ObjectHideFlags: 0

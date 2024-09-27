@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class SharedData : NetworkBehaviour
 {
+    [Networked] public TickTimer SyncTimer { get; set; }
     
 /*
  * ------------ Non - Static ---------------
