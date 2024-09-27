@@ -29,6 +29,7 @@ public class LoginManager : MonoBehaviour
 
     public void Enter()
     {
+        EffectSoundManager.Instance.ButtonEffect();  // 버튼 클릭 소리 
         Debug.Log("Enter()");
         Process().Forget();
     }
@@ -39,7 +40,6 @@ public class LoginManager : MonoBehaviour
         BGMManger.Instance.SoundStop();
         Debug.Log("Enter() -> Process()");
         
-        EffectSoundManager.Instance.ButtonEffect();  // 버튼 클릭 소리 
 
         if (nickName.text.IsNullOrEmpty())
         {
