@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Fusion;
 using Global;
 using Network;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class VoteManager : Singleton<VoteManager>
@@ -13,6 +15,7 @@ public class VoteManager : Singleton<VoteManager>
     
     public TMP_Text[] voteTexts; // 투표 개수 보이는 텍스트 
     public TMP_Text timerText;
+    public Button[] ChoiceButtons;
 
     private bool _voted;
     private int _myVote = -1;
@@ -53,8 +56,10 @@ public class VoteManager : Singleton<VoteManager>
         SharedData.HasAggregated = false;
         
         await TimerProcess(); 
-        RandomVote(); // 아무 선택이 없을 때 랜덤 선택 (내 선택만)
-            
+        RandomVote();
+        // 아무 선택이 없을 때 랜덤 선택 (내 선택만)
+
+        
         // await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
 
         if (RunnerController.Runner.IsSharedModeMasterClient) // 투표의 일관성을 위해 마스터 클라이언트가 투표 집계 
@@ -130,15 +135,21 @@ public class VoteManager : Singleton<VoteManager>
     {
         if (!_voted)
         {
-            Vote(Random.Range(0, NetworkManager.ChoiceNum));
+            int buttonIndex = Random.Range(0, NetworkManager.ChoiceNum);
+            Vote(buttonIndex);
+            ChoiceButtons[buttonIndex].image.color = ChoiceButtons[buttonIndex].colors.selectedColor;
         } 
     }
     
 
     private void ClearMyVote()
     {
+        if(_myVote != -1)
+            ChoiceButtons[_myVote].image.color = Color.white;
+        
         _voted = false;
         _myVote = -1;
+        
     }
     
     
@@ -165,6 +176,8 @@ public class VoteManager : Singleton<VoteManager>
 
     async UniTask VoteTimer()
     {
+        
+        
         bool isFirst = true;
         float time = 0;
         
