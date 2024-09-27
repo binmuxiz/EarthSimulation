@@ -44,7 +44,6 @@ namespace Home
             // await UniTask.WaitForSeconds(2f); 
 
             MoveToLoginMenu();
-            //이은빈 대머리;;
         }
             
 

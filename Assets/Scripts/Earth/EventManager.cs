@@ -27,9 +27,9 @@ public class EventManager : MonoBehaviour
         // 이벤트 조건 배열 설정
         _eventConditions = new Func<bool>[]
         {
-            () => Score.Environment >= 10 && Score.Technology >= 25 && Score.Economy >= 25,  // 첨단 산업 발전
-            () => Score.Environment >= 25,                                                  // 환경 긍정 이벤트 
-            () => Score.Society >= 25 && Score.Technology >= 15 && Score.Economy >= 15,      // 사회 복지 시스템 확장
+            () => Score.Technology >= 20,           // 첨단 산업 발전
+            () => Score.Environment >= 20,          // 환경 긍정 이벤트 
+            () => Score.Society >= 20,              // 사회 복지 시스템 확장
         };
     }
 
@@ -94,7 +94,7 @@ public class EventManager : MonoBehaviour
             _eventUIImage.sprite = eventUISprites[idx];
             
             eventUICanvasGroup.alpha = 1;
-            await UniTask.WaitForSeconds(7f);
+            await UniTask.WaitForSeconds(5f);
             eventUICanvasGroup.alpha = 0;            
         }
     }

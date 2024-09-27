@@ -95,10 +95,8 @@ namespace Game
             Score score = NetworkManager.Instance.GetScore(SharedData.SelectedNum);
             ScoreManager.Instance.SetScore(score);
             
-            Debug.Log("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
             await _eventManager.Event();
                 
-            Debug.Log("siasisidasdjfasldfasjdlfkjasdklfjasdklfjasdklfjasdklfjasdklf");
             if (_currentRound == FinalRound) return;
         
             NetworkManager.Instance.GetData = null;
