@@ -2133,9 +2133,7 @@ MonoBehaviour:
   mVideoClips:
   - {fileID: 32900000, guid: b054afd664fd4f14c8309f1b40a2bf5d, type: 3}
   - {fileID: 32900000, guid: d07bd25a10b37bf4a9d5e40ab988840a, type: 3}
-  - {fileID: 32900000, guid: 1d0c182c0f13fd041a0bd87c256b10a4, type: 3}
-  - {fileID: 32900000, guid: f5a441554a6d09b4aa8e532a9fe48a85, type: 3}
-  - {fileID: 32900000, guid: 9e814057fd3c1a7488663a661169c08d, type: 3}
+  - {fileID: 32900000, guid: 3892f9b250154c3429b3ee4990f4efcd, type: 3}
 --- !u!1 &1359165877
 GameObject:
   m_ObjectHideFlags: 0
@@ -3784,7 +3782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb6573c910271d4c98a883ef1845390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ButtonSound: {fileID: 0}
+  ButtonSound: {fileID: 8300000, guid: 7d3b6442a3036854a94707a60bd0ec97, type: 3}
 --- !u!1 &2043776461
 GameObject:
   m_ObjectHideFlags: 0
@@ -4205,11 +4203,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSoundPlaying: 0
   sounds:
-  - {fileID: 8300000, guid: b6513e6adb3c2b34787caf689122cf79, type: 3}
-  - {fileID: 8300000, guid: edd00c9fa639715498a76ad8acc75da3, type: 3}
-  - {fileID: 8300000, guid: 6f05c2cff39341d4aae54c68cbc572a4, type: 3}
-  - {fileID: 8300000, guid: c7283ec3a9bddfd4a8dfae71e6df5ec4, type: 3}
-  - {fileID: 8300000, guid: 56cf1c4c4a2d0f8419a47c6dd7ee32e3, type: 3}
+  - {fileID: 8300000, guid: 391f942d0c180194db9c73a44c0cea9e, type: 3}
+  - {fileID: 8300000, guid: 9d49823b9e1de124b82c996ceede43fc, type: 3}
+  - {fileID: 8300000, guid: abcb8b0417e1293408cc41ccdb70f7c2, type: 3}
+  - {fileID: 8300000, guid: 29f301bfb337d5f4a9ff4ec93e0c3f36, type: 3}
+  - {fileID: 8300000, guid: 39c2261151e12b243883a9700e4bd679, type: 3}
   - {fileID: 8300000, guid: a292db788b4f773448c639832bc80fa8, type: 3}
   _Bgm: 0
 --- !u!1 &2130051820
